@@ -189,8 +189,27 @@ nemoclaw my-assistant policy remove huggingface --yes    # Removed preset: huggi
   - Message 6 verified correct. Message 5 stays on Franco's phone; treat it as superseded.
 - Fixed `demo.sh` backgrounding: the subshell had held the stdout pipe open, so a piped caller hung after the run finished.
 
-## NEXT
-1. Franco: confirm Telegram message_id 4 on the phone. Decide on the policy removals (below).
-2. Test that `tool_search`/`tool_call` cannot reach denied tools (or turn tool search off for the gmaps agent).
-3. Repeat E1 x3 and run E2-E6 through the full stack; owned clip → Whisper when Rachel's audio lands.
-4. Parked: Option A (managed MCP + private CA), Telegram channel rebuild (preflight failed: gateway.version.compatible, gateway.port.uncontested; standalone openshell gateway PID 61626 on :8080 left untouched).
+## 8. E2 and E4 through the full stack: DONE (14:16-14:22 CDT). Input: transcript text (no owned clips for E2/E4), labelled on screen
+**E2 `e2demo-20261003-141619`** (no-overlap negative; same authorizations, crossing at t=70-77). URL `?f=samples/agent_e2demo-20261003-141619.json`
+- Look-ahead (agent-requested) at as_of 0, 3, 70, 74, 77: **no candidate at any time**. At as_of 0/3 it was unavailable (airborne / no observation), shown as unavailable.
+- The ledger still opens **R1 w0001 at t=74**: two recorded authorizations on runway 36 (landing for SIM212, crossing for RESCUE7). post_alert → **Telegram message 7**, whose look-ahead line reads "as_of 74.0 s: no occupancy-overlap candidate for these actors in the current window."
+- So the honest non-alert is the **look-ahead's**. The authorization rule still alerts, as designed ("route-only would alarm"). If the demo needs zero messages on E2, post only look-ahead-backed alerts: a Franco decision, not done.
+
+**E4 first attempt `e4demo-20261003-141737`: feed loss NOT demonstrated.** RESCUE7's packets stop between 35.6 and 70.6 s, but the last transmission is t=31, so the agent never asked for a look-ahead during the gap. (Message 8 = that run's R1 alert at t=28, with the overlap.)
+
+**E4 with clock ticks `e4demo-20261003-142003`** (`venue/demo.sh SIM_E4_FEED_LOSS --alerts --tick 38 --tick 44`). URL `?f=samples/agent_e4demo-20261003-142003.json`
+- Tick turns carry no radio text. The agent was told to call only lookahead/open_warnings, and did so (no parse on ticks).
+- t=28: overlap raised [47.3, 72.8]; R1 alert → **Telegram message 9**.
+- tick 38: overlap still raised [47.1, 56.9] (RESCUE7 obs age 3.0 s).
+- **tick 44: `T-VH7 last observation 9.0 s old (> 6.0 s): timed prediction withdrawn`, candidates [] → UNAVAILABLE**, not "no conflict".
+- Agent reply at 44: "RESCUE7 prediction unavailable is not 'no conflict' ... w0001 remains open". It also calls SIM212 "on final" when it is rolling out: the model's prose is loose; the tool results are the evidence.
+- Turn wall times: transmissions 11.8-22.1 s, ticks 12.3 / 16.5 s.
+
+Telegram messages sent today: 4 (E1), 5 (E1, **stale look-ahead line, superseded**), 6 (E1 video run), 7 (E2), 8 (E4 no ticks), 9 (E4 ticks). All are R1 ledger alerts labelled FICTIONAL SIMULATION.
+
+## NEXT (feature freeze 16:30 ET = 15:30 CDT)
+1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).
+2. Video: `venue/demo_e1.sh` (~110 s; sends one alert) → open the printed URL → press Play.
+3. Not done, still open: E3/E5/E6 through the agent (E3/E5 clips exist), E1 x3 repeats, blind fresh-seed test, clip-to-screen latency.
+4. Open: test whether OpenClaw `tool_search`/`tool_call` can reach denied tools.
+5. Parked: Option A (managed MCP + private CA), Telegram channel rebuild (preflight failed: gateway.version.compatible, gateway.port.uncontested; standalone openshell gateway PID 61626 on :8080 untouched).

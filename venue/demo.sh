@@ -7,6 +7,8 @@
 set -euo pipefail
 EP=${1:-SIM_E1_CROSS_DURING_ROLLOUT}
 ALERTS=${2:---alerts}
+shift $(( $# < 2 ? $# : 2 ))
+EXTRA=("$@")   # e.g. --tick 38 --tick 44
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 V=$HOME/gmaps_venue
 IMG=sha256:46591c6e4a018d8d197fa246b1e3d682c907654aab4e9402302abb3e6a7dd916   # existing nemoclaw vLLM image
@@ -37,7 +39,7 @@ fi
 echo "== input mode: $MODE"
 
 # 3. agent turns
-python3 "$REPO/venue/run_fullstack.py" "$EP" --run-id "$RUN" "${ASR_ARG[@]}"
+python3 "$REPO/venue/run_fullstack.py" "$EP" --run-id "$RUN" "${ASR_ARG[@]}" "${EXTRA[@]}"
 
 # 4. UI
 python3 "$REPO/venue/build_timeline.py" "$RUN" --episode "$EP" --input-mode "$MODE" --out "$REPO/ui_scaffold/samples/agent_$RUN.json"
