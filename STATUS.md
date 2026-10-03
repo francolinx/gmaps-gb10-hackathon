@@ -250,6 +250,17 @@ clip_to_alert values: [12.83, 13.96, 16.0] median 13.96
 - **Clip-to-alert, n=3: 12.83 s, 13.96 s, 16.0 s (median 13.96 s).** Telegram messages 13, 14, 15. Total script wall 108 / 103 / 113 s.
 - Evaluation script output: `venue_traces/repeat3_eval.txt`. Every run kept (no failures to keep).
 
+## 12. Can OpenClaw `tool_search`/`tool_call` reach non-gmaps tools? **NO** (14:44 CDT). No config change
+- Docs inside the sandbox: `openclaw/docs/tools/tool-search.md`: the catalog is built after "normal policy filtering"; "if a tool is not in the effective policy, search should not return it" (l.296).
+- Probe 1 (session `agent:gmaps:toolsearch-probe-*`): the agent searched exec, bash, process, read, write, web_fetch, web_search, message, browser, cron, sessions_send → 11× tool_search, all empty. Its prose reply nevertheless shows a "cron → sessions_send" row that the tool results don't contain; more evidence that agent prose is unverified.
+- Probe 2 (session `agent:gmaps:toolsearch-probe2-*`, raw transcript exported via `nemoclaw my-assistant sessions export` → `venue_traces/toolsearch_probe/*.jsonl`):
+  - `tool_call {"id":"exec","args":{"command":"id"}}` → `"Unknown tool id: exec ..."`
+  - `tool_call read /etc/hostname` → `"Unknown tool id: read ..."`
+  - `tool_call web_fetch https://example.com` → `"Unknown tool id: web_fetch ..."`
+  - `tool_search ""` (limit 20) → exactly **gmaps__ledger_ingest, gmaps__lookahead, gmaps__open_warnings, gmaps__parse_transmission, gmaps__post_alert**
+  - `tool_search` "exec shell command" / "read file" / "web_fetch fetch url" → `[]`
+- Scope: tested by name for exec, read, web_fetch, plus a full-catalog listing. Not every built-in was called individually.
+
 ## NEXT (feature freeze 16:30 ET = 15:30 CDT)
 1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).
 2. Video: `venue/demo_e1.sh` (~110 s; sends one alert) → open the printed URL → press Play.
