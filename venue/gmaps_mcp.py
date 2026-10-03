@@ -12,7 +12,7 @@ Boundaries:
 
   GMAPS_MCP_TOKEN=... python3 gmaps_mcp.py --episode SIM_E1_CROSS_DURING_ROLLOUT --bind 127.0.0.1 --port 8090
 """
-import argparse, hmac, json, os, ssl, sys, threading, time, uuid
+import argparse, hmac, json, os, ssl, sys, threading, time, urllib.parse, urllib.request, uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -29,6 +29,7 @@ PROTOCOLS = ('2025-06-18', '2025-03-26', '2024-11-05')
 SIM_AIRPORT = 'XSIM'
 HOLD_LINES = SIM_MAP['hold_lines']
 LOG_DIR = Path.home() / 'gmaps_venue' / 'log'
+SECRETS = Path.home() / '.gmaps_secrets'   # Telegram token + chat id; read at call time, never logged
 
 
 def intents_from(led, packets_by_cs, as_of):
@@ -64,8 +65,10 @@ class ToolError(Exception):
 
 
 class GmapsTools:
-    def __init__(self, episode, run_id):
-        self.episode, self.run_id = episode, run_id
+    def __init__(self, episode, run_id, send=False):
+        self.episode, self.run_id, self.send = episode, run_id, send
+        self.last_lookahead = None
+        self.posted = {}
         self.ap = SimAirport()
         self.led = Ledger(self.ap)
         self.events = {}
@@ -114,20 +117,80 @@ class GmapsTools:
         as_of = float(as_of)
         fd = self._feed(as_of)
         if fd is None:
-            return {'as_of': as_of, 'status': 'prediction_unavailable',
-                    'reason': 'no simulated observation feed emitted through as_of', 'note': 'Prediction unavailable is not "no conflict".'}
+            self.last_lookahead = {'as_of': as_of, 'status': 'prediction_unavailable',
+                                   'reason': 'no simulated observation feed emitted through as_of', 'note': 'Prediction unavailable is not "no conflict".'}
+            return self.last_lookahead
         tracks, by_cs, through = fd
         self.led.tick(as_of)
         out = predict(as_of, tracks, intents_from(self.led, by_cs, as_of), 'combined')
         out['feed_emitted_through'] = through
         out['note'] = 'Fictional SIM-1 map, simulated observations. Prediction unavailable is not "no conflict".'
+        self.last_lookahead = out
         return out
 
     def open_warnings(self):
         return {'open_warnings': [w for w in self.led.warnings if w['status'] == 'open']}
 
+    def alert_text(self, w):
+        a, b = w.get('authorization_a') or {}, w.get('authorization_b') or {}
+        lines = ['GMAPS ALERT - FICTIONAL SIMULATION (map SIM-1, airport XSIM). Not real traffic.',
+                 f"{w['rule_id']} {w['severity']}: {w['name']} (warning {w['warning_id']}, t={w['t_fired']} s)",
+                 f"Actors: {a.get('callsign')} {a.get('type')} rwy {a.get('runway_end')} [{a.get('acknowledged')}] / "
+                 f"{b.get('callsign')} {b.get('type')} rwy {b.get('runway_end')} [{b.get('acknowledged')}]",
+                 f"Why: {w['explain']}"]
+        la = self.last_lookahead
+        if la is None:
+            lines.append('Look-ahead: not run yet for this warning.')
+        elif la.get('status') == 'prediction_unavailable':
+            lines.append(f"Look-ahead (as_of {la['as_of']} s): PREDICTION UNAVAILABLE ({la['reason']}). Unavailable is not 'no conflict'.")
+        else:
+            cs = {a.get('callsign'), b.get('callsign')}
+            cands = [c for c in la.get('candidates', []) if cs & set(c.get('callsigns', []))]
+            if cands:
+                for c in cands:
+                    lines.append(f"Look-ahead (simulated obs, as_of {la['as_of']} s): {'/'.join(c['callsigns'])} "
+                                 f"{'conditional ' if c.get('conditional') else ''}occupancy overlap at {c['zone'].split(':')[-1]} "
+                                 f"{c['overlap'][0]}-{c['overlap'][1]} s (lead {c.get('lead_s')} s)")
+            else:
+                lines.append(f"Look-ahead (as_of {la['as_of']} s): no occupancy-overlap candidate for these actors in the current window.")
+            if la.get('unavailable'):
+                lines.append(f"Prediction unavailable for: {', '.join(u['track'] for u in la['unavailable'])}")
+        lines += [f"Evidence: run {self.run_id}, events {a.get('event_id')}, {b.get('event_id')}; cite {w.get('cite')}",
+                  f"Limit: {w['claim_limit']} Decision support only; the controller decides."]
+        return '\n'.join(lines)
+
     def post_alert(self, warning_id):
-        raise ToolError('post_alert is not wired on the tool server; the approved destination is the OpenClaw Telegram channel')
+        w = next((x for x in self.led.warnings if x['warning_id'] == warning_id), None)
+        if w is None:
+            raise ToolError(f'unknown warning_id {warning_id!r}')
+        if w['status'] != 'open':
+            raise ToolError(f'warning {warning_id} is {w["status"]}; only open warnings are posted')
+        if warning_id in self.posted:
+            return {'warning_id': warning_id, 'status': 'already_posted', 'message_id': self.posted[warning_id]}
+        text = self.alert_text(w)
+        if not self.send:
+            return {'warning_id': warning_id, 'status': 'dry_run_not_sent', 'text': text}
+        sec = {}
+        for ln in SECRETS.read_text().splitlines():
+            if '=' in ln and not ln.lstrip().startswith('#'):
+                k, v = ln.split('=', 1)
+                sec[k.strip()] = v.strip().strip('"\'')
+        tok, chat = sec.get('TELEGRAM_BOT_TOKEN'), sec.get('TELEGRAM_CHAT_ID')
+        if not tok or not chat:
+            raise ToolError('approved destination not configured on the host')
+        body = urllib.parse.urlencode({'chat_id': chat, 'text': text, 'disable_web_page_preview': 'true'}).encode()
+        try:
+            with urllib.request.urlopen(urllib.request.Request(f'https://api.telegram.org/bot{tok}/sendMessage', data=body),
+                                        timeout=15) as r:
+                res = json.loads(r.read())
+        except Exception as e:   # never echo the URL (it contains the token)
+            raise ToolError(f'delivery failed: {type(e).__name__} {getattr(e, "code", "")}'.replace(tok, '<redacted>'))
+        if not res.get('ok'):
+            raise ToolError(f"delivery failed: telegram ok=false {res.get('error_code')}")
+        mid = res['result']['message_id']
+        self.posted[warning_id] = mid
+        return {'warning_id': warning_id, 'status': 'sent', 'destination': 'approved Telegram chat (host-side)',
+                'message_id': mid, 'text': text}
 
     def call(self, name, args):
         fn = {s['function']['name']: getattr(self, s['function']['name']) for s in TOOL_SCHEMAS}.get(name)
@@ -252,6 +315,7 @@ def main():
     a.add_argument('--bind', default='127.0.0.1')
     a.add_argument('--port', type=int, default=8090)
     a.add_argument('--cert'); a.add_argument('--key')
+    a.add_argument('--send-alerts', action='store_true', help='post_alert really sends to the approved Telegram chat (default: dry run)')
     a.add_argument('--run-id', default=os.environ.get('GMAPS_RUN_ID') or time.strftime('run-%Y%m%d-%H%M%S'))
     args = a.parse_args()
     token = os.environ.get('GMAPS_MCP_TOKEN')
@@ -259,7 +323,7 @@ def main():
         sys.exit('set GMAPS_MCP_TOKEN (>= 16 chars)')
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     log_path = LOG_DIR / f'mcp_calls_{args.run_id}.jsonl'
-    tools = GmapsTools(args.episode, args.run_id)
+    tools = GmapsTools(args.episode, args.run_id, send=args.send_alerts)
     srv = ThreadingHTTPServer((args.bind, args.port), make_handler(tools, token, log_path))
     scheme = 'http'
     if args.cert:
@@ -267,7 +331,7 @@ def main():
         ctx.load_cert_chain(args.cert, args.key)
         srv.socket = ctx.wrap_socket(srv.socket, server_side=True)
         scheme = 'https'
-    print(f'gmaps-mcp run_id={args.run_id} episode={args.episode} {scheme}://{args.bind}:{args.port}/mcp log={log_path}', flush=True)
+    print(f'gmaps-mcp run_id={args.run_id} episode={args.episode} send_alerts={args.send_alerts} {scheme}://{args.bind}:{args.port}/mcp log={log_path}', flush=True)
     srv.serve_forever()
 
 
