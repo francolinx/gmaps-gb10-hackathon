@@ -1,0 +1,1290 @@
+{
+ "summary": {
+  "n": 47,
+  "cold_load_s": 12.118,
+  "median_asr_s": 0.268,
+  "min_asr_s": 0.165,
+  "max_asr_s": 3.078,
+  "device": "NVIDIA GB10",
+  "median_audio_s": 7.0
+ },
+ "clips": [
+  {
+   "clip": "01_DAL520_hold_short_runway13.wav",
+   "audio_s": 7.0,
+   "asr_s": 0.274,
+   "asr_text_raw": "Short of Lima on Runway 13, and we'll talk to Ramp, get back to you.",
+   "batch": "batch1_labelled",
+   "unverified_label": "DAL520 hold short runway13",
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "HOLD_SHORT",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "taxiway": "L",
+      "on_runway": "13"
+     }
+    ],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "hold short of Lima on runway 13 heard; callsign DAL520 not in clip text",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "01_REAL_ATC_002.2-009.3.wav",
+   "audio_s": 7.1,
+   "asr_s": 0.244,
+   "asr_text_raw": "Tower Hall is the force of a nice hair tail, requesting left pattern for Meridian.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "01_TAXI_ROUTE_HOLD_SHORT.wav",
+   "audio_s": 11.0,
+   "asr_s": 0.418,
+   "asr_text_raw": "Why don't you go Lima Alpha and then hold your text away Kila and when able, actually Mike Alpha showed up Kila and when able to say the reason for the abort. We need to hold position.",
+   "batch": "batch2_labelled",
+   "unverified_label": "TAXI ROUTE HOLD SHORT",
+   "parse": {
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [
+     [
+      "kila",
+      "kilo"
+     ]
+    ],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "route words present but garbled (\"hold your text away Kila\")",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "02_HOLD_SHORT_QUESTION.wav",
+   "audio_s": 9.0,
+   "asr_s": 0.416,
+   "asr_text_raw": "for a little bit in United 2384. I have no problem. Can you hold sure the mic or do you need to just stay right there? Yeah, we can hold sure the mic, United 2384.",
+   "batch": "batch2_labelled",
+   "unverified_label": "HOLD SHORT QUESTION",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "UAL2384",
+     "UAL2384"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"Can you hold sure the mic\": \"hold short of Mike\" likely misheard",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "02_REAL_ATC_010.4-017.7.wav",
+   "audio_s": 7.3,
+   "asr_s": 0.263,
+   "asr_text_raw": "Helicopter 4790L, Avery Tower makes left closed traffic runway 28R cleared for takeoff.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "readback",
+    "kind": "TAKEOFF_CLEARANCE",
+    "actor_candidates": [],
+    "runway": "28R",
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": [
+     "runway 28R not in KLGA inventory"
+    ]
+   }
+  },
+  {
+   "clip": "02_TRUCK1_calling_tower.wav",
+   "audio_s": 2.0,
+   "asr_s": 0.202,
+   "asr_text_raw": "Truck 1 & Company, LaGuardia Tower.",
+   "batch": "batch1_labelled",
+   "unverified_label": "TRUCK1 calling tower",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "TRUCK1"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Truck 1 & Company, LaGuardia Tower\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "03_PILOT_ACKNOWLEDGE_ROUTE.wav",
+   "audio_s": 7.0,
+   "asr_s": 0.348,
+   "asr_text_raw": "and when you get a chance, let me know the reason for the abort. We'll let you know, United. 2384. 2384.",
+   "batch": "batch2_labelled",
+   "unverified_label": "PILOT ACKNOWLEDGE ROUTE",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "United 2384 acknowledgement heard; content differs from label",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "03_REAL_ATC_018.0-023.5.wav",
+   "audio_s": 5.5,
+   "asr_s": 0.244,
+   "asr_text_raw": "To each right, clear for day close, left close start to case you stop.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "CANCEL",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "03_TRUCK1_request_cross_runway4_at_D.wav",
+   "audio_s": 4.0,
+   "asr_s": 0.244,
+   "asr_text_raw": "Mark 1 and company, LaGuardia Tower, requesting to cross 4 at Delta.",
+   "batch": "batch1_labelled",
+   "unverified_label": "TRUCK1 request cross runway4 at D",
+   "parse": {
+    "speech_act": "request",
+    "kind": "CROSS_REQUEST",
+    "actor_candidates": [],
+    "runway": "04",
+    "route": null,
+    "crossing_at": "D",
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"requesting to cross 4 at Delta\" heard; callsign misheard as \"Mark 1\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "04_ATC_cross_runway4_at_D.wav",
+   "audio_s": 4.0,
+   "asr_s": 0.268,
+   "asr_text_raw": "Truck 1 & Company, cross for Delta. Truck 1 & Company, cross for Delta.",
+   "batch": "batch1_labelled",
+   "unverified_label": "ATC cross runway4 at D",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "TRUCK1",
+     "TRUCK1"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"cross for Delta\": runway \"4\" heard as \"for\", so no runway extracted",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "04_REAL_ATC_031.9-038.2.wav",
+   "audio_s": 6.3,
+   "asr_s": 0.358,
+   "asr_text_raw": "Helicopter, Ninersfield, I'll tell you, Gluckwave, traffic, taxi, VVB, Meridian, clear to land, wind barrier platform.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "LANDING_CLEARANCE",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [
+     [
+      "clear to land",
+      "cleared to land"
+     ]
+    ],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "04_SHORT_OF_N.wav",
+   "audio_s": 7.0,
+   "asr_s": 0.309,
+   "asr_text_raw": "I can make it Bravo, short of November. Short of November. What's the line-up for tonight?",
+   "batch": "batch2_labelled",
+   "unverified_label": "SHORT OF N",
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "TAXI",
+    "actor_candidates": [],
+    "runway": null,
+    "route": [
+     "B"
+    ],
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "taxiway": "N"
+     }
+    ],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Bravo, short of November\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "05_MAKING_PHONE_CALLS.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.354,
+   "asr_text_raw": "Uh, we're making some phone calls here at United 2384. Hey, two minutes, United 2384. Make it Bravo, should it Zulu, please?",
+   "batch": "batch2_labelled",
+   "unverified_label": "MAKING PHONE CALLS",
+   "parse": {
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "actor_candidates": [
+     "UAL2384",
+     "UAL2384"
+    ],
+    "runway": null,
+    "route": [
+     "B"
+    ],
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"we're making some phone calls here, United 2384\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "05_REAL_ATC_038.8-045.7.wav",
+   "audio_s": 6.9,
+   "asr_s": 0.25,
+   "asr_text_raw": "And left closed traffic, taxiway Zulu, cleared on land 4700 Seraphim.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "05_UAL2384_proceed_to_ramp.wav",
+   "audio_s": 3.0,
+   "asr_s": 0.225,
+   "asr_text_raw": "2384, proceed to ramp. Proceed to ramp.",
+   "batch": "batch1_labelled",
+   "unverified_label": "UAL2384 proceed to ramp",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"2384, proceed to ramp\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "06_HOLD_POSITION_FOR_NOW.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.265,
+   "asr_text_raw": "And ground, we need to hold position for now, United 2384. United 2384.",
+   "batch": "batch2_labelled",
+   "unverified_label": "HOLD POSITION FOR NOW",
+   "parse": {
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "actor_candidates": [
+     "UAL2384",
+     "UAL2384"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"we need to hold position for now\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "06_REAL_ATC_046.4-051.5.wav",
+   "audio_s": 5.1,
+   "asr_s": 0.242,
+   "asr_text_raw": "Hey, Wood Tower, Scott, ATL Hotel. We're at three crosses departure.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "06_STOP_TRUCK1_STOP.wav",
+   "audio_s": 6.0,
+   "asr_s": 0.216,
+   "asr_text_raw": "truck one stop truck one stop",
+   "batch": "batch1_labelled",
+   "unverified_label": "STOP TRUCK1 STOP",
+   "parse": {
+    "speech_act": "instruction",
+    "kind": "CANCEL",
+    "actor_candidates": [
+     "TRUCK1",
+     "TRUCK1"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"truck one stop truck one stop\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "07_FFT4195_staying_here.wav",
+   "audio_s": 3.0,
+   "asr_s": 0.188,
+   "asr_text_raw": "4195, we're staying here.",
+   "batch": "batch1_labelled",
+   "unverified_label": "FFT4195 staying here",
+   "parse": {
+    "speech_act": "report",
+    "kind": "REPORT_HOLDING_POSITION",
+    "actor_candidates": [
+     "?4195"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"4195, we're staying here\" (airline prefix not heard)",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "07_REAL_ATC_053.0-060.8.wav",
+   "audio_s": 7.8,
+   "asr_s": 0.339,
+   "asr_text_raw": "Skyhawk, 1280 cell, Hayward Tower, in the future, I can't have you pulling onto the runway before I'm ready for takeoff.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "07_TAXI_TAKEOFF_TIME_QUESTION.wav",
+   "audio_s": 9.0,
+   "asr_s": 0.389,
+   "asr_text_raw": "Do you know how long for us to taxi and take off, roughly? Let me know when you're fully ready. I'll try to get you out of here as soon as you can.",
+   "batch": "batch2_labelled",
+   "unverified_label": "TAXI TAKEOFF TIME QUESTION",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"how long for us to taxi and take off\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "08_APPROX_FIVE_MINUTES_REPLY.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.365,
+   "asr_text_raw": "I mean, if you, you know, it'll be a minute. It won't be long because I'll get you to the head of the line. Okay.",
+   "batch": "batch2_labelled",
+   "unverified_label": "APPROX FIVE MINUTES REPLY",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"it'll be a minute ... won't be long\": no \"five minutes\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "08_DAL2603_go_around.wav",
+   "audio_s": 5.0,
+   "asr_s": 0.218,
+   "asr_text_raw": "603, go around, runway heading 2000, just 646.",
+   "batch": "batch1_labelled",
+   "unverified_label": "DAL2603 go around",
+   "parse": {
+    "speech_act": "instruction",
+    "kind": "GO_AROUND",
+    "actor_candidates": [
+     "?603",
+     "?646"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"603, go around\": callsign truncated",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "08_REAL_ATC_060.5-067.8.wav",
+   "audio_s": 7.3,
+   "asr_s": 0.258,
+   "asr_text_raw": "What are you doing, continue, ACRT stop, we didn't clear you for takeoff.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "CANCEL",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "09_LEFT_TURN_K_RIGHT_A_SHORT_E.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.222,
+   "asr_text_raw": "left turn on Keel and then right on Alpha.",
+   "batch": "batch2_labelled",
+   "unverified_label": "LEFT TURN K RIGHT A SHORT E",
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "TAXI",
+    "actor_candidates": [],
+    "runway": null,
+    "route": [
+     "A"
+    ],
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "partial",
+    "note": "\"left turn on Keel ... right on Alpha\": Kilo misheard, \"short of E\" missing",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "09_REAL_ATC_069.3-072.6.wav",
+   "audio_s": 3.3,
+   "asr_s": 0.188,
+   "asr_text_raw": "Good morning, take 5 at the hotel.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "09_UAL2384_hold_short_B_of_Z.wav",
+   "audio_s": 5.0,
+   "asr_s": 0.289,
+   "asr_text_raw": "Make it Bravo, short of Zulu, please. Bravo, short of Zulu, United, 23-84.",
+   "batch": "batch1_labelled",
+   "unverified_label": "UAL2384 hold short B of Z",
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "TAXI",
+    "actor_candidates": [],
+    "runway": null,
+    "route": [
+     "B"
+    ],
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "taxiway": "Z"
+     }
+    ],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Bravo, short of Zulu ... United 23-84\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "10_REAL_ATC_074.8-084.0.wav",
+   "audio_s": 9.2,
+   "asr_s": 0.432,
+   "asr_text_raw": "Hey Saratel, we didn't put you in line up in wait or clear for takeoff, exit at Delta and contact ground point four. Thank you, Delta, ground point four, 8 Saratel.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "TAKEOFF_CLEARANCE",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [
+     [
+      "clear for takeoff",
+      "cleared for takeoff"
+     ]
+    ],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "10_REPEAT_TAXI_INSTRUCTION.wav",
+   "audio_s": 7.0,
+   "asr_s": 0.467,
+   "asr_text_raw": "Alright, United 23-4, can I move now? Yeah, we can move. Alright, make the left turn on Kilo, and then right on Alpha, short of Echo. Kilo, Alpha, short of Echo.",
+   "batch": "batch2_labelled",
+   "unverified_label": "REPEAT TAXI INSTRUCTION",
+   "parse": {
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "actor_candidates": [
+     "UAL234"
+    ],
+    "runway": null,
+    "route": [
+     "K",
+     "A"
+    ],
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "taxiway": "E"
+     }
+    ],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"left turn on Kilo, right on Alpha, short of Echo\" (callsign heard as \"23-4\")",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "10_UAL2384_hold_position_for_now.wav",
+   "audio_s": 5.0,
+   "asr_s": 0.22,
+   "asr_text_raw": "And ground, we need to hold position for now, United 2384.",
+   "batch": "batch1_labelled",
+   "unverified_label": "UAL2384 hold position for now",
+   "parse": {
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"we need to hold position for now, United 2384\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "11_DECLARE_EMERGENCY.wav",
+   "audio_s": 10.0,
+   "asr_s": 0.373,
+   "asr_text_raw": "Groundwater 2384 is declaring an emergency. Flight attendants in the back are feeling ill. Because of the odor, we will need to go into any available gates at this time.",
+   "batch": "batch2_labelled",
+   "unverified_label": "DECLARE EMERGENCY",
+   "parse": {
+    "speech_act": "report",
+    "kind": "REPORT_EMERGENCY",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"declaring an emergency. Flight attendants...\" (callsign heard as \"Groundwater 2384\")",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "11_REAL_ATC_087.2-093.4.wav",
+   "audio_s": 6.2,
+   "asr_s": 0.236,
+   "asr_text_raw": "Hill Ground, 0128 Hotel, Alpha Delta, 2A right.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "12_GATE_DOOR_DISCREPANCY_PHONE.wav",
+   "audio_s": 10.0,
+   "asr_s": 0.417,
+   "asr_text_raw": "Hey, it's Ed again, LaGuardia Tower. Now that United says he needs a gate, but so now he's declaring an emergency. But the ramp doesn't have a gate for him.",
+   "batch": "batch2_labelled",
+   "unverified_label": "GATE DOOR DISCREPANCY PHONE",
+   "parse": {
+    "speech_act": "report",
+    "kind": "REPORT_EMERGENCY",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "gate / emergency discussion",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "12_REAL_ATC_094.6-101.9.wav",
+   "audio_s": 7.3,
+   "asr_s": 0.335,
+   "asr_text_raw": "Personal 1280 Hotel, Hayward Ground. Possible pilot, Dave, you shouldn't have a number of feet of coffee if I've been here. Ready.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "13_PHONE_ACKNOWLEDGEMENT.wav",
+   "audio_s": 6.0,
+   "asr_s": 0.312,
+   "asr_text_raw": "yeah they're now we can get a stair trunk if you need them to get off the plane okay yeah yeah do that just in case they",
+   "batch": "batch2_labelled",
+   "unverified_label": "PHONE ACKNOWLEDGEMENT",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"okay yeah yeah do that\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "13_REAL_ATC_102.4-104.8.wav",
+   "audio_s": 2.4,
+   "asr_s": 0.19,
+   "asr_text_raw": "I really can't be able to go.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "14_RAMP_GATE_DELAY_PORT_AUTHORITY.wav",
+   "audio_s": 10.0,
+   "asr_s": 0.41,
+   "asr_text_raw": "Grant doesn't have a gate for you yet, but I'm trying to get in touch with the Port Authority to see if they have something. Copy. We only... Jazz 6460.",
+   "batch": "batch2_labelled",
+   "unverified_label": "RAMP GATE DELAY PORT AUTHORITY",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "JZA6460"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"doesn't have a gate ... Port Authority\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "14_REAL_ATC_105.0-109.9.wav",
+   "audio_s": 4.9,
+   "asr_s": 3.078,
+   "asr_text_raw": "780TL, that number is 510-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-785-7",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "15_REAL_ATC_111.8-114.2.wav",
+   "audio_s": 2.4,
+   "asr_s": 0.165,
+   "asr_text_raw": "510-785",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "report",
+    "kind": "CHECK_IN",
+    "actor_candidates": [
+     "?510",
+     "?785"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "15_TOWER_HOLD_SHORT_RUNWAY_13.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.348,
+   "asr_text_raw": "Hold short of Lima on runway 13 and just verify with the ramp that you'll be able to get in. Okay, hold short of Lima",
+   "batch": "batch2_labelled",
+   "unverified_label": "TOWER HOLD SHORT RUNWAY 13",
+   "parse": {
+    "speech_act": "instruction_or_readback",
+    "kind": "HOLD_SHORT",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "taxiway": "L",
+      "on_runway": "13"
+     }
+    ],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Hold short of Lima on runway 13\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "16_GATE_SHUFFLING_CONFIRMATION.wav",
+   "audio_s": 8.0,
+   "asr_s": 0.428,
+   "asr_text_raw": "and we'll talk to Ramp, get back to you Delta 520. Thank you. I'm just verifying there's some shuffling of gates going on here due to an inbound that has",
+   "batch": "batch2_labelled",
+   "unverified_label": "GATE SHUFFLING CONFIRMATION",
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [
+     "DAL520"
+    ],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"shuffling of gates ... inbound\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "16_REAL_ATC_115.1-116.7.wav",
+   "audio_s": 1.6,
+   "asr_s": 0.181,
+   "asr_text_raw": "Thank you, thank you.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "17_REAL_ATC_117.2-120.3.wav",
+   "audio_s": 3.1,
+   "asr_s": 0.227,
+   "asr_text_raw": "And it says 802, what's your intentions now?",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "17_TRUCK1_CALLING_TOWER.wav",
+   "audio_s": 9.0,
+   "asr_s": 0.429,
+   "asr_text_raw": "Truck 1 & Company, LaGuardia Tower. Truck 1 & Company. Truck 1 & Company, LaGuardia Tower, requesting to cross 4 at Delta. Truck 1 & Company.",
+   "batch": "batch2_labelled",
+   "unverified_label": "TRUCK1 CALLING TOWER",
+   "parse": {
+    "speech_act": "request",
+    "kind": "CROSS_REQUEST",
+    "actor_candidates": [
+     "TRUCK1",
+     "TRUCK1",
+     "TRUCK1",
+     "TRUCK1"
+    ],
+    "runway": "04",
+    "route": null,
+    "crossing_at": "D",
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Truck 1 & Company, LaGuardia Tower\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "18_REAL_ATC_120.0-123.7.wav",
+   "audio_s": 3.7,
+   "asr_s": 0.224,
+   "asr_text_raw": "We'll taxi back to the green ramp and give you a call.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "18_TRUCK1_CROSSING_RUNWAY4_AT_D.wav",
+   "audio_s": 9.0,
+   "asr_s": 0.293,
+   "asr_text_raw": "Cross 4 at Delta. Truck 1 and Company crossing 4 at Delta. Frontier 4195 to stop there please.",
+   "batch": "batch2_labelled",
+   "unverified_label": "TRUCK1 CROSSING RUNWAY4 AT D",
+   "parse": {
+    "speech_act": "instruction",
+    "kind": "CROSS",
+    "actor_candidates": [
+     "TRUCK1",
+     "FFT4195"
+    ],
+    "runway": "04",
+    "route": null,
+    "crossing_at": "D",
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "grammar",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   },
+   "vs_unverified_label": {
+    "judgement": "match",
+    "note": "\"Truck 1 and Company crossing 4 at Delta\"",
+    "method": "Claude, from Whisper text vs filename label only; nobody listened"
+   }
+  },
+  {
+   "clip": "19_REAL_ATC_123.5-125.9.wav",
+   "audio_s": 2.4,
+   "asr_s": 0.181,
+   "asr_text_raw": "Roger, taxi straight ahead.",
+   "batch": "batch3_unlabelled",
+   "unverified_label": null,
+   "parse": {
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "actor_candidates": [],
+    "runway": null,
+    "route": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "hold_position": false,
+    "parse_path": "residue",
+    "asr_repairs_applied": [],
+    "unresolved": []
+   }
+  }
+ ],
+ "analysis": {
+  "batch1_labelled": {
+   "n": 10,
+   "typed": 7,
+   "residue_or_unknown": 3,
+   "median_asr_s": 0.2225
+  },
+  "batch2_labelled": {
+   "n": 18,
+   "typed": 11,
+   "residue_or_unknown": 7,
+   "median_asr_s": 0.369
+  },
+  "batch3_unlabelled": {
+   "n": 19,
+   "typed": 7,
+   "residue_or_unknown": 12,
+   "median_asr_s": 0.244
+  },
+  "all": {
+   "n": 47,
+   "typed": 25,
+   "residue_or_unknown": 22
+  },
+  "vs_unverified_labels": {
+   "partial": 9,
+   "match": 19,
+   "n": 28
+  },
+  "typed_kinds": {
+   "instruction_or_readback/HOLD_SHORT": 2,
+   "request/REQUEST_OTHER": 4,
+   "readback/TAKEOFF_CLEARANCE": 1,
+   "instruction_or_readback/CANCEL": 2,
+   "request/CROSS_REQUEST": 2,
+   "instruction_or_readback/LANDING_CLEARANCE": 1,
+   "instruction_or_readback/TAXI": 3,
+   "instruction/TAXI": 2,
+   "instruction/CANCEL": 1,
+   "report/REPORT_HOLDING_POSITION": 1,
+   "instruction/GO_AROUND": 1,
+   "instruction_or_readback/TAKEOFF_CLEARANCE": 1,
+   "report/REPORT_EMERGENCY": 2,
+   "report/CHECK_IN": 1,
+   "instruction/CROSS": 1
+  },
+  "extraction": {
+   "runway": 4,
+   "route": 5,
+   "hold_constraints": 5,
+   "crossing_at": 3,
+   "resolved_callsign": 12,
+   "partial_callsign_only": 5
+  }
+ }
+}
