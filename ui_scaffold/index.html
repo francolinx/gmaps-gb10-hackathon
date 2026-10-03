@@ -219,22 +219,71 @@ function renderMap(){
   ['T-AC1','T-VH7'].forEach(id => {
     const pts = D.frames.filter(x => x.t <= T && x.positions[id]).map(x => x.positions[id]);
     const col = id === 'T-AC1' ? getCss('--ac') : getCss('--vh');
-    c.strokeStyle = col; c.globalAlpha = .35; c.beginPath(); pts.forEach((p,i) => { const [px,py] = P(p.x,p.y); i ? c.lineTo(px,py) : c.moveTo(px,py); }); c.stroke(); c.globalAlpha = 1;
+    c.strokeStyle = col; c.globalAlpha = .18; c.lineWidth = 1; c.beginPath(); pts.forEach((p,i) => { const [px,py] = P(p.x,p.y); i ? c.lineTo(px,py) : c.moveTo(px,py); }); c.stroke(); c.globalAlpha = 1;
     const p = f.positions[id]; if (!p) return;
     const [px,py] = P(p.x,p.y); const stale = p.age_s > 3;
     c.fillStyle = stale ? '#5a6676' : col; c.beginPath(); c.arc(px,py, id==='T-AC1'?7:5, 0, Math.PI*2); c.fill();
     c.fillStyle = '#e6edf5'; c.fillText(`${p.callsign}${stale?'  (stale '+p.age_s+'s)':''}`, px+9, py-8);
   });
-  $('legend').innerHTML = `<span style="color:${getCss('--ac')}">●</span> aircraft obs · <span style="color:${getCss('--vh')}">●</span> vehicle obs · <span style="color:${getCss('--hold')}">━</span> hold line · red box = zone Z1<br>Positions are simulated observations, not truth. Frame: SIM-LOCAL-1 (fictional metres).`;
+  drawProjection(c, P, m, f);
+  $('legend').innerHTML = `<span style="color:${getCss('--ac')}">●</span> aircraft obs · <span style="color:${getCss('--vh')}">●</span> vehicle obs · <span style="color:${getCss('--hold')}">━</span> hold line · red box = zone Z1<br>solid trail = observed history; dashed = model projection (simulated, not truth). Positions are simulated observations. Frame: SIM-LOCAL-1 (fictional metres).`;
   // gantt of occupancy windows (combined vs motion-only)
   const span = 60, lo = T, hi = T + span; const X = v => Math.max(0, Math.min(100, (v - lo) / span * 100));
   const row = (lab, w, col, cond) => { if (!w) return `<div class="grow"><span class="lab">${lab}</span><div class="gbar"><span style="position:absolute;left:6px;top:0;font:10px var(--mono);color:#5a6676">no window</span></div></div>`;
     const a = X(w[0]), b = X(w[1] ?? hi); return `<div class="grow"><span class="lab">${lab}</span><div class="gbar"><div class="w" style="left:${a}%;width:${Math.max(.8,b-a)}%;background:${col};opacity:${cond?.35:.85}"></div></div></div>`; };
-  const occ = (pred, id) => { const a = pred.actors[id]; return a && a.occupancy && a.occupancy.status === 'window' ? a.occupancy.window : null; };
+  const occ = (pred, id) => { const a = pred && pred.actors ? pred.actors[id] : null; return a && a.occupancy && a.occupancy.status === 'window' ? a.occupancy.window : null; };
   const vhCond = (f.combined.actors['T-VH7']||{}).hold_hypothesis?.plausible;
   $('gantt').innerHTML = `<div class="grow"><span class="lab"></span><span style="font:10px var(--mono);color:#5a6676">zone Z1 occupancy windows, now → +${span}s (combined = intent + motion)</span></div>`
     + row('AC combined', occ(f.combined,'T-AC1'), getCss('--ac')) + row('VH combined', occ(f.combined,'T-VH7'), getCss('--vh'), vhCond)
-    + row('VH motion-only', occ(f.motion_only,'T-VH7'), '#8b98a9');
+    + (f.motion_only ? row('VH motion-only', occ(f.motion_only,'T-VH7'), '#8b98a9') : '');
+}
+
+// Look-ahead projection: drawn ONLY from the combined look-ahead output already in the frame (no computation of motion here).
+// Path = the map centreline nearest the observed dot (display geometry), drawn forward to the far edge of zone Z1.
+function drawProjection(c, P, m, f){
+  const la = f.combined || {}; if (la.as_of == null) return;
+  const Tn = T, z = m.zones['XSIM:ZONE:Z1'];
+  const unav = new Set((la.unavailable || []).map(u => u.track));
+  const asof = la.as_of < Tn - 0.5 ? ` [look-ahead as_of ${la.as_of}s]` : '';
+  c.font = '11px ui-monospace,monospace';
+  // zone tint + predicted window
+  const raised = (la.candidates || []).filter(x => x.raised && x.overlap), cond = (la.candidates || []).filter(x => !x.raised && x.overlap);
+  if (raised.length || cond.length){
+    const [a1,b1] = P(z.xmin, z.ymax), [a2,b2] = P(z.xmax, z.ymin);
+    c.fillStyle = raised.length ? 'rgba(255,70,70,.38)' : 'rgba(255,190,60,.25)'; c.fillRect(a1, b1, a2-a1, b2-b1);
+    const o = (raised[0] || cond[0]).overlap;
+    c.fillStyle = raised.length ? '#ff8080' : '#ffc860';
+    c.fillText(`${raised.length ? 'predicted overlap' : 'conditional overlap'} ${Math.round(o[0])}–${Math.round(o[1])} s (model)${asof}`, a1 - 60, b1 - 8);
+  }
+  const lines = [...Object.values(m.runways), ...Object.values(m.taxiways)].map(r => r.centerline);
+  ['T-AC1','T-VH7'].forEach((id, k) => {
+    const p = f.positions[id]; if (!p) return;
+    const [px,py] = P(p.x,p.y), col = id === 'T-AC1' ? getCss('--ac') : getCss('--vh'), ly = py + 18 + 12*k;
+    const a = (la.actors || {})[id];
+    if (!a || a.status !== 'ok' || unav.has(id) || unav.has('all')){
+      c.fillStyle = '#c8a0ff'; c.fillText(`prediction unavailable${asof}`, px + 9, ly); return;   // never "clear"
+    }
+    // nearest centreline, direction = start -> end (the predictor's along-path direction)
+    let best = null;
+    lines.forEach(l => { const [x0,y0] = l[0], [x1,y1] = l[1], L = Math.hypot(x1-x0, y1-y0), dx = (x1-x0)/L, dy = (y1-y0)/L;
+      const d = Math.abs((p.x-x0)*dy - (p.y-y0)*dx); if (!best || d < best.d) best = {d, dx, dy}; });
+    const far = Math.max(...[[z.xmin,z.ymin],[z.xmin,z.ymax],[z.xmax,z.ymin],[z.xmax,z.ymax]].map(([cx,cy]) => (cx-p.x)*best.dx + (cy-p.y)*best.dy));
+    const occ = a.occupancy || {};
+    let label;
+    if (occ.status === 'window'){
+      const [w0, w1] = occ.window;
+      label = w0 > Tn ? `projected: enters Z1 in ~${Math.round(w0 - Tn)}s (model)` : (w1 == null || w1 > Tn ? 'projected: in Z1 window now (model)' : 'projected: Z1 window passed (model)');
+      if (occ.hypothesis) label += ' · start time assumed';
+    } else if (occ.status === 'no_entry_within_horizon') label = 'projected: no Z1 entry within horizon (model)';
+    else if (occ.status === 'past_zone') label = 'projected: past Z1 (model)';
+    else label = 'projection: ' + (occ.status || 'n/a');
+    if (far > 0 && occ.status !== 'past_zone'){
+      const [qx,qy] = P(p.x + best.dx*far, p.y + best.dy*far);
+      c.save(); c.strokeStyle = col; c.globalAlpha = 1; c.lineWidth = 2.5; c.setLineDash([7,5]);
+      c.beginPath(); c.moveTo(px,py); c.lineTo(qx,qy); c.stroke(); c.restore();
+    }
+    c.fillStyle = col; c.fillText(label + asof, px + 9, ly);
+  });
 }
 
 function renderRes(){
