@@ -286,6 +286,14 @@ SIM_H56774_5                     True   62.965 | TP   t=  22 lead= 41.0 | TP   t
 tally {"route_only": {"TN": 4, "FP": 1, "TP": 1}, "motion_only": {"FP": 4, "TN": 1, "TP": 1}, "combined": {"TN": 5, "TP": 1}}
 ```
 
+## 14. Real-audio ASR robustness: DONE (15:34-15:40 CDT), private audio, text only
+- 47 WAVs in `~/gmaps_venue/audio_real_private/` (3 batches: README.txt = 10 labelled, README (1).txt = 18 labelled, README (2).txt = 19 unlabelled `REAL_ATC_*`). The audio was **not copied, committed, uploaded or played**; it was mounted read-only into an offline throwaway container.
+- `venue/asr_real.py asr` (container) → `venue/asr_real.py parse` (host, library `parse()` with the KLGA graph as identifier resolver; no ledger, no agent, no alerts). Run `asr_real_153455`.
+- Whisper: n=47, median 0.268 s, min 0.165, max 3.078 s (repetition loop on batch 3 clip 14), cold 12.118 s.
+- Parse: 25/47 typed, 22/47 residue/unknown. vs. unverified human labels (28 clips, judged from text): 19 match / 9 partial / 0 miss.
+- Filename labels were never given to Whisper or the parser. The batch split special-cases `06_STOP_TRUCK1_STOP.wav` (README.txt item 06).
+- Text results committed: `venue_traces/real_asr_text/asr_real_text_only.json` (commit 735b28a). RESULTS.md section added.
+
 ## NEXT (feature freeze 16:30 ET = 15:30 CDT)
 1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).
 2. Video: `venue/demo_e1.sh` (~110 s; sends one alert) → open the printed URL → press Play.

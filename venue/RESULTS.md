@@ -41,6 +41,25 @@ Everything below was observed on the GB10 today. Each line names its run ID; tra
 - E1–E6 were designed before the event; they are **regression cases, not a blind test**.
 - The blind test scored the **library pipeline, not the agent** (see below).
 
+## Real-audio ASR robustness (local only, audio not redistributed)
+47 short clips cut from public recordings of real ATC radio and phone audio, in 3 batches. The audio stayed in a private local folder, was transcribed offline (`--network none`), and is not in this repo. Only text results are kept (`venue_traces/real_asr_text/`). This measures **speech recognition and parsing only**: no ledger, look-ahead, agent or alerts ran on it. Nothing here says anything about the outcome of the real events.
+- Whisper large-v3-turbo on the GB10: **median 0.268 s per clip** (min 0.165, max 3.078 s), n=47, median clip length 7.0 s; cold load 12.118 s. Run `asr_real_153455`.
+- Grammar parser (the library behind `parse_transmission`, with the draft KLGA graph used for identifier lookup only): **25/47 typed**, 22/47 residue or unknown.
+  - By batch: batch 1 7/10, batch 2 11/18, batch 3 7/19.
+  - Fields extracted: runway in 4 clips, taxi route in 5, hold-short constraints in 5, crossing point in 3, a resolved callsign in 12, a partial callsign only (e.g. "?2384") in 5.
+  - "Typed" is not "correct": some garbled lines were typed anyway (e.g. "...left close start to case you stop." → CANCEL; the digits "510-785" → CHECK_IN).
+- **vs. unverified human labels** (filename labels on 28 clips; judged from the transcript text by Claude, nobody listened): 19 match, 9 partial, 0 miss.
+- Example lines (Whisper text as produced → parse):
+  - "truck one stop truck one stop" → instruction / CANCEL, actor TRUCK1.
+  - "Cross 4 at Delta. Truck 1 and Company crossing 4 at Delta. Frontier 4195 to stop there please." → CROSS, runway 04, at D, actors TRUCK1, FFT4195. The clip mixes ATC and pilot speech, which the parser types as one event.
+  - "...make the left turn on Kilo, and then right on Alpha, short of Echo." → TAXI, route K, A, hold short of E. The callsign was heard as "United 23-4" → actor UAL234 (wrong; label says 2384).
+- Failure modes seen:
+  - Misheard callsigns ("Mark 1", "Groundwater 2384", "23-4").
+  - "4" heard as "for" ("cross for Delta"), which drops the runway.
+  - Taxiway names misheard ("Keel" for Kilo, "hold sure the mic").
+  - One **repetition loop** (batch 3 clip 14, "785-785-785-…", 3.08 s).
+  - Batch 3 appears to be a different airport ("Hayward Tower", runway 28R). The parser flagged "runway 28R not in KLGA inventory" rather than guessing.
+
 ## Blind test (fresh seed, picked live)
 - Seed **56774**, picked 14:46:14 CDT. 6 hidden episodes (`tools/make_episodes.py --hidden 6 --seed 56774`). Label sha256s were recorded and **committed before scoring** (commit 3cf603b; `venue_traces/blind_label_hashes.txt`).
 - **System scored: the prepared GMAPS library pipeline** (parse → ledger → look-ahead, per-second frames) through `eval/run_eval.py`, **not the OpenClaw agent**. The agent requests a look-ahead only per transmission or tick, and the scorer needs per-second frames; adapting it was not possible before the freeze. The agent's tools call this same deterministic code.
