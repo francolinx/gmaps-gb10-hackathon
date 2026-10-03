@@ -1,0 +1,154 @@
+{
+ "summary": {
+  "model_dir": "~/gmaps_models/whisper-large-v3-turbo",
+  "device": "NVIDIA GB10",
+  "torch": "2.12.0a0+5aff3928d8.nv26.05",
+  "n": 5,
+  "cold_load_plus_first_s": 11.947,
+  "warm_asr_s_median": 0.197,
+  "warm_asr_s_min": 0.178,
+  "warm_asr_s_max": 0.213,
+  "note": "Warm per-clip wall time of adapters.transcribe() on GPU, excluding file decode. Clips are re-voiced fictional lines."
+ },
+ "clips": [
+  {
+   "clip": "SIM_E1_CROSS_DURING_ROLLOUT_0.wav",
+   "episode": "SIM_E1_CROSS_DURING_ROLLOUT",
+   "t": 0.0,
+   "audio_s": 3.78,
+   "sr_in": 16000,
+   "asr_text_raw": "Simair 212, Runway 36, cleared to land.",
+   "script_text": "SimAir two one two, runway three six, cleared to land.",
+   "asr_s": 0.201,
+   "rtf": 0.053,
+   "parse": {
+    "event_id": "ev00001",
+    "speech_act": "instruction",
+    "kind": "LANDING_CLEARANCE",
+    "actor_candidates": [
+     "SIM212"
+    ],
+    "runway": "36",
+    "crossing_at": null,
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "SIM_E1_CROSS_DURING_ROLLOUT_3.wav",
+   "episode": "SIM_E1_CROSS_DURING_ROLLOUT",
+   "t": 3.0,
+   "audio_s": 3.7,
+   "sr_in": 16000,
+   "asr_text_raw": "cleared to land runway 367R212",
+   "script_text": "Cleared to land runway three six, SimAir two one two.",
+   "asr_s": 0.178,
+   "rtf": 0.048,
+   "parse": {
+    "event_id": "ev00002",
+    "speech_act": "instruction_or_readback",
+    "kind": "LANDING_CLEARANCE",
+    "actor_candidates": [],
+    "runway": "36",
+    "crossing_at": null,
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "SIM_E1_CROSS_DURING_ROLLOUT_24.wav",
+   "episode": "SIM_E1_CROSS_DURING_ROLLOUT",
+   "t": 24.0,
+   "audio_s": 5.32,
+   "sr_in": 16000,
+   "asr_text_raw": "Tour, Resco 7, request to cross runway 36 at Kilo.",
+   "script_text": "Tower, Rescue seven, request to cross runway three six at Kilo.",
+   "asr_s": 0.213,
+   "rtf": 0.04,
+   "parse": {
+    "event_id": "ev00003",
+    "speech_act": "request",
+    "kind": "CROSS_REQUEST",
+    "actor_candidates": [],
+    "runway": "36",
+    "crossing_at": "K",
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "SIM_E1_CROSS_DURING_ROLLOUT_28.wav",
+   "episode": "SIM_E1_CROSS_DURING_ROLLOUT",
+   "t": 28.0,
+   "audio_s": 3.11,
+   "sr_in": 16000,
+   "asr_text_raw": "Rescue 7, Cross Runway 36 at Kilo.",
+   "script_text": "Rescue seven, cross runway three six at Kilo.",
+   "asr_s": 0.189,
+   "rtf": 0.061,
+   "parse": {
+    "event_id": "ev00004",
+    "speech_act": "instruction",
+    "kind": "CROSS",
+    "actor_candidates": [
+     "RESCUE7"
+    ],
+    "runway": "36",
+    "crossing_at": "K",
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "SIM_E1_CROSS_DURING_ROLLOUT_31.wav",
+   "episode": "SIM_E1_CROSS_DURING_ROLLOUT",
+   "t": 31.0,
+   "audio_s": 3.84,
+   "sr_in": 16000,
+   "asr_text_raw": "Crossing Runway 36 at Kilo, RISCO 7.",
+   "script_text": "Crossing runway three six at Kilo, Rescue seven.",
+   "asr_s": 0.197,
+   "rtf": 0.051,
+   "parse": {
+    "event_id": "ev00005",
+    "speech_act": "readback",
+    "kind": "CROSS",
+    "actor_candidates": [],
+    "runway": "36",
+    "crossing_at": "K",
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  }
+ ]
+}

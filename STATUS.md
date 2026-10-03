@@ -238,6 +238,18 @@ Telegram messages sent today: 4 (E1), 5 (E1, **stale look-ahead line, superseded
   - Agent flakiness: on the first turn the model made 5 calls with empty arguments (4× parse_transmission, 1× ledger_ingest, via OpenClaw's tool_call meta-tool). The server rejected each ("bad arguments") and the model then recovered.
   - The prepared harness (`run_sim_episode`, dev check) shows a 1-second `hold_exceedance` blip at t=78 in E6. It was not exercised here (no tick there).
 
+## 11. E1 x3 back to back via `venue/demo_e1.sh`: 3/3 PASS (14:38-14:43 CDT)
+Pass criteria were fixed before the runs: exit 0; 5 turns rc=0; all input via Whisper; R1 w0001 at t=28; exactly one alert, tier POSSIBLE CONFLICT, whose look-ahead is as_of 28 with a raised overlap.
+Clip-to-alert = Whisper time for the t=28 clip + (Telegram sendMessage accepted − start of the t=28 agent turn). It excludes Whisper cold start (~12 s, once per run) and file decode, because ASR runs as a batch before the turns.
+```
+run 1 e1demo-20261003-143811-030f: PASS msg=13 clip_to_alert=12.83s (asr 0.182 + turn-start->alert 12.64) overlap=[47.3, 72.8] la_source=agent-requested total_wall=108s
+run 2 e1demo-20261003-143959-5d15: PASS msg=14 clip_to_alert=13.96s (asr 0.182 + turn-start->alert 13.78) overlap=[47.3, 72.8] la_source=agent-requested total_wall=103s
+run 3 e1demo-20261003-144142-a52a: PASS msg=15 clip_to_alert=16.0s (asr 0.189 + turn-start->alert 15.81) overlap=[47.3, 72.8] la_source=agent-requested total_wall=113s
+clip_to_alert values: [12.83, 13.96, 16.0] median 13.96
+```
+- **Clip-to-alert, n=3: 12.83 s, 13.96 s, 16.0 s (median 13.96 s).** Telegram messages 13, 14, 15. Total script wall 108 / 103 / 113 s.
+- Evaluation script output: `venue_traces/repeat3_eval.txt`. Every run kept (no failures to keep).
+
 ## NEXT (feature freeze 16:30 ET = 15:30 CDT)
 1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).
 2. Video: `venue/demo_e1.sh` (~110 s; sends one alert) → open the printed URL → press Play.

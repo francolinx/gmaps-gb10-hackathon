@@ -1,0 +1,4 @@
+run 1 e1demo-20261003-143811-030f: PASS msg=13 clip_to_alert=12.83s (asr 0.182 + turn-start->alert 12.64) overlap=[47.3, 72.8] la_source=agent-requested total_wall=108s
+run 2 e1demo-20261003-143959-5d15: PASS msg=14 clip_to_alert=13.96s (asr 0.182 + turn-start->alert 13.78) overlap=[47.3, 72.8] la_source=agent-requested total_wall=103s
+run 3 e1demo-20261003-144142-a52a: PASS msg=15 clip_to_alert=16.0s (asr 0.189 + turn-start->alert 15.81) overlap=[47.3, 72.8] la_source=agent-requested total_wall=113s
+clip_to_alert values: [12.83, 13.96, 16.0] median 13.96
