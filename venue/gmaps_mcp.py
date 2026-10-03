@@ -65,8 +65,8 @@ class ToolError(Exception):
 
 
 class GmapsTools:
-    def __init__(self, episode, run_id, send=False):
-        self.episode, self.run_id, self.send = episode, run_id, send
+    def __init__(self, episode, run_id, send=False, input_mode='unspecified'):
+        self.episode, self.run_id, self.send, self.input_mode = episode, run_id, send, input_mode
         self.last_lookahead = None
         self.posted = {}
         self.ap = SimAirport()
@@ -131,31 +131,52 @@ class GmapsTools:
     def open_warnings(self):
         return {'open_warnings': [w for w in self.led.warnings if w['status'] == 'open']}
 
-    def alert_text(self, w):
+    @staticmethod
+    def tier(w, la):
+        """Deterministic alert tier from tool results only (no model text).
+        POSSIBLE CONFLICT    = ledger rule AND a raised look-ahead overlap involving the warning's actors
+        AUTHORIZATION CHECK  = ledger rule only; sub-label says whether the look-ahead found no overlap or was unavailable"""
         a, b = w.get('authorization_a') or {}, w.get('authorization_b') or {}
-        lines = ['GMAPS ALERT - FICTIONAL SIMULATION (map SIM-1, airport XSIM). Not real traffic.',
-                 f"{w['rule_id']} {w['severity']}: {w['name']} (warning {w['warning_id']}, t={w['t_fired']} s)",
-                 f"Actors: {a.get('callsign')} {a.get('type')} rwy {a.get('runway_end')} [{a.get('acknowledged')}] / "
-                 f"{b.get('callsign')} {b.get('type')} rwy {b.get('runway_end')} [{b.get('acknowledged')}]",
-                 f"Why: {w['explain']}"]
+        cs = {a.get('callsign'), b.get('callsign')} - {None}
+        if la is None or la.get('status') == 'prediction_unavailable':
+            return 'AUTHORIZATION_CHECK_UNAVAILABLE', []
+        cands = [c for c in la.get('candidates', []) if cs & set(c.get('callsigns', []))]
+        if any(c.get('raised') for c in cands):
+            return 'POSSIBLE_CONFLICT', cands
+        unavail = {u['track'] for u in la.get('unavailable', [])}
+        actor_tracks = {tid for tid, r in la.get('actors', {}).items() if r.get('callsign') in cs}
+        if actor_tracks & unavail:
+            return 'AUTHORIZATION_CHECK_UNAVAILABLE', cands
+        return 'AUTHORIZATION_CHECK_NO_OVERLAP', cands
+
+    HEADERS = {'POSSIBLE_CONFLICT': 'POSSIBLE CONFLICT',
+               'AUTHORIZATION_CHECK_NO_OVERLAP': 'AUTHORIZATION CHECK, no predicted overlap from this check',
+               'AUTHORIZATION_CHECK_UNAVAILABLE': 'AUTHORIZATION CHECK, look-ahead unavailable (not "no conflict")'}
+
+    def alert_text(self, w):
+        """Deterministic template over tool results (ledger warning + look-ahead). No LLM text is ever included."""
+        a, b = w.get('authorization_a') or {}, w.get('authorization_b') or {}
         la = self.last_lookahead
+        tier, cands = self.tier(w, la)
+        lines = [f"GMAPS {self.HEADERS[tier]}",
+                 'FICTIONAL SIMULATION - map SIM-1, airport XSIM, simulated observations. Not real traffic.',
+                 f"Rule {w['rule_id']} ({w['severity']}): {w['name']} - warning {w['warning_id']} at t={w['t_fired']} s",
+                 f"Actors: {a.get('callsign')} {a.get('type')} rwy {a.get('runway_end')} t={a.get('t_issued')} [{a.get('acknowledged')}]"
+                 f" / {b.get('callsign')} {b.get('type')} rwy {b.get('runway_end')} t={b.get('t_issued')} [{b.get('acknowledged')}]"]
         if la is None:
-            lines.append('Look-ahead: not run yet for this warning.')
+            lines.append('Look-ahead: not available.')
         elif la.get('status') == 'prediction_unavailable':
-            lines.append(f"Look-ahead (as_of {la['as_of']} s): PREDICTION UNAVAILABLE ({la['reason']}). Unavailable is not 'no conflict'.")
+            lines.append(f"Look-ahead as_of {la['as_of']} s: UNAVAILABLE ({la['reason']}).")
         else:
-            cs = {a.get('callsign'), b.get('callsign')}
-            cands = [c for c in la.get('candidates', []) if cs & set(c.get('callsigns', []))]
-            if cands:
-                for c in cands:
-                    lines.append(f"Look-ahead (simulated obs, as_of {la['as_of']} s): {'/'.join(c['callsigns'])} "
-                                 f"{'conditional ' if c.get('conditional') else ''}occupancy overlap at {c['zone'].split(':')[-1]} "
-                                 f"{c['overlap'][0]}-{c['overlap'][1]} s (lead {c.get('lead_s')} s)")
-            else:
-                lines.append(f"Look-ahead (as_of {la['as_of']} s): no occupancy-overlap candidate for these actors in the current window.")
-            if la.get('unavailable'):
-                lines.append(f"Prediction unavailable for: {', '.join(u['track'] for u in la['unavailable'])}")
-        lines += [f"Evidence: run {self.run_id}, events {a.get('event_id')}, {b.get('event_id')}; cite {w.get('cite')}",
+            for c in cands:
+                lines.append(f"Look-ahead as_of {la['as_of']} s: {'/'.join(c['callsigns'])} "
+                             f"{'' if c.get('raised') else 'conditional '}occupancy overlap at {c['zone'].split(':')[-1]} "
+                             f"window {c['overlap'][0]}-{c['overlap'][1]} s (lead {c.get('lead_s')} s)")
+            if not cands:
+                lines.append(f"Look-ahead as_of {la['as_of']} s: no overlap candidate for these actors.")
+            for u in la.get('unavailable', []):
+                lines.append(f"Look-ahead unavailable for {u['track']}: {u['reason']}")
+        lines += [f"Run {self.run_id} | input: {self.input_mode} | events {a.get('event_id')}, {b.get('event_id')} | cite {w.get('cite')}",
                   f"Limit: {w['claim_limit']} Decision support only; the controller decides."]
         return '\n'.join(lines)
 
@@ -173,7 +194,8 @@ class GmapsTools:
             self.lookahead(w['t_fired'])
             la_note = 'computed by post_alert at warning time (agent had not requested it yet)'
         text = self.alert_text(w)
-        result_extra = {'lookahead_used': self.last_lookahead, 'lookahead_source': la_note}
+        result_extra = {'lookahead_used': self.last_lookahead, 'lookahead_source': la_note,
+                        'tier': self.tier(w, self.last_lookahead)[0]}
         if not self.send:
             return {'warning_id': warning_id, 'status': 'dry_run_not_sent', 'text': text, **result_extra}
         sec = {}
@@ -321,6 +343,7 @@ def main():
     a.add_argument('--bind', default='127.0.0.1')
     a.add_argument('--port', type=int, default=8090)
     a.add_argument('--cert'); a.add_argument('--key')
+    a.add_argument('--input-mode', default='unspecified')
     a.add_argument('--send-alerts', action='store_true', help='post_alert really sends to the approved Telegram chat (default: dry run)')
     a.add_argument('--run-id', default=os.environ.get('GMAPS_RUN_ID') or time.strftime('run-%Y%m%d-%H%M%S'))
     args = a.parse_args()
@@ -329,7 +352,7 @@ def main():
         sys.exit('set GMAPS_MCP_TOKEN (>= 16 chars)')
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     log_path = LOG_DIR / f'mcp_calls_{args.run_id}.jsonl'
-    tools = GmapsTools(args.episode, args.run_id, send=args.send_alerts)
+    tools = GmapsTools(args.episode, args.run_id, send=args.send_alerts, input_mode=args.input_mode)
     srv = ThreadingHTTPServer((args.bind, args.port), make_handler(tools, token, log_path))
     scheme = 'http'
     if args.cert:

@@ -207,6 +207,20 @@ nemoclaw my-assistant policy remove huggingface --yes    # Removed preset: huggi
 
 Telegram messages sent today: 4 (E1), 5 (E1, **stale look-ahead line, superseded**), 6 (E1 video run), 7 (E2), 8 (E4 no ticks), 9 (E4 ticks). All are R1 ledger alerts labelled FICTIONAL SIMULATION.
 
+## 9. Tiered, deterministic alerts: DONE (14:25-14:28 CDT)
+- `post_alert` text is a **deterministic template over tool results only**: tier header, fictional/simulated label, rule, actors, look-ahead window, run ID, input mode, events, cite, claim limit. No LLM text ever goes to Telegram.
+- Tier rule (`GmapsTools.tier`, shared by alert and UI):
+  - `POSSIBLE CONFLICT` = ledger rule + a raised look-ahead overlap involving the warning's actors.
+  - `AUTHORIZATION CHECK, no predicted overlap from this check` = ledger rule only, with a look-ahead available.
+  - **Added variant for Franco to accept or change:** `AUTHORIZATION CHECK, look-ahead unavailable (not "no conflict")` when the look-ahead is unavailable for those actors. It avoids implying "no overlap" when nothing could be predicted.
+- UI: each warning card carries the tier header and the alert message id. The agent's own prose appears only in a collapsed "agent summary (unverified)" under each transmission.
+- `demo.sh` now runs ASR first, then starts the server with `--input-mode`, so the alert states the input mode.
+- Reruns (2 alerts total, as capped):
+  - **E1 `e1demo-20261003-142530`** (Whisper input, 104 s): R1 w0001 t=28 → **msg 10 "GMAPS POSSIBLE CONFLICT"**, look-ahead as_of 28: SIM212/RESCUE7 overlap Z1 47.3-72.8 s, lead 19.3 s.
+  - **E2 `e2demo-20261003-142714`** (transcript text, 79 s): R1 w0001 t=74 → **msg 11 "GMAPS AUTHORIZATION CHECK, no predicted overlap from this check"**, look-ahead as_of 74: no overlap candidate.
+- Note: the template still prints the ledger's own severity, "Rule R1 (CONFLICT)", under the AUTHORIZATION CHECK header. That is the rule's procedural severity, not a prediction.
+- Phone receipt of messages 4-11: Franco's note is still a placeholder; **unconfirmed** (Bot API ok:true for each).
+
 ## NEXT (feature freeze 16:30 ET = 15:30 CDT)
 1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).
 2. Video: `venue/demo_e1.sh` (~110 s; sends one alert) → open the printed URL → press Play.

@@ -15,6 +15,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / 'lib'))
 from gmaps_core.sim.simmap import SIM_MAP          # noqa: E402
 from gmaps_core.sim.predict import MODEL           # noqa: E402
+sys.path.insert(0, str(REPO / 'venue'))
+from gmaps_mcp import GmapsTools                   # noqa: E402  (tier rule only)
 
 LOG = Path.home() / 'gmaps_venue' / 'log'
 
@@ -54,11 +56,19 @@ def main():
                                'assumptions': [res.get('note', '')]})
         elif r['tool'] == 'post_alert':
             alerts.append({'warning_id': res['warning_id'], 'status': res['status'], 'message_id': res.get('message_id'), 'iso': r['iso'],
-                           'lookahead_source': res.get('lookahead_source')})
+                           'lookahead_source': res.get('lookahead_source'), 'tier': res.get('tier'), 'text': res.get('text')})
             if res.get('lookahead_used') and 'candidates' in res['lookahead_used']:
                 lookaheads.append(res['lookahead_used'])
     transcript.sort(key=lambda x: x['t'])
     lookaheads.sort(key=lambda x: x['as_of'])
+    # tier each warning from the look-ahead at its firing time (the one the alert used, else the first with as_of >= t_fired)
+    alert_by_w = {x['warning_id']: x for x in alerts}
+    for w in warnings.values():
+        la = next((x for x in lookaheads if x['as_of'] >= w['t_fired']), None)
+        tier = alert_by_w.get(w['warning_id'], {}).get('tier') or GmapsTools.tier(w, la)[0]
+        w['tier'], w['tier_header'] = tier, GmapsTools.HEADERS[tier]
+        if w['warning_id'] in alert_by_w:
+            w['alert'] = alert_by_w[w['warning_id']]
 
     t_end = args.t_end or int(max([e['t'] for e in tr['events']] + [0])) + 50
     none_yet = {'as_of': None, 'model': MODEL['version'], 'candidates': [], 'actors': {}, 'unavailable': [],
@@ -83,7 +93,16 @@ def main():
         so = x['stdout']
         prov = re.findall(r'"winnerProvider": "(.*?)"', so)
         model = re.findall(r'"winnerModel": "(.*?)"', so)
+        summ = re.findall(r'"finalAssistantVisibleText": "(.*?)",\n', so)
+        try:
+            summ = json.loads('"' + summ[-1] + '"') if summ else None
+        except json.JSONDecodeError:
+            summ = summ[-1] if summ else None
+        for e in transcript:
+            if e['t'] == x['t'] and summ:
+                e['agent_summary_unverified'] = summ
         turn_rows.append({'t': x['t'], 'wall_s': x['wall_s'], 'rc': x['rc'], 'provider': prov[-1] if prov else None,
+                          'agent_summary_unverified': summ,
                           'model': model[-1] if model else None, 'source_id': x['source_id'],
                           'input_text': x.get('input_text'), 'asr_s': x.get('asr_s')})
     ep = {k: v for k, v in tr.items() if k != 'events'}
