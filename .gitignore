@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+audio/
+ui_scaffold/samples/live*.json
+eval/results_latest.json

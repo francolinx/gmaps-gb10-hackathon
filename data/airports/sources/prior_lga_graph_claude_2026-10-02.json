@@ -1,0 +1,77 @@
+{
+  "_readme": {
+    "airport": "KLGA — LaGuardia, New York",
+    "source": "FAA d-TPP airport diagram 00289AD, cycle NE-2, effective 01 OCT 2026 to 29 OCT 2026 (https://aeronav.faa.gov/d-tpp/2610/00289ad.pdf), read visually at 600 dpi on Oct 2, 2026.",
+    "status": "FIRST PASS. Taxiway roles, runway crossings, parallels and hot spots are read directly from the diagram and are reliable. The exact ORDER of connectors along a parallel and the far-ends of A and the west-side parallels are best reading; every edge carries a confidence field. Verify against the open diagram before the demo; do not present this graph as FAA data.",
+    "conventions": {
+      "node_id": "TWY/TWY for a taxiway intersection; TWY/RWY-side for a hold-short position where a taxiway meets a runway (side = which side of the runway); RWYxx/RWYyy for the runway intersection; AREA:name for named areas.",
+      "edge": "{from, to, taxiway, kind: segment|runway_crossing|runway_exit|ramp_link, hold_short_required: bool, confidence}",
+      "hold_short": "Every runway_crossing edge is bounded by two hold-short nodes. JO 7110.65 3-7-2 requires the controller to issue the hold-short and the pilot to read it back with the runway named; §3-1-3 requires ground to obtain local's approval before authorizing a crossing and to advise local when it is complete."
+    }
+  },
+  "frequencies": {"tower": "118.7", "ground": "121.7", "clearance_delivery": "135.2", "helicopter": "121.875", "atis_arrival": "125.95", "atis_departure": "127.05", "cpdlc_pdc": true},
+  "runways": [
+    {"id": "04/22", "length_ft": 7002, "width_ft": 150, "headings_mag": {"04": 44, "22": 224}, "emas_both_ends": true, "notes": ["ILS hold line on TWY B short of the 4 threshold: aircraft taxiing on B for a runway 4 departure may be instructed to hold at the ILS hold line (diagram caution).", "ILS HOLD also marked near the 22 end on the R/U side."]},
+    {"id": "13/31", "length_ft": 7002, "width_ft": 150, "headings_mag": {"13": 134, "31": 314}, "emas_both_ends": true, "notes": ["Runway Status Lights in operation (all runways).", "ASDE-X in use."]}
+  ],
+  "hot_spots": [
+    {"id": "HS1", "at": "Intersection of RWY 4/22 and RWY 13/31, with TWYs P, R, S and AA converging just south of the crossing point", "engine_note": "Any authorization that touches 4/22 or 13/31 near HS1 touches both runways' protected areas."},
+    {"id": "HS2", "at": "TWY G / Q / B / AA where G crosses RWY 4/22 south-west of HS1", "engine_note": "G crossing of 4/22 is inside a hot spot; the B turn from the 13/31 parallel onto the 4/22 parallel happens here."}
+  ],
+  "named_areas": [
+    {"id": "AREA:TerminalA", "label": "Terminal A (Marine Air Terminal), west side near the 4 end", "links": ["CY", "YY", "AC", "BB"]},
+    {"id": "AREA:TerminalB", "label": "Terminal B, south-center; alleys 1–9 off TWY A", "links": ["1", "2", "3", "5", "6", "7", "8", "9"]},
+    {"id": "AREA:TerminalC", "label": "Terminal C, south-east; alleys 11–19 off TWY A", "links": ["11", "12", "14", "15", "16", "19", "N"]},
+    {"id": "AREA:GAParking", "label": "General Aviation Parking, west side off E/F/BB"},
+    {"id": "AREA:TransientParking", "label": "Transient Parking, north-west off DD/E"},
+    {"id": "AREA:FireStation", "label": "Fire Station, west side at TWY D / H1 helipad", "engine_note": "ARFF vehicles leaving the station toward the terminal side cross RWY 4/22 at D (or E). On 2026-03-22 Truck 1 crossed 4 at Delta."},
+    {"id": "AREA:AirCarrierMaint", "label": "Air Carrier Maintenance & Base Facilities, south-center near TWR"},
+    {"id": "AREA:TWR", "label": "Control tower, south-center"},
+    {"id": "AREA:NWS", "label": "NWS, west side near Terminal A"}
+  ],
+  "taxiways": [
+    {"id": "A", "role": "Outer parallel: along the south side of RWY 13/31 from the 31 end to the HS2 area, then along the east side of RWY 4/22 south-west toward E/D. Serves the terminal alleys.", "ordered_nodes_east_to_west": ["A/Z", "A/W", "A/V", "A/N", "A/M", "A/L", "A/K", "A/J", "A/H", "A/GG", "A/G", "A/F", "A/E"], "confidence": "roles reliable; order of V/N/W/Z near the 31 end is best reading"},
+    {"id": "B", "role": "Inner parallel: along the south side of RWY 13/31 from the 31 end to HS2, then turns south-west along the east side of RWY 4/22 to the 4 threshold (ILS hold line near the 4 end).", "ordered_nodes_east_to_west_then_southwest": ["B/W", "B/Z", "B/V", "B/N", "B/M", "B/L", "B/K", "B/J", "B/T", "B/H", "B/GG", "B/G", "B/Q", "B/F", "B/E", "B/D", "B/C", "B/Y", "B/RWY04-ILS-hold", "B/RWY04-threshold"], "confidence": "roles and the turn at HS2 reliable; exact connector order best reading"},
+    {"id": "P", "role": "Parallel along the south-west side of RWY 13/31 from the 13 threshold to HS1; crosses RWY 4/22 just south of the runway intersection and continues east (P/S) to B.", "ordered_nodes": ["P/RWY13-threshold", "P/DD", "P/G", "P/AA", "P/RWY04-22-west", "P/RWY04-22-east", "P/R", "P/S"], "runway_crossings": ["04/22 at HS1"], "confidence": "reliable"},
+    {"id": "R", "role": "Connector from the RWY 22 end / ILS hold area (north of 13/31) crossing RWY 13/31 to the P/S area east of 4/22.", "ordered_nodes": ["R/U", "R/RWY13-31-north", "R/RWY13-31-south", "R/P"], "runway_crossings": ["13/31 east of HS1"], "confidence": "reliable"},
+    {"id": "S", "role": "Short connector between P and B east of HS1.", "ordered_nodes": ["S/P", "S/B"], "confidence": "best reading"},
+    {"id": "U", "role": "Connector near the RWY 22 end to the ILS hold / runway end (north-east).", "ordered_nodes": ["U/R", "U/RWY22-end"], "confidence": "best reading"},
+    {"id": "T", "role": "Runway 13/31 exit/entry onto B, east of HS1.", "ordered_nodes": ["T/RWY13-31-south", "T/B"], "kind": "runway_exit", "confidence": "reliable"},
+    {"id": "H", "role": "Connector between B and A east of GG.", "ordered_nodes": ["H/B", "H/A"], "confidence": "reliable"},
+    {"id": "GG", "role": "Connector between B and A just east of G.", "ordered_nodes": ["GG/B", "GG/A"], "confidence": "reliable"},
+    {"id": "G", "role": "West–east connector: from the DD/CC/BB/AA parallels on the west side, crosses RWY 4/22 at HS2, continues to B and A.", "ordered_nodes": ["G/DD", "G/CC", "G/BB", "G/AA", "G/RWY04-22-west", "G/RWY04-22-east", "G/B", "G/A"], "runway_crossings": ["04/22 at HS2"], "confidence": "reliable"},
+    {"id": "Q", "role": "Short connector on the west side of 4/22 at HS2 between G/AA and the runway edge.", "ordered_nodes": ["Q/AA", "Q/RWY04-22-west"], "confidence": "best reading"},
+    {"id": "F", "role": "West–east connector: from BB/AA (GA parking side) crosses RWY 4/22 to B and A.", "ordered_nodes": ["F/BB", "F/AA", "F/RWY04-22-west", "F/RWY04-22-east", "F/B", "F/A"], "runway_crossings": ["04/22"], "confidence": "reliable"},
+    {"id": "E", "role": "West–east connector: from the GA/transient parking side (E/DD, E/BB) crosses RWY 4/22 to B and A near the Terminal B alleys 1–3. UAL2384's 'hold short runway 4' on 2026-03-22 was at E (westbound).", "ordered_nodes": ["E/DD", "E/BB", "E/AA", "E/RWY04-22-west", "E/RWY04-22-east", "E/B", "E/A"], "runway_crossings": ["04/22"], "confidence": "reliable"},
+    {"id": "D", "role": "West–east connector: from the Fire Station / H1 helipad (west) crosses RWY 4/22 to B near Terminal B alley 1. The ARFF crossing point on 2026-03-22 ('cross 4 at Delta').", "ordered_nodes": ["D/AREA:FireStation", "D/BB", "D/AA", "D/RWY04-22-west", "D/RWY04-22-east", "D/B"], "runway_crossings": ["04/22"], "confidence": "reliable"},
+    {"id": "C", "role": "West–east connector near Terminal A (labelled C / CY on the diagram) crossing RWY 4/22 to B.", "ordered_nodes": ["C/BB", "C/AA", "C/RWY04-22-west", "C/RWY04-22-east", "C/B"], "runway_crossings": ["04/22"], "confidence": "best reading"},
+    {"id": "Y", "role": "Connectors near the RWY 4 threshold on the west side (Y, YY) between Terminal A / AA and the runway end; AC leads to the ILS hold near the 4 end.", "ordered_nodes": ["YY/AA", "Y/RWY04-22-west", "AC/ILS-hold"], "confidence": "best reading"},
+    {"id": "AA", "role": "West-side parallel to RWY 4/22 from the 4 end (near YY) north-east to P/G at HS2 and on to the 13-threshold area.", "ordered_nodes_southwest_to_northeast": ["AA/YY", "AA/C", "AA/D", "AA/E", "AA/F", "AA/Q", "AA/G", "AA/P"], "confidence": "reliable"},
+    {"id": "BB", "role": "Second west-side parallel, from Terminal A / NWS north to F, E and G.", "ordered_nodes_southwest_to_northeast": ["BB/AREA:TerminalA", "BB/C", "BB/D", "BB/F", "BB/E", "BB/G"], "confidence": "best reading"},
+    {"id": "CC", "role": "Short west-side parallel in the transient-parking area, meets G.", "ordered_nodes": ["CC/G"], "confidence": "best reading"},
+    {"id": "DD", "role": "Short west-side parallel in the transient-parking area, meets E, G and P.", "ordered_nodes": ["DD/E", "DD/G", "DD/P"], "confidence": "best reading"},
+    {"id": "J", "role": "Connector between B and A east of H.", "ordered_nodes": ["J/B", "J/A"], "confidence": "reliable"},
+    {"id": "K", "role": "Connector between B and A (and the alley 6/7 area) east of J. UAL2384 was 'on taxiway Alpha just east of taxiway Kilo' on 2026-03-22.", "ordered_nodes": ["K/B", "K/A"], "confidence": "reliable"},
+    {"id": "L", "role": "Runway 13/31 exit onto B and connector to A, east of K ('right turn at Lima, left on Bravo').", "ordered_nodes": ["L/RWY13-31-south", "L/B", "L/A"], "kind": "runway_exit", "confidence": "reliable"},
+    {"id": "M", "role": "Runway 13/31 exit onto B and connector to A, east of L ('right at Mike, right on Bravo').", "ordered_nodes": ["M/RWY13-31-south", "M/B", "M/A"], "kind": "runway_exit", "confidence": "reliable"},
+    {"id": "N", "role": "Connector from the Terminal C alleys (14–19) up to A (and B), east of M ('runway 13, November, Alpha, Echo').", "ordered_nodes": ["N/AREA:TerminalC", "N/A", "N/B"], "confidence": "reliable for N→A; N→B best reading"},
+    {"id": "V", "role": "Connector between A and B near the 31 end, east of N.", "ordered_nodes": ["V/A", "V/B"], "confidence": "best reading"},
+    {"id": "W", "role": "Connector at the RWY 31 threshold between B and the runway end.", "ordered_nodes": ["W/B", "W/RWY31-threshold"], "confidence": "best reading"},
+    {"id": "Z", "role": "Connector at the RWY 31 threshold area between A/B and the runway end ('Bravo, short of Zulu').", "ordered_nodes": ["Z/A", "Z/B", "Z/RWY31-threshold"], "confidence": "best reading"}
+  ],
+  "runway_crossings": [
+    {"taxiway": "P", "runway": "04/22", "where": "just south of the runway intersection (HS1)", "hold_short_nodes": ["P/RWY04-22-west", "P/RWY04-22-east"]},
+    {"taxiway": "G", "runway": "04/22", "where": "HS2", "hold_short_nodes": ["G/RWY04-22-west", "G/RWY04-22-east"]},
+    {"taxiway": "F", "runway": "04/22", "hold_short_nodes": ["F/RWY04-22-west", "F/RWY04-22-east"]},
+    {"taxiway": "E", "runway": "04/22", "hold_short_nodes": ["E/RWY04-22-west", "E/RWY04-22-east"]},
+    {"taxiway": "D", "runway": "04/22", "where": "opposite the Fire Station", "hold_short_nodes": ["D/RWY04-22-west", "D/RWY04-22-east"]},
+    {"taxiway": "C", "runway": "04/22", "where": "near Terminal A", "hold_short_nodes": ["C/RWY04-22-west", "C/RWY04-22-east"]},
+    {"taxiway": "R", "runway": "13/31", "where": "east of HS1, from the 22-end side", "hold_short_nodes": ["R/RWY13-31-north", "R/RWY13-31-south"]},
+    {"taxiway": "RWY13/31 itself", "runway": "04/22", "where": "the runway intersection (HS1)", "engine_note": "Intersecting runways: an authorization on either runway reserves the intersection. LGA runs arrivals on 4 with departures on 13 routinely; the compatibility matrix must allow a takeoff on 13 with an arrival on 4 outside the controller's timing window (the 2026-03-22 00:13 'traffic inside three mile' takeoff clearance is the negative test)."}
+  ],
+  "ils_critical_areas": [
+    {"runway": "04", "where": "ILS hold line on TWY B short of the 4 threshold; AC near Terminal A", "active_when": "ILS runway 4 in use / low visibility"},
+    {"runway": "22", "where": "ILS HOLD on the R/U side near the 22 end"},
+    {"runway": "13", "where": "ILS HOLD marked near the 13 end (P side)"}
+  ]
+}

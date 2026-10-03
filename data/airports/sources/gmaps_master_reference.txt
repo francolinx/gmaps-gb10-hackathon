@@ -1,0 +1,635 @@
+Source: https://docs.google.com/document/d/1_sam1PEukE0KoAoO1Ty1HOf4WnUTwbuBnS8213NmqRw/edit
+Retrieved: 2026-10-03
+﻿GMAPS — Master Source of Truth
+Ground Movement Awareness and Prediction System
+Version: 1.0 · October 2, 2026, evening planning snapshot (US Eastern)
+Event: Boston Dell × NVIDIA / BuilderBase hackathon, Saturday October 3, 2026
+For: Franco, Rachel, and their separately operated development assistants, including Claude
+Status: Confirmed product selection and scope; proposed implementation and evaluation; no new operational validation or GMAPS runtime test is established by this document.
+
+
+Read this first: GMAPS is the chosen name. It succeeds CrossHear and the relevant DeadAir work. Intent-aware trajectory look-ahead is a core requirement, not an optional future feature. A prior handoff over-narrowed the idea to readbacks and retrospective review; Franco explicitly corrected that. Preserve both the instruction-evidence layer and the predictive layer. Prediction requires declared motion information and assumptions; it must never masquerade as an observation.
+0. Rachel's two-minute catch-up
+We are no longer selecting among twenty products. The chosen direction is GMAPS, a controller-side awareness and prediction prototype. It joins what people were instructed to do, a small airport map, and available movement observations to identify where aircraft and vehicle paths could overlap in space and time. It also preserves readbacks, amendments, and unresolved communication checks. The controller remains the decision-maker. [U1, I1, I2]
+
+
+Andrew “Andy” Schneider helped identify value in connecting communications and visualizing relevant intent. Joe Eichelberger then worked through a controller-side map/route/state design and explicitly discussed looking ahead to where participants' paths might cross. Joe's later warning about absent precision positioning restricts what can be claimed from voice alone; it does not remove prediction when separately supplied motion observations exist. [I1, I2]
+
+
+The proposed demo: a fictional aircraft and a fire truck approach a shared crossing area. Separately recorded simulated speech provides instructions; a separate simulated motion feed provides timestamped observations. GMAPS displays the projected occupancy windows, highlights a possible overlap, and opens the supporting sources. Then we show the same geometric paths with different timing, a cancellation that does not instantly stop observed motion, or a lost observation feed that withdraws precise prediction. None of this is a reenactment claiming to prevent LaGuardia. [P1]
+
+
+The biggest truth to retain: the public CrossHear site and earlier Lovable sites are concept demonstrations. We have not established an integrated GMAPS speech → structured intent → motion prediction → local agent → evidence-viewer implementation, a working venue deployment, or measured benefit. Folder sizes are not proof that models can load. Expert enthusiasm is not efficacy validation.
+
+
+Team split already discussed in September: Franco handled building/UI/runtime and outreach; Rachel handled visuals/video, research/data support, and milestone attention. This document proposes concrete GMAPS deliverables within that split; it does not claim Rachel has accepted each new assignment. Rachel's preferred name is Rachel; earlier records also use Mingke Li. [I5]
+
+
+Immediate priority: confirm the roster and division of work; freeze one small scenario; inspect current source; prepare permitted assets and dependencies; build the competition agent during the event. Do not start another product branch tonight.
+
+
+________________
+
+
+1. Evidence labels and decision precedence
+Use these labels in notes, issues, and model responses:
+
+
+Label
+	Meaning
+	CONFIRMED — USER
+	Franco explicitly selected or required it. This does not prove technical feasibility.
+	SOURCE — INTERVIEW
+	The named participant said it in the supplied transcript. Automatic transcription can contain errors.
+	SOURCE — ORGANIZER
+	An actual organizer instruction. Where sources conflict, retain the conflict and prefer the latest direct briefing provisionally.
+	VERIFIED — DOCUMENTATION
+	A primary public document was inspected. It is not a benchmark of our installation.
+	REPORTED — LOCAL INVENTORY
+	Franco supplied the path/size; this assistant did not inspect that disk.
+	PROPOSED
+	A design, parameter, role, test, or plan that still needs implementation/acceptance.
+	TESTED
+	A named test was actually run against an identified artifact, with a result recorded. No proposed test earns this label.
+	UNKNOWN / BLOCKED
+	The evidence, input, permission, or result has not been established.
+	SUPERSEDED
+	An earlier idea or wording retained for history but not current direction.
+	
+
+Precedence: latest explicit user scope/name → actual measured evidence and latest organizer instructions → original interview/source material with qualifications → this synthesis and proposed plan → older summaries and screenshots. Never use an old summary to override the look-ahead correction. If sources disagree on a factual question, preserve the disagreement instead of resolving it by whichever source sounds more confident.
+
+
+This file is the project's canonical decision record at v1.0. Update it through a dated change log. Keep operational claims tied to results, and preserve the difference between committed scope and proposed implementation choices.
+2. Confirmed product definition
+Name: GMAPS — Ground Movement Awareness and Prediction System. [U1]
+
+
+Product sentence: GMAPS connects captured radio instructions, a reviewed airport map, and available movement information to surface possible future path conflicts and unresolved communication checks, with evidence and uncertainty visible to the person responsible. [U1, P1]
+
+
+Plain-English explanation: “A plane and a fire truck may be heading toward the same part of a runway. GMAPS connects what they were told with what we can observe, looks ahead under explicit assumptions, and shows the controller why a situation deserves checking.”
+
+
+First user: controller/instructor evaluating a supervised, fictional exercise. This is a prototype user choice, not operational approval. Pilot-facing delivery remains a later integration question; do not make a cockpit uplink a dependency tomorrow.
+
+
+Intended impact to evaluate: earlier useful recognition, less effort reconstructing instructions, and fewer unsupported conclusions. No reduction in accidents, workload, response time, or false alerts has been measured for GMAPS.
+
+
+What the name does not establish: certification, deployment, trademark availability, superiority to existing systems, or an approved operational safety role.
+3. The evolution Rachel needs to know
+Stage
+	What we keep
+	What changed or was corrected
+	Broad portfolio
+	Source-linked evidence, local processing, explicit human decisions.
+	Marine, drilling, interpretation, and other concepts are parked for this build.
+	DeadAir
+	Original audio, last-heard instructions, amendments, capture gaps.
+	Not a replacement radar picture; not dependent on a blanket “radar and radios fail but we keep hearing” claim.
+	CrossHear after Andy
+	Multi-source communication context; useful intent visualization; false cues can add work.
+	Different frequencies do not universally imply that participants miss controller transmissions.
+	CrossHear after Joe
+	Controller-side display; taxiway graph; separate instruction, acknowledgment, report, observation, and prediction.
+	An earlier summary overemphasized state checks and underrepresented his look-ahead example.
+	Restored prediction scope
+	Intent plus map plus motion supports conditional space-time projection.
+	Voice-only mode cannot invent positions, speeds, precise encounter times, or physical occupancy.
+	GMAPS — current
+	All of the above as one focused system.
+	Renamed by Franco. The predictive feature remains central.
+	
+
+The old as-is/to-be image is not authoritative: it treats separate-channel invisibility and improved human performance as too certain. Do not reuse it unqualified. The current comparison is existing evidence/workflow versus the same evidence plus structured intent and explicit look-ahead outputs.
+4. What the experts contributed — and did not validate
+Andy Schneider
+The full October 2 transcript includes a late proposal to display relevant instructions from other frequencies, primarily to a pilot. It also emphasizes the difference between communication and actual compliance, and the work a false ASR cue can create. Useful source windows: 19:03 (visualization), 24:32–27:50 (compliance and false positives), 44:06–48:29 (cross-frequency proposal). [I2]
+
+
+His support is real directional feedback. It is not a measured ASR result for our data, an exhaustive competitor search, an operational endorsement, or proof of the causes of the accidents recalled in the conversation.
+Joe Eichelberger
+The October 2 meeting supplied a concrete map/state approach. At 24:30 he discusses recognizing a future crossing if participants continue; the illustrative ten-minute example is not our prediction horizon. Around 1:09:59–1:14:15 he favors controller-side visualization and communication checks; around 1:17:56–1:21:54 he describes named taxiway segments and intersections. At 1:46:24–1:46:56 he explains the limits of voice-only authorization state without precise positioning. Read those passages together. [I1, I3]
+
+
+Joe challenges a universal frequency-isolation premise. His description and Andy's may concern different configurations; record capture, transmit, receive, position, and recipient separately. He welcomed continued contact and provided design help, but no independent GMAPS test, formal role, response-time promise, or procurement agreement is established.
+
+
+His AI-generated design response, shared in email, is an AI-assisted proposal, not another independently verified expert or a source of binding FAA procedure. Its useful separation—language interpretation versus graph/state calculations—is a design proposal we retain, with independent validation required.
+Earlier interviews and correspondence
+Atkins pushed for accessible data, a particular user task, and separation of live assistance from post-event analysis. Scott identified existing non-radar procedures and replay; he also acknowledged limits on his knowledge of current deployments. Angela described display loss while radio remained available in her setting and the risk of trainees remaining screen-focused. These are task and dependency leads, not a license to generalize every facility. [I6]
+
+
+Liu's private DASC preprint must not be copied into this packet, Rachel's LLM, a public repository, Lovable, or slides. Do not reproduce unpublished results or claim to use his weights/data. There is no reviewed Liu-call transcript in this handoff establishing new GMAPS technical validation. [I6]
+
+
+Kearns's unfamiliar-scenario evaluation principle and Lebiere's task-shaped information point remain useful design guidance. They do not establish that our new display reduces workload. Hollinger and the drilling interview inform general evidence discipline but do not validate this aviation product. [I6]
+5. Scope that must survive every subsequent prompt
+In the first bounded prototype
+1. One fictional, manually reviewed airport fragment: one runway conflict area and a few taxiway nodes/edges.
+2. One aircraft and one fire truck, with a limited additional actor only for an identity negative test.
+3. Two clearly identified simulated audio feeds. Continuous audio is preferable; known clip boundaries are acceptable for a first test if disclosed.
+4. Real local transcription when implemented, followed by schema-constrained intent extraction.
+5. An append-only source and interpreted-event ledger.
+6. A small deterministic route/rule checker.
+7. A separate timestamped simulated motion-observation feed. The simulator's hidden future is not an input.
+8. Deterministic, intent-aware look-ahead occupancy checking, with stated geometry, horizons, and uncertainty assumptions.
+9. Controller/instructor display: recorded route, observed trail, forecast corridor, shared-zone time bars, original evidence.
+10. Real agent request → meaningful tool use → review packet through the organizer-required messaging connection, implemented during the event.
+Explicitly outside the first implementation
+No radio transmission, aircraft/truck control, automatic clearance issuance, real cockpit/FIS-B/CPDLC delivery, complete airport OCR, newly trained detector, operational separation authority, autonomous intervention, or claim that a historical accident would have been prevented.
+
+
+Do not add a vision model merely to draw moving objects. Simulated observations make a transparent software experiment possible without claiming camera tracking or ADS-B integration. A future real observation adapter is an interface, not a completed integration.
+
+
+No silent scope downgrade: if prediction is not working, label that feature unfinished. Ask Franco before re-scoping to a debrief-only product; do not rename a communication ledger a trajectory predictor.
+6. Three distinct outputs
+Output
+	Minimum evidence
+	Allowed conclusion
+	Route/intent relationship
+	Captured, interpretable instructions plus map references.
+	Routes or authorizations concern the same relevant area; timing may be unknown.
+	Predicted space-time overlap
+	Usable motion observations, actor identity association, geometry/footprints, time basis, route hypotheses, and a declared motion model.
+	Under these assumptions, possible future occupancy overlaps.
+	Observed instruction discrepancy
+	Independent observation plus a source-supported instruction.
+	The received observation differs from the recorded instruction under a defined comparison.
+	
+
+These are not interchangeable. A matching readback is not physical compliance. A completion report is a report, not independent observation. Missing captured completion does not establish that the truck is still on the runway. An absence of detected overlap does not certify safety.
+
+
+Maintain separate records for instruction/authorization, acknowledgment, reported state, independently observed state, forecast state, and reviewer judgment. Use “recorded authorization,” not wording that implies GMAPS grants authority.
+7. Predictive design — the part we must not lose
+7.1 Separate truth, observations, and predictions
+Simulation truth may drive evaluation but is never readable by the inference/predictor path. Observation packets are emitted with sample time, receipt time, noise/uncertainty metadata, source identity, and an explicit simulation label. The runtime sees only packets received by the current clock. Predictions are computed from that available history and the declared model.
+
+
+A map animation rendered from the complete fixture trajectory is not a prediction. Likewise, an estimated truck position generated from the instruction alone is not a sensor observation. [P1]
+7.2 The numerical task
+For each actor i, candidate route, and relevant zone Z, calculate a projected occupancy interval or set of intervals I(i,Z) over a bounded forecast horizon. A candidate exists when actor footprints/projected corridors share the relevant spatial or protected region AND the projected intervals overlap. An interval intersection is a candidate, not an accident probability or legal-separation verdict.
+
+
+For two closed illustrative intervals [a,b] and [c,d], intersection exists when max(a,c) <= min(b,d). Actual endpoint conventions, sampling resolution, buffers, footprints and geometry must be explicit. Avoid a naive plot-line crossing that misses time, height, vehicle length, or swept volume.
+
+
+The first scene can use an aircraft's ground-roll segment approaching a crossing and a truck approaching from a taxiway. That preserves the predictive feature while avoiding an unreviewed landing-dynamics model. If an airborne approach is included, vertical state, runway intersection geometry, and a declared landing/rollout hypothesis are additional prerequisites. Do not flatten altitude out of a collision claim. These are scope proposals, not operational engineering standards.
+
+
+Prefer a simple, auditable constant-speed/limited-acceleration model on reviewed route segments to a model that invents trajectories. If motion slows, stops, or deviates, recompute from new observations. Use swept footprints or an analytically checked zone-crossing calculation to avoid missing an encounter between discrete display frames.
+7.3 Uncertainty and amendments
+Represent measurement uncertainty, clock uncertainty, motion bounds and alternate route hypotheses separately. Do not label chosen ranges “95% confidence” without calibration. An unknown initial position can leave route relevance assessable but timed prediction unavailable.
+
+
+A stop/cancel instruction changes communicated intent. It does not instantly stop an object. Retain a branch consistent with current observed movement until new observations support stopping. Conversely, do not force every moving target to follow its authorized route: deviations are part of the problem.
+
+
+With stale tracking, widen bounds only within a declared valid model, then mark timed prediction unavailable. Do not continue extrapolation indefinitely with a fresh-looking marker. If identity association is uncertain, preserve candidate mappings rather than attach a target to the last callsign heard.
+7.4 Example used only to explain the UI
+Suppose a simulated model projects aircraft occupancy of one shared zone at +18 to +24 seconds and truck occupancy at +15 to +22 seconds. The ranges overlap from +18 to +22. Those numbers are invented illustrations, not LGA timing, a required prediction horizon, measured latency, or a calibrated error interval.
+
+
+Suggested cue: Projected crossing-zone overlap under current assumptions. Inspect instruction, motion sources and timing.
+8. Proposed software architecture
+permitted audio A/B -> independent VAD/buffering -> local ASR
+
+
+                                            -> typed intent candidates
+
+
+                                            -> schema/source/identity validation
+
+
+                                            -> recorded-event ledger
+
+
+                                                         |
+
+
+reviewed map + rule subset -------------------------------+
+
+
+                                                         |
+
+
+simulated motion observations -> time/identity validation +
+
+
+                                                         v
+
+
+                      deterministic route + occupancy projection
+
+
+                                                         v
+
+
+                        source-linked controller review display
+
+
+                                                         v
+
+
+                      local agent builds a review/evaluation packet
+
+
+                                                         v
+
+
+                  approved Slack / Discord / Telegram destination
+
+
+Responsibilities: the language model interprets language and orchestrates bounded tools. Code owns arithmetic, geometry, schema validation, graph connectivity, event order, declared rules, and versioning. The model cannot change safety thresholds, instructions, sources, map topology, or observation values to make its answer fit.
+
+
+Proposed tools: transcribe_capture, get_source_interval, parse_intent, resolve_graph_references, check_readback, get_recent_observations, project_occupancy, compare_candidates, assemble_review_packet. Implement only the minimum actual tools needed. A scripted “thinking” animation or a human advancing every substep is not an autonomous agent.
+
+
+NeMo ASR and NemoClaw are different components. The former can run a speech model; the latter participates in the required agent/sandbox/inference setup. Installing one does not install or satisfy the other.
+
+
+Use a small durable store such as SQLite plus immutable files if that is the easiest available choice. This is a proposal, not a mandate to replace working infrastructure. Vector retrieval is unnecessary for a tiny reviewed rule/graph pack; exact IDs and lexical lookup are a good first baseline.
+Minimum data contracts
+Object
+	Required fields / distinctions
+	Source event
+	event_id, run, feed, source hash/path, sample rate, original interval, event-time basis, receipt time, integrity flags.
+	Interpretation
+	Derivation (fixture, ASR, model, reviewer), version, exact source spans, speaker role, addressee candidates, action, runway suffix, route/hold/condition/amendment.
+	Map/rule pack
+	Version/hash, fictional or authoritative source, effective dates, nodes/edges/zone geometry, applicability, prerequisites and unimplemented cases.
+	Observation
+	Independent source/track ID, explicit actor association status, coordinates/reference frame, velocity/heading/height where supplied, footprint, event/receipt time, age/uncertainty.
+	Prediction
+	Model/version, as-of time, observation IDs, intent versions, hypotheses, horizon, occupancy intervals/corridors, assumptions and expiry.
+	Review event
+	Append-only action, source/prediction version, reason, run, timestamp; withdrawal preserves original.
+	
+
+No future transcript or motion packet may influence an earlier prediction. Duplicate capture of one utterance should retain two source references but only one interpreted instruction. Replay source playback must not change the main current-state clock.
+9. Models: plan, not a runtime success claim
+Default first choice is the smallest already working stack, not the largest download inventory.
+
+
+Proposed baseline: existing Whisper large-v3-turbo for ASR; existing Nemotron-3 Nano NVFP4 for local extraction/orchestration if its serving/tool path passes a smoke test; numerical prediction in code; original audio for source replay. Silero is a small optional segmentation component. If continuous VAD setup is not ready, transparently start with pre-segmented simulated utterances rather than pretending a segmentation model ran.
+
+
+Parakeet TDT 0.6B v2 is a useful challenger, not the automatic primary merely because it is NVIDIA's. Qwen3-4B-Instruct-2507 is a useful parser fallback to bring if time permits. The ATC-tuned Whisper candidate needs a clean held-out comparison and has a deprecation warning. Details and public sources are in GMAPS_MODEL_AND_RUNTIME_PLAN.md.
+
+
+Do not keep every downloaded model resident. Speech generation, healthcare models, a large coding model, an embedding model, and two large vision models are not required for this first runtime. Keep them on storage; do not delete them. A prerecorded synthetic source does not require a TTS server during the demo.
+
+
+All existing directories are user-reported, not inspected. Folder names do not prove repository identity, revision, weight format, complete shards, tokenizer availability, correct kernels, licensing, or target-hardware execution.
+10. The current inventory — preserved without double-counting
+Base path: D:\GB10_ARSENAL\models. Size units below reproduce Franco's “GB”; the measurement method and decimal/binary convention were not provided. [U2]
+
+
+Relative folder
+	Reported size
+	Proposed role
+	reasoning\nemotron-3-nano-30b-a3b-nvfp4
+	18.03 GB
+	First local agent/extraction candidate if serving is ready.
+	reasoning\qwen3.5-35b-a3b-fp8
+	34.92 GB
+	Alternate model; do not add to the critical path before a compatible runtime test.
+	coding\qwen3-coder-30b-a3b-instruct-fp8
+	32.52 GB
+	Development aid, not required runtime.
+	speech\whisper-large-v3-turbo
+	1.51 GB
+	Existing ASR baseline candidate. Format must be inspected.
+	speech\kokoro-82m
+	0.34 GB
+	Optional offline preparation of synthetic audio; not required live.
+	speech\csm-1b
+	18.24 GB
+	Park. Actual directory contents/duplicate artifacts uninspected.
+	retrieval\nemotron-3-embed-1b-nvfp4
+	0.97 GB
+	Optional later retrieval; exact/lexical lookup first.
+	vision\qwen3-vl-30b-a3b-instruct-fp8
+	30.05 GB
+	Optional chart-assistance experiment; not a motion sensor.
+	vision\cosmos-reason2-2b
+	4.55 GB
+	Park for this prototype; no validated trajectory role.
+	healthcare\medgemma-4b-it
+	8.05 GB
+	Outside this project.
+	
+
+Top-level reported category totals are reasoning 52.95, coding 32.52, speech 20.09, retrieval 0.97, vision 34.61, healthcare 8.05 GB: 149.19 GB combined. The listed leaf totals sum to 149.18 GB; the 0.01 difference is consistent with rounding, not a finding of corruption. Nested .cache, .cache\huggingface, and .cache\huggingface\download entries each repeat 3.47 GB inside the coding folder; they must not be added again.
+
+
+Disk storage is not live RAM. Unified memory must also serve the OS, KV cache, activations, workspaces, audio, browser, and sandbox/services. Do not plan a resident stack by adding only downloaded file sizes. [T10]
+
+
+The companion inventory auditor is a read-only helper to identify obvious missing files; it does not test model semantics, GPU loading, or upstream authenticity.
+11. Event requirements and preparation boundary
+Latest direct organizer email read: “1DAY LEFT! Boston Dell x NVIDIA Hackathon OCT 3RD - Everything you need to know,” sent October 2, 2026. It reiterates Hult International Business School, 1 Education St, Cambridge, MA 02141; doors/build at 09:00; freeze/submission at 18:00; judging through approximately 21:00; top eight live pitches; teams of 2–4, one GB10 per team. [O1]
+
+
+Required: NemoClaw + OpenClaw + OpenShell; inference and demo on the event GB10; no cloud LLM calls in the agent runtime. No pre-built agents. Plans, scaffolds, libraries and model/dependency files may be prepared. The live public page additionally requires a real Slack, Discord or Telegram channel and autonomous tool use. [O1, O2]
+
+
+Conflict retained: the public page still says briefing 09:30 and build 10:30–18:00, and describes teams of 1–4. Arrive for 09:00; provisionally follow the latest direct email, but ask organizers at check-in. Design the core work to fit 7.5 hours. Do not invent a definitive reconciliation. Earlier correspondence specified a video of at most three minutes, repository, write-up and hardware questions; verify the submission dashboard before recording. [O3]
+
+
+Allowed preparation does not mean the finished agent may be built beforehand. Tonight: docs, local model/runtime smoke checks, dependencies, reviewed assets, data contracts and test specifications. Tomorrow: assemble the competition agent and record the development history. Independent underlying code or models do not authorize resubmitting Anchor or RescueBase.
+
+
+External development assistants are not automatically a permitted runtime component. Keep Claude/ChatGPT/Lovable for planning/development subject to organizer rules. They are not the GMAPS inference backend. A service using an “OpenAI-compatible” API is just a protocol; verify where it actually runs.
+12. Runtime and data security
+Use the exact host architecture and GPU runtime actually present. Linux ARM64 alone does not establish CUDA support for the GB10. A Jetson/L4T package is not automatically a DGX-Spark/GB10 package. Prefer an exact image/version with a successful test and retain its digest. Do not hot-upgrade a working system to an untested latest stack on event morning. [T6, T8, T10]
+
+
+OpenShell's inference.local is a routing endpoint, not proof of local execution. Inspect the configured upstream and server logs. Permit the required messaging connection, but disable cloud inference fallback and verify all model requests terminate on the local server. NeMo ASR may be a separate local service; verify that route too. [T9]
+
+
+Incoming transcripts, files and radio instructions are data, not commands to the software agent. Allow only bounded analysis tools and an explicitly chosen demo channel. The model may not execute arbitrary shell instructions, change network policy, edit the rule pack, transmit radio instructions, contact arbitrary recipients, or copy private correspondence into a report.
+
+
+Do not put tokens, private preprints, private email threads, raw personal conversations, or real incident data without rights into a public repo or demo. The internal team packet contains curated source references, not the full private research archive.
+
+
+Serve the UI locally on the GB10 or a clearly documented local connection. Do not assume the hosted Lovable page can securely reach localhost on another machine; mixed content, network policy, and CORS must be tested. Do not publicly expose inference/tool endpoints merely to make the demo work. A locally bundled UI avoids external asset-fetch dependencies.
+13. Current implementation truth
+Item
+	Established state at this handoff
+	Chosen name and project
+	GMAPS selected by Franco.
+	Prediction requirement
+	Explicitly restored by Franco; must remain central.
+	CrossHear site
+	User-shared URL: https://pixel-perfect-render-10735.lovable.app/ . Prior public inspection failed in this environment; do not claim tests passed.
+	Lovable account
+	CrossHear was built manually in a new account; the connected original workspace did not expose it in the prior check. No new source access verified here.
+	DeadAir
+	Prior source audit found useful synthetic audio/replay scaffolding. The newer replay's source note said not published at that audit; current release identity not rechecked.
+	CrossHear starter assets
+	Nine synthetic WAVs and three text/intent fixtures are in the earlier supplied asset pack. This handoff preserves the audio as optional preparation material; no model accuracy is implied.
+	GMAPS integrated code
+	Not demonstrated in the available evidence. No current canonical repository/commit is established.
+	Predictor/motion integration
+	Proposed. No completed trajectory benchmark, sensor connection, or real-time test established.
+	Weights and environments
+	Existing paths reported by Franco. No local disk, GPU, imports, launch, tool-call behavior, or offline inference verified by this assistant.
+	External Claude/Rachel transfer
+	Files prepared. Not loaded into another Claude conversation, not sent to Rachel, not pushed to a repo.
+	Expert-reviewed test labels
+	Not yet established for the final combined scenario.
+	Prior score
+	CrossHear 75/100 was a build-selection judgment before this packaging, not a working-submission or winning probability score.
+	
+
+The useful prototype concepts are merged, not competing tasks: DeadAir evidence handling; CrossHear multi-source association; task-shaped clearance cards; and the restored trajectory feature. Marine/drilling projects remain background only.
+14. A fair evaluation plan
+Primary technical test: input-to-evidence-to-prediction on a small unfamiliar fictional episode, not a rehearsed animation. Reviewer labels must be prepared independently and unavailable to the runtime. Prepared parameters for expected collision/absence may live only in the evaluation runner, never in the predictor input schema.
+
+
+Separate three questions:
+
+
+1. Recognition: did ASR preserve the critical words and usable source intervals? Run reference text and ASR text through identical downstream code.
+2. Prediction: compare a competent motion-only predictor, communication/route-only relevance, and combined intent+motion on the same episode set. Do not claim the combined system is better merely because only it receives useful information.
+3. Human benefit: compare actual baseline materials with those same materials plus GMAPS. Measure checking effort and correct conclusions, not just subjective confidence. This study is not yet run.
+
+
+Suggested metrics (all currently UNMEASURED): critical field/callsign-association errors; abstention and answer coverage; timestamp/source-link error; missed and false candidate events per defined exposure; repeated cues grouped per event; first eligible and first persistent cue time; forecast interval calibration/error against simulator truth; unsupported state transitions; stale-input behavior; p50/p95 input-end-to-checkable-result latency; queue growth and dropped inputs; reviewer time including correction; memory and energy if actually instrumented.
+
+
+Earlier-warning claims require a preregistered alert rule, same-input baseline, and actual first supporting input time. Compare similar nuisance/recall operating points and retain misses. Subtracting edited video caption times is not a lead-time measurement. Model benchmark WER is not our workflow's failure probability.
+
+
+ATC adaptation comparison: different model architectures/sizes do not isolate the effect of fine-tuning. A controlled general-versus-tuned claim needs the same base model, fresh held-out material, identical preprocessing/decoding conditions where applicable, and documented training overlap. Otherwise label it a candidate-model comparison.
+15. Acceptance tests — specifications, not passed results
+ID
+	Test
+	Required behavior
+	G01
+	One unfamiliar clear instruction
+	Correct typed fields and source interval; no answer-key access.
+	G02
+	Hold omitted from attributable reply
+	Specific captured-readback issue, not inferred physical noncompliance.
+	G03
+	Same geometric paths, overlapping future occupancy
+	Candidate appears from available inputs before the simulated encounter under declared bounds.
+	G04
+	Same paths, nonoverlapping occupancy
+	No candidate from this check; no broad “safe” status.
+	G05
+	Aircraft above truck with disjoint vertical envelopes
+	No physical-collision claim from flat-map intersection alone.
+	G06
+	Short encounter between display samples
+	Swept/analytic check does not miss it because no display frame overlaps.
+	G07
+	Stop/cancel instruction while observed motion continues
+	Intent updates; motion-consistent risk branch remains until supported otherwise.
+	G08
+	Stale or absent tracking
+	Bounds widen only within limits, then timed prediction becomes unavailable.
+	G09
+	Similar/partial callsigns or unknown group members
+	Keep association unresolved; do not bind to the most recent actor.
+	G10
+	Same utterance captured on two feeds
+	One interpreted event, both capture references retained.
+	G11
+	Separate actors emit overlapping speech
+	Do not merge them into one complete imagined clearance.
+	G12
+	Long pause inside an utterance / clipped first word
+	VAD does not silently erase evidence; segmentation uncertainty is recorded.
+	G13
+	Future amendment or collision label exists in fixture
+	Unavailable to current inference; no semantic leakage.
+	G14
+	Capture lost then restored
+	Permanent gap remains; unseen words are not backfilled.
+	G15
+	Different runway suffix or crossing point
+	No same-object match from partial names alone.
+	G16
+	Multiple possible graph routes / unknown origin
+	No unique route invented.
+	G17
+	Request versus authorization versus readback
+	Distinct event types with role/source support.
+	G18
+	Reported completion without observation
+	Reported status only, not an independently clear runway.
+	G19
+	Map, clock, rule or interpretation changed
+	Dependent predictions/reviews invalidated and recomputed.
+	G20
+	Reset, reload, withdrawal, export
+	Run isolation, append-only review history, original sources intact.
+	G21
+	Prompt-injection text inside a transcript/document
+	No policy change, arbitrary tool, network destination, or secret exposure.
+	G22
+	Full inference egress blocked; approved messaging allowed
+	Actual local inference continues; no cloud fallback. Disconnected messaging is marked undelivered.
+	G23
+	Resource pressure / service timeout
+	Visible degraded state, not fake model output or silent dropped message.
+	G24
+	Ordinary and benign scenarios
+	Quiet relevant display; no universal rule that every landing/crossing reference is a conflict.
+	
+
+Set software invariants as pass/fail now. Operational error tolerances and real-world warning thresholds require qualified validation. Any numerical demo thresholds must be labeled engineering choices, not accepted aviation standards.
+16. Work split and Saturday plan
+Historical agreed split: Franco—build/UI/runtime and outreach; Rachel—visuals/video, research/data support and milestones. New GMAPS assignments below are proposed and should be confirmed together. [I5]
+
+
+Owner proposed
+	First deliverable
+	Boundary
+	Franco
+	Working local ASR/agent endpoint, typed ledger and deterministic occupancy checker.
+	Do not burn the build window on optional large-model downloads.
+	Rachel
+	One fictional scene specification, evidence/claim labels, a storyboard, test recording and final video.
+	Do not infer real accident timing or treat synthetic scenario numbers as observed facts.
+	Together
+	Freeze task, minimum graph, scenario roles, result wording and test acceptance.
+	One shared repo/branch ownership and versioned result manifest.
+	Qualified reviewer, if available
+	Independently check scenario interpretation and what must remain unknown.
+	An invitation or interview is not a booked evaluation.
+	Before the event, within allowed preparation
+Read this file; confirm roles/roster; inspect the source exported from the new Lovable account; archive old versions; collect model/runtime files; freeze a small fictional map and sample/reference packet; prepare test specifications and dependency locks. Verify generic model/environment functionality on the owned GB10 if available; do not assemble a pre-built competition agent. Bring USB/external storage, laptop, power/extension and required credentials stored privately. [O1]
+Build plan — compressible to 7.5 hours
+Clock (provisional)
+	Deliverable / decision
+	09:00–10:30
+	Check in and confirm permitted build start. Copy/load artifacts and verify generic runtime readiness as allowed. Confirm architecture, models and one real messaging channel.
+	First authorized 60 minutes
+	ASR/source linkage on one new clip; one local structured tool call. Freeze working candidates.
+	Next 90 minutes
+	Event/identity ledger, map constraints and simulated observation adapter; predictor sees no future truth.
+	By approximately 13:30
+	Combined positive/negative predictive path through the real tool workflow; source drawer works.
+	13:30–14:30
+	Cancellation, ambiguity, capture gaps and stale tracking; fix blockers rather than add actors.
+	14:30–15:30
+	Frozen unfamiliar evaluation, same-input baselines, actual latency/resource records.
+	15:30–16:30
+	Feature freeze; synchronize UI and backend version; rehearse full demonstration and fallback.
+	16:30–17:30
+	Record <=3-minute submission if dashboard confirms, prepare repo/readme/results/hardware answers.
+	17:30–18:00
+	Submit with margin; verify uploaded artifacts and links; no risky last-minute changes.
+	
+
+Time boxes are proposed planning choices, not promises. If infrastructure starts at 10:30, cut decorative work and optional comparative models, not the source-integrity checks or predictive test.
+Scope-failure decisions
+If ASR fails, keep the replay/transcript demonstration explicitly labeled and report the ASR failure; do not call it a working speech agent. If the predictor fails, label it unfinished and ask Franco whether to narrow; do not silently remove the core feature. If mandatory stack/channel fails, consult mentors and report the exact missing component; there is no valid “fake trace” replacement. An alternate product such as EightyPlus is a last-resort user decision, not an assistant's automatic pivot.
+17. Demo and pitch
+Suggested 2.5-minute arc, subject to the actual runtime:
+
+
+* 0:00–0:20: “Controllers need to connect instructions with what moving aircraft and vehicles may do next. GMAPS makes that connection inspectable.” Label the exercise fictional.
+* 0:20–0:55: Submit a new permitted clip/episode via the real integration; show actual transcription and source-linked intent.
+* 0:55–1:25: Separate simulated observations drive future occupancy windows at a shared zone. Show the candidate before the simulated encounter; open its assumptions.
+* 1:25–1:50: Same paths, different timing: no overlap from that check. Alternatively, a stop command arrives while motion persists: no premature dismissal.
+* 1:50–2:10: Lose a capture or tracking input; show explicit uncertainty/withdrawn precision rather than invented continuity.
+* 2:10–2:30: Show only measured results and the real local runtime. State the user, baseline and next field-validation question.
+
+
+Suggested closing: “Understand the instruction. See the evidence. Look ahead.”
+
+
+No statistics are required to make this compelling. Do not say GMAPS already reduces workload, always warns earlier, prevents runway collisions, or is the first intent-aware system.
+Historical context, if used
+LaGuardia's March 22, 2026 landing collision with an airport rescue/firefighting vehicle is separately documented by NTSB; the case remains preliminary/ongoing on the inspected page. It motivates the topic, not a prevention claim. [R1]
+
+
+Joe's pasted VASAviation captions are imperfect media-time text, not authenticated raw ATC audio or an original display recording. The original chart and detailed media synchronization were not verified in the prior research. Do not claim an eight-second rescue window from two caption labels. A current chart is not automatically the historical layout. [I4]
+
+
+ASDE-X already fuses surveillance and supplies potential-conflict alerts, and route/clearance-based conflict detection has prior research. Therefore the competitive hypothesis is incremental, source-linked speech intent added to an explicit look-ahead workflow—not inventing prediction itself. [R2, R3]
+18. Honest differentiation and business case
+Proposed first adoption route: an ATC training organization or an authorized surface-operations/safety team evaluating a controlled workflow. A real airport deployment would require integration, human-factors evaluation, security, operational assurance and applicable approvals far beyond this hackathon. We have no signed buyer or budget commitment.
+
+
+The product must show useful incremental work beyond raw replay/transcript search and a competent deterministic predictor. Reduced repeated data entry, easier instruction/amendment retrieval, or a useful intent-conditioned prediction are hypotheses to measure. Meeting enthusiasm, official-looking graphics and a local GPU are not a business case.
+19. Unresolved items — do not fill these in by guessing
+* Current CrossHear/GMAPS source export, branch, commit, asset presence and deploy URL ownership.
+* Actual disk format and completeness of each reported model directory.
+* Working ARM64/Blackwell ASR, LLM, tool parser and full event stack combination.
+* Final model winner, memory/latency results and true offline startup behavior.
+* Reviewed fictional map, footprints, motion model, horizon and independent labels.
+* Real observation/identity source if later expanding beyond simulated data.
+* Exact permitted preparation boundary for any existing code reused from prior events.
+* Final team roster, Rachel's acceptance of GMAPS assignments, and submission dashboard details.
+* Expert availability and consent for named acknowledgments or quotes.
+* Whether any local/remote tool schema or network setting invalidates the no-cloud-runtime claim.
+20. Claude / other-assistant handoff contract
+This packet is prepared for manual loading. It has not been injected into Rachel's model or another Claude conversation. No Claude connector was returned by the provider discovery available in this session.
+
+
+Upload GMAPS_MASTER_SOURCE_OF_TRUTH.md and GMAPS_MODEL_AND_RUNTIME_PLAN.md first, then use CLAUDE_BOOTSTRAP_PROMPT.md. For Claude Code, the supplied short CLAUDE.md points to the master file; it does not guarantee an entire long file is automatically in context. Explicitly read the relevant sections and report missing paths. [T11]
+
+
+The receiving assistant should return: (a) the chosen product and non-negotiable prediction scope; (b) what is actually built versus proposed; (c) input/model/runtime blockers; (d) the first useful test; and (e) a proposed task split. It must not open a new product branch, promote synthetic numbers to results, or quietly restore the older debrief-only scope.
+
+
+Before editing, inspect the actual repository. Do not overwrite newer code with an older handoff, connect an external service, spend credits, deploy, or contact someone merely because the document describes that action. Follow the receiving user's authorization and the event's rules.
+21. Source register
+Private/internal sources — summarized, not fully redistributed:
+
+
+* U1: Franco's current chat: selects GMAPS name and requests Rachel/Claude master handoff; earlier correction explicitly restores trajectory prediction.
+* U2: Franco's supplied D:\GB10_ARSENAL\models directory/size listing. No disk access or model verification provided.
+* I1: AI developer meeting_otter_ai.zip / Joe transcript, October 2. Relevant times: 24:30; 1:09:59–1:14:15; 1:17:56–1:21:54; 1:46:24–1:46:56.
+* I2: Andrew Schneider full October 2 transcript, especially 24:32–27:50 and 44:06–48:29. Automatic text, not audio-verified.
+* I3: CrossHear_LookAhead_Correction_2026-10-02.md. Takes precedence over earlier narrowing; excerpt included in packet's curated provenance note.
+* I4: notes from joe.txt and CrossHear_Joe_Resources_Research_and_Build_Brief.md. Prior research access limits preserved.
+* I5: Boston_Current_Brief_2026-09-29.md, section 9; summarizes September 27 Franco/Rachel meeting and agreed broad role split.
+* I6: Prior conversation, call syntheses and model-selection boards. Historical snapshots, not fresh measures. Liu's private preprint excluded.
+* P1: Analyst-proposed implementation, tests, workload and pitch in this file. Not an expert-certified design.
+
+
+Organizer:
+
+
+* O1: Latest organizer email, Oct 2, subject “1DAY LEFT! Boston Dell x NVIDIA Hackathon OCT 3RD - Everything you need to know”; Gmail message 1a0fc74b442362c0. Read directly during this handoff. Internal source; not copied into public app.
+* O2: https://luma.com/rvinoam5 — opened Oct 2; public stack/channel requirements; schedule/team-size conflicts retained.
+* O3: Earlier organizer briefing, subject “Dell x NVIDIA Hackathon at Boston is 5 days away. Important info before the event!”, message 1a0eacce28f69e44; submission items retained from prior reviewed record; verify dashboard.
+
+
+Primary public documentation, checked October 2, 2026 unless stated otherwise:
+
+
+* R1: NTSB LGA investigation overview: https://www.ntsb.gov/investigations/Pages/DCA26MA161.aspx
+* R2: FAA ASDE-X: https://www.faa.gov/air_traffic/technology/asde-x
+* R3: Weiß et al. (2013), Route-Based Detection of Conflicting ATC Clearances on Airports: https://arxiv.org/abs/1304.6494
+* R4: FAA radio/readback section: https://www.faa.gov/air_traffic/publications/atpubs/atc_html/chap2_section_4.html
+* R5: FAA taxi/ground movement: https://www.faa.gov/air_traffic/publications/atpubs/atc_html/chap3_section_7.html — reviewed in preceding resource study; version/applicability must be frozen for exercise.
+* T1–T8: Model cards and runtime documentation enumerated in GMAPS_MODEL_AND_RUNTIME_PLAN.md.
+* T9: NVIDIA OpenShell inference routing: https://docs.nvidia.com/openshell/v0.0.116/sandboxes/inference-routing ; NemoClaw local options: https://docs.nvidia.com/nemoclaw/latest/user-guide/openclaw/inference/local-inference/choose-local-inference-server
+* T10: NVIDIA DGX Spark system/porting references: https://docs.nvidia.com/dgx/dgx-spark/system-overview.html ; https://docs.nvidia.com/dgx/dgx-spark-porting-guide/porting/software-requirements.html . Similar GB10 platform guidance is not a check of the actual event unit.
+* T11: Claude Code project instructions: https://code.claude.com/docs/en/memory
+22. Change log
+Version/date
+	Change
+	Basis
+	1.0 / Oct 2
+	Canonical GMAPS name; reintroduces mandatory intent-aware prediction; separates source/observation/simulation truth; consolidates Rachel handoff, model plan and organizer update.
+	User selection and correction; supplied interviews; latest organizer email; primary technical docs.
+	Next update
+	Record exact commit, data/model versions, test result and changed claim.
+	Must be supported; do not write “verified” from a plan.
+	
+
+End of master. If a downstream assistant remembers only one thing: build GMAPS's source-linked intent-plus-motion look-ahead prototype, not an imaginary aircraft tracker and not a silently narrowed transcript viewer.

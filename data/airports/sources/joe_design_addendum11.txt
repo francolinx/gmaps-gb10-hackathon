@@ -1,0 +1,167 @@
+Source: https://docs.google.com/document/d/1ojw7iaw_9RiXLgznxKMGdUykYk9zTjEuE1yO_L7LtmU/edit
+Retrieved: 2026-10-03
+﻿Boston GB10 — Addendum 11 (Oct 2, 15:30 ET): the Eichelberger meeting — the build is decided; here is what it scores, what it is, and the Saturday plan
+Prepared by Claude for Franco Plathottathil. Companion to Addenda 1–10. Sources: the 2 h 25 min Otter transcript of today's noon meeting with Joe Eichelberger (read in full), his 14:04 email carrying the prompt he gave his own model and its reply, the CrossHear page he was shown (pixel-perfect-render-10735.lovable.app, fetched), FAA JO 7110.65BB §3-1-3 (fetched today), and the NTSB record already in this folder.
+Bottom line. Two practitioners who have never spoken to each other — an aviation speech-AI researcher this morning and an air-traffic CTI program manager at noon — arrived at the same tool from opposite ends: a system that listens to tower and ground communications, turns each clearance into authorized state, and raises its hand when two authorizations need the same runway at the same time. Joe went further and gave it an architecture in writing. Scored under the same rubric as every idea since Sept 30, the merged build comes out at 79.4 — two points under TowerDebrief (81.4), above everything else, and it is the same engine as TowerDebrief with a runway rule, an airport graph and an incursion story on top. So "this is it" is consistent with the scoreboard, on two conditions: the claims stay at replay, training and advisory (never "it would have prevented LaGuardia"), and the AI is a parser, not a judge. The rest of this addendum is what changes in Saturday's plan.
+1. Who he is (verified from his email signature and the referral thread)
+Joe Eichelberger, Ed.D. — Associate Professor, Aviation; AT-CTI and UAS-CTI Program Manager, The Community College of Baltimore County. Referred by Prof. Roscoe Law. Runs an ATC simulator lab and is currently reworking "on the order of 70" simulator problems, each about an hour long, using agents to play-test them. Based in Baltimore (Martin State is his example airport). He offered, unprompted, to be a reference on the presentation ("my bosses all love that kind of thing"), sent his cell number by email at 14:09, and said "as you're working on future projects, definitely keep me in mind." He is the first person in this whole process who both trains controllers and builds the simulator they train on — which makes him the first realistic test bed, not only a validator.
+2. What he confirmed
+Claim in our record
+	What he said
+	Effect
+ 
+	Cognitive load is the value, not emergency takeover (Gyssler, Angela, Schneider's "ten things")
+	"Something that offloaded some of that work from a controller or from a pilot would be enormously helpful… instead of something that kicks in when everything goes wrong, having something instead that's a secondary system that's tracking all along."
+	DeadAir's "continuity" idea survives only in this form: always-on, and the degraded mode of a bigger engine.
+	The incursion gap is real and the FAA pays for it (Addendum 10, FAA's $16.5M vehicle-transponder program)
+	"That type of thing happens enough that the FAA actually has safety management systems built entirely around preventing runway incursions… there's definitely a gap there."
+	Usefulness evidence from someone inside the system.
+	Existing surface tools are position-based, not context-aware (Addendum 10 §4, row 1a)
+	"There's a safety management system now, but it's not context aware… it can see this airplane's here, the fire truck's there, but it doesn't hear the communications… That's the difference that your system would offer."
+	The one-sentence competitive position for the pitch.
+	Track state, not position (Clearance Reviewer's lanes)
+	"It's not tracking position; it's tracking authorized state… and looking for places where those states overlap." His model's note splits it into authorized, acknowledged, reported, inferred, observed.
+	Those are Clearance Reviewer's six lanes with better names. Adopt his names.
+	Standard phraseology is the grammar (Veselý's contextual biasing; ERAU's customisation)
+	"There's the 7110.65… all of the prescribed words and phrases that we're allowed to use… you can tell the AI this is what you need to hear, and if you don't hear this, ignore everything but this." Taxi format: runway, "taxi via", route, "hold short of".
+	Parser is grammar-first; the model fills gaps and reports confidence.
+	A ground-ops watchdog tolerates latency that a separation tool cannot (Schneider's real-time caution)
+	"The latency there wouldn't be as much of an issue… aircraft on the ground, you've got a little bit more leeway." But: "that couple of seconds might be too much" for anything safety-critical in flight.
+	Honest latency line for the judges: seconds are acceptable for an advisory on the ground; the demo should show the measured number.
+	Reconstruct LaGuardia as the hook (Addendum 10 §6)
+	"You could totally recreate this and then show how your system would have handled it differently… maybe 30 seconds" for Logan.
+	As-is / to-be timeline is the demo spine; Logan is one slide.
+	Hallucination guard = deterministic core plus a second model (Addendum 9 A1)
+	"Having one cross check the other one… is probably not a terrible idea."
+	Keep the deterministic engine; cross-check is optional, not the story.
+	3. What he corrected
+Our premise
+	Correction
+	Verified?
+ 
+	DeadAir as a fallback controllers would use when the displays go
+	"I'm not sure that something like this would have the fidelity necessary for controllers and pilots to be comfortable falling back on it. But as a general visualizer, I can definitely see value in it." Radar data relayed off-site is barred from separation use because of latency "even if it's on the order of milliseconds." Position inferred from voice has "pretty big error bars."
+	Consistent with FAA practice on surveillance latency. DeadAir's fallback claim is now corrected by two practitioners in one day; retire it.
+	"Channel A / Channel B"
+	"It's not really a channel. It's a frequency. A channel would be a block of frequencies… somebody who wants to be pedantic could catch you up on that."
+	Terminology. Fix every page.
+	CrossHear's premise: a pilot on one frequency misses an instruction given on another
+	"When the controller broadcasts, they broadcast on all of them simultaneously… it's not like the pilot is going to miss something on a different frequency." This is true of one position whose several frequencies are cross-coupled. Ground control and local control are different positions on different frequencies, and JO 7110.65BB §3-1-3 (fetched today) says ground "must obtain approval from local control before authorizing an aircraft or a vehicle to cross or use any portion of an active runway" and "must advise the local controller when the coordinated runway operation is complete." So Schneider's gap (a landing pilot on tower does not hear a ground-issued crossing) and Joe's correction (one controller's transmissions reach all of that controller's frequencies) are both right; they describe different things.
+	Primary rule text. The reconciled design: the box sits tower-side and listens to both positions; what it makes explicit is the §3-1-3 coordination itself — approval, crossing, completion — which happens inside one head when positions are combined, as they were at LaGuardia.
+	Joe's own LaGuardia recollection: the departing aircraft "rejected his takeoff because he had an odor" and the truck was responding to it
+	Public record: United 2384 declared an emergency after aborting takeoff twice; the truck was crossing runway 4 to reach it. The odour detail is unverified.
+	Partly. Use the NTSB preliminary's wording, not the call's.
+	"Safety management system" as the name for the tool
+	His own model's note: the FAA uses SMS for the organisation-wide framework; call the thing a "clearance-state safety monitor" or "surface safety assurance layer" and say it feeds an SMS.
+	FAA usage; correct.
+	4. The architecture he put in writing (his model's note, 14:04), and the verdict on each point
+1. AI translates language into structured state changes; a deterministic graph/state engine does the safety reasoning. Adopt. This was Addendum 9's complaint about every project (A1, A3); it is now a design, not a complaint.
+2. A clearance is a set of permissions and constraints, not a sentence. "Taxi via A, B, hold short runway 15" = authority over A → B → the hold boundary and nothing beyond; "cross runway 15 at B" adds a temporary runway authority; a takeoff clearance adds another kind. Adopt verbatim.
+3. Keep authorized, acknowledged, reported, inferred and observed state separate. "A voice-only system should never quietly turn 'cleared onto the runway' into 'physically on the runway.'" This is the single most important safety property and it is exactly the Clearance Reviewer's lane discipline. Adopt the names.
+4. Runway conflicts are overlapping reservations with a compatibility matrix and time windows, not a Boolean. Adopt; LUAW with a landing clearance is the worked example in the FAA rules.
+5. The expected sequence is a state machine with legal transitions, not a script. Adopt as an event-sourced state machine; the Petri-net remark is for the paper, not Saturday.
+6. The language model is a constrained parser with a fixed ontology and a confidence; it may never say "this is safe." Adopt; this is the line to put on the slide.
+7. Every warning is explainable: the two authorizations, their timestamps, the resource, the rule, the two source transmissions. Adopt; this is the packet the Clearance Reviewer already exports.
+8. "Semantic surveillance" and the three modes — full (surveillance + ADS-B + comms), degraded, continuity (comms only) — with the same engine running in all three. Adopt the framing; it is how DeadAir survives: as the continuity mode of the monitor, not as a product.
+9. Validation corpus: the FAA ASIAS runway-incursion database (searchable event narratives), used to write simulator scenarios and ask "at what point in the sequence did the system have enough information?" Adopt as the post-hackathon test, and as one sentence in the pitch.
+10. Pick one airport, model only its movement area, six rule families — runway-crossing, takeoff/crossing, LUAW/arrival, hold-short boundary, route incompatibility, unresolved or discrepant readback — then "start abusing it": blocked transmissions, similar callsigns, mid-route amendments, wrong-runway readbacks, vehicles without a clean identifier. Adopt; this is the Saturday scope and the Saturday test list.
+What it adds to the record: the five state kinds, the reservation model and the "parser, not judge" rule are the three things Addendum 9 said were missing from every project. They arrived from a controller-educator's side, in writing, the day before the build.
+5. Where Schneider and Eichelberger agree, and where they differ
+Question
+	Schneider (ERAU, speech AI, pilot)
+	Eichelberger (CCBC, CTI, ATC)
+	Record's position
+ 
+	Who sees it
+	Pilot, eventually; tower-side extraction
+	Controller-side MVP; FIS-B/UAT to aircraft is future and tower-fed
+	Controller-side. Pilot display is one slide, labelled future.
+	Real-time or post-event
+	Both; warned hard about false positives; post-event is where training lives
+	Real-time advisory on the ground is tolerable; latency of seconds is "something to take into account"
+	Replay and training now; advisory as the research question; no pilot-facing live claim.
+	Which frequencies
+	Ground vs tower is the structural gap
+	One controller's transmissions reach all its frequencies
+	Both positions, tower-side, with §3-1-3 coordination made visible (above).
+	What the AI does
+	Turns unstructured into structured; "readback is not compliance"
+	Constrained parser; deterministic engine; "tracking authorized state"
+	Identical in substance. Use both sentences.
+	The incident set
+	DCA (frequency bands), LaGuardia, "Narita" (Haneda)
+	LaGuardia, VASAviation reconstruction
+	LaGuardia + Logan (Addendum 10 corrections stand).
+	Data
+	ASR needs customisation; FAA Academy "Elta"
+	7110.65 phraseology; ASIAS incursion database; airport diagram as graph
+	All three named on the page with licences.
+	Credit
+	Individual advice, not ERAU
+	Reference on the presentation; "my bosses love that"
+	Both credited by name and institution, as individuals.
+	6. The merged idea, scored
+Same rubric as Addenda 6, 7 and 10: Technical 20, Usefulness 20, Local-first 15, Demo 15, Practitioner evidence 12, Data and license 10, Domain access and claim safety 8; contribution = weight × rating ÷ 5. Scored for what can be claimed Saturday evening.
+Idea
+	T
+	U
+	L
+	D
+	Ev
+	Data
+	Acc
+	Total
+	Why each number
+ 
+	Clearance-state runway monitor (working name CrossHear): tower-side box listens to ground and local; a constrained parser turns each transmission into an event (callsign, action, runway, route, hold point, readback, confidence); a deterministic engine keeps five state kinds per aircraft and vehicle over an airport graph; runways are reserved resources with a compatibility matrix; a warning names the two authorizations, the rule and the two source transmissions. Replay of LaGuardia and Logan; one taxi-route exercise; one clipped-readback exercise; a measured local-ASR slice.
+	16
+	16
+	9
+	12
+	12
+	8
+	6.4
+	79.4
+	T 4/5: the engine is well-specified and small; ASR on real tower audio remains the unproven step. U 4/5: life-or-death problem, FAA already spending on it, a CTI simulator lab as the first user; no buyer with a budget line yet. L 3/5: a replay and training tool would run fine in the cloud; local is required only for the advisory mode, so claim it for that mode and show the measured latency on the box. D 4/5: the strip turning red 62 s before the Logan go-around is one picture; the risk is that two airports, five states and a graph do not fit in 150 s. Ev 5/5: two independent practitioners proposed it, one in writing, and one offered a test bed. Data 4/5: diagram, 7110.65, NTSB tables, ASIAS are public; the gap is labelled tower audio with crossings, so the demo audio is re-voiced and says so. Acc 4/5: two named advisors and a simulator lab; the claim is safe only while it stays "replay, training, advisory."
+	For comparison: Addendum 10 row 1a (the same thing before Joe)
+	16
+	16
+	9
+	12
+	9.6
+	6
+	4.8
+	73.4
+	Six points came from evidence, data and access — the three criteria a second practitioner can move. Nothing moved on technical or demo, because nothing has been built since this morning.
+	For comparison: TowerDebrief (main board #1)
+	—
+	—
+	—
+	—
+	—
+	—
+	—
+	81.4
+	Still first by two points, and it is the same engine. The honest statement for Saturday: this is TowerDebrief's ledger pointed at the runway, with the incursion record as the story and Joe's state model as the spine.
+	Readiness and the strict rubric (Addenda 8–9), for the CrossHear page as it exists this afternoon: it is a scripted simulation with author-supplied interpretations and locally synthesised speech, and it says so in its own footer — G1 renders, G2 claim safety passes (its disclaimer is the best in the workspace: "without turning someone else's instruction into your clearance"), G3 stack named passes (NemoClaw + OpenClaw + OpenShell on a GB10, the first page to say it), G4 passes, G5 fails (nothing runs). Its premise ("the relevant instruction may be on another channel") and its "pilot preview" are the two things Joe's correction removes; "Channel A / B" becomes LaGuardia ground and local; "Cobalt 41 / 07L" can stay fictional while the airport graph is real.
+7. The Saturday plan, revised (build 09:00–18:00; code and video due 18:30; deck by 19:00; top-seven pitches 20:00, 150 s each)
+Tonight (user-owned, build-time tools allowed): generate the LaGuardia movement-area graph from the FAA diagram Joe sent (d-TPP cycle effective Oct 1 – Oct 29, 2026): runways, taxiway segments between intersections as edges, intersections and hold-short positions as nodes, ILS critical areas, named areas (terminal alleys, GA parking, maintenance). Write the four scenario scripts as event lists with timestamps: LaGuardia (from the NTSB preliminary and public reporting, labelled reconstruction; re-voiced, not the VASAviation audio), Logan DCA26LA242 (Table 1 verbatim), one fictional taxi-via-with-hold-short exercise (Joe's node walk: runway, taxi via, hold short, readback, holding short, cross, crossing complete), one clipped-readback exercise (Schneider's common case). Pre-download the recogniser and the small model.
+09:00–10:00 Box up: NemoClaw/OpenClaw/OpenShell roles as on the DeadAir page; recogniser loaded; the graph and scripts in. Nothing new is designed after 10:00.
+10:00–13:00 The deterministic core, in this order: event ontology (point 6 above) → five state kinds per entity → runway resources with reservation windows and a compatibility matrix (land, take off, LUAW, cross, hold short) → six rule families → explainable warning objects → the §3-1-3 coordination triple (approval, crossing, completion) as explicit state. Unit-test against Logan: the warning must fire at 11:33:43 and name DAL2351's landing clearance (11:32:35) and AAL3161's takeoff clearance.
+13:00–15:00 The parser: 7110.65 phraseology grammar first (taxi, crossing, hold-short, LUAW, landing and takeoff clearances, readbacks, cancellations); the local model only for residue, emitting the ontology with a confidence; anything below threshold lands in "unknown," never in "authorized." Then the ASR slice: the local recogniser on the ATCOSIM/ATCO2 sample, word error rate and the three worst lines on a panel, measured on the GB10.
+15:00–17:00 The screen: DeadAir's shell, Clearance Reviewer's lanes renamed to the five states, the runway strip across the top (one row per runway: who holds what, since when, reservations overlapping in red), the as-is / to-be timeline for LaGuardia (what the record shows happened; where the monitor's warning would have appeared in the sequence — phrased as "had enough information at," never "would have prevented"). Thirty seconds of Logan. The hard-stop freeze-frame as the continuity mode, with Schneider's title.
+17:00–18:30 Video, README with datasets and licences, the stack, the limits, and the credit lines. Submit.
+Pitch (150 s): the LaGuardia truck had no transponder and was never on a surveillance display — but it was on the radio (10 s). Existing surface tools see position; this one hears clearances and keeps authorized state (15 s). Five states, one rule: two authorizations cannot own one runway at the same time (20 s). Logan replay, strip turns red 62 seconds before the go-around (30 s). LaGuardia as-is / to-be sequence (30 s). Measured ASR number and latency on the box; parser, not judge; replay and training now, advisory is the research question (25 s). Credits and ask (20 s).
+8. Cautions that this meeting added
+* Never say "it would have prevented LaGuardia." The NTSB has not said who was working ground, which frequency carried the crossing, or why the stop calls did not land. Say: "at this point in the recorded sequence the monitor had two authorizations on runway 4."
+* Do not use the VASAviation video's audio in the build or the video; it is their edit of LiveATC audio. Use it to check the sequence, then re-voice.
+* "Frequency," not "channel." "Clearance-state monitor" or "surface safety assurance layer," not "safety management system."
+* FIS-B / UAT 978 to the cockpit is one labelled-future slide, not a claim; Joe said it himself: "this might be getting a little bit too complicated for your presentation."
+* Latency: Joe's "couple of seconds might be too much" is about flight; on the ground he gave leeway. Show the number rather than arguing it.
+* The three-model stack Franco described (recogniser plus three to five models under 30 B) is more than the design needs. One recogniser, one small parser model, one deterministic engine. A cross-check model only if it costs nothing.
+* Credit lines, both agreed: "Advisors: Dr. Andrew Schneider, Embry-Riddle Aeronautical University (Speech and Language AI Lab); Dr. Joe Eichelberger, The Community College of Baltimore County (AT-CTI & UAS-CTI Program Manager). Individual advice, not institutional endorsement. Referral: Prof. Roscoe Law."
+9. Open items this meeting created
+* Joe's simulator lab (about 70 hour-long problems) is the first place this could be run against known-correct state at every instant; ask after Saturday, with the packet.
+* ASIAS runway-incursion records as the scenario source for the "at what point did it know" study.
+* Whether to text Joe tonight: he offered; one message with the Logan strip screenshot is enough, and only if something is built.
+* Schneider's pilot-side lane and Joe's controller-side lane are both now in the record; any post-hackathon collaboration should state which side each party owns.

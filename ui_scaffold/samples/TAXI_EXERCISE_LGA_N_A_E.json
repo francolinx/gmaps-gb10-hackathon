@@ -1,0 +1,803 @@
+{
+ "scenario": {
+  "id": "TAXI_EXERCISE_LGA_N_A_E",
+  "title": "Taxi-route exercise (Joe's node walk): runway 13 via November, Alpha, Echo, hold short runway 4",
+  "airport": "KLGA",
+  "source_note": "Real phraseology from UAL2384's second taxi on Mar 22, 2026 (video 4:10). Route segments and hold points come from lga_graph.json.",
+  "expected_engine_behaviour": [
+   "Parse: runway=13, route=[N, A, E], hold_short={runway: 04, at: E}.",
+   "Trace N\u2192A\u2192E on the graph; E crosses runway 4/22, so the segment E-west-of-4/22 requires a hold boundary: hold short of 4 at E. Controller DID issue it (no 'missing hold' warning).",
+   "Expect a readback that names 'hold short runway 4'. Received at +11 s (no 'readback missing' warning).",
+   "Next expected event: 'holding short of runway 4' report (not captured) \u2192 then a crossing clearance 'cross runway 4 at Echo' \u2192 then crossing complete \u2192 then runway 13 line-up/takeoff.",
+   "Variant A (missing hold): replay with the controller saying 'Runway 13, November, Alpha, Echo' only \u2192 warning: route crosses runway 4 at E, no hold-short issued.",
+   "Variant B (discrepant readback): pilot reads back 'hold short runway 13' \u2192 warning: readback names a different runway.",
+   "Variant C (unclosed crossing): crossing issued, no 'crossing complete' within 90 s \u2192 reminder: close out the crossing; runway 4 remains reserved."
+  ]
+ },
+ "timeline": [
+  {
+   "t": 0,
+   "freq": "ground",
+   "text": "Ground, United 2384, ready to taxi, information India.",
+   "event": {
+    "event_id": "ev00001",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_READY",
+    "raw_text": "Ground, United 2384, ready to taxi, information India.",
+    "normalized_text": "GROUND , , READY TO TAXI , INFORMATION I .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#0",
+    "source_start_s": 0,
+    "source_end_s": null,
+    "event_time": 0,
+    "received_time": 0,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 3,
+   "freq": "ground",
+   "text": "United 2384, runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+   "event": {
+    "event_id": "ev00002",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "United 2384, runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+    "normalized_text": "RUNWAY 13 , TAXI VIA N , A , E , HOLD SHORT RUNWAY 4 .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#3",
+    "source_start_s": 3,
+    "source_end_s": null,
+    "event_time": 3,
+    "received_time": 3,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": [
+     "N",
+     "A",
+     "E"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "N",
+      "candidates": [
+       "KLGA:TWY:N"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     },
+     {
+      "word": "E",
+      "candidates": [
+       "KLGA:TWY:E"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "runway": "04"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "N",
+      "taxiway_id": "KLGA:TWY:N",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "A",
+      "taxiway_id": "KLGA:TWY:A",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "E",
+      "taxiway_id": "KLGA:TWY:E",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": 14,
+   "freq": "ground",
+   "text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+   "event": {
+    "event_id": "ev00003",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAXI",
+    "raw_text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+    "normalized_text": "RUNWAY 13 , N , A , E , HOLD SHORT RUNWAY 4 , .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#14",
+    "source_start_s": 14,
+    "source_end_s": null,
+    "event_time": 14,
+    "received_time": 14,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": [
+     "N",
+     "A",
+     "E"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "N",
+      "candidates": [
+       "KLGA:TWY:N"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     },
+     {
+      "word": "E",
+      "candidates": [
+       "KLGA:TWY:E"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "runway": "04"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 240,
+   "freq": "ground",
+   "text": "United 2384, holding short of runway 4 at Echo.",
+   "event": {
+    "event_id": "ev00004",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_HOLDING_SHORT",
+    "raw_text": "United 2384, holding short of runway 4 at Echo.",
+    "normalized_text": "HOLDING SHORT OF RUNWAY 4 AT E .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#240",
+    "source_start_s": 240,
+    "source_end_s": null,
+    "event_time": 240,
+    "received_time": 240,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "runway": "04",
+      "at": "E"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 250,
+   "freq": "ground",
+   "text": "United 2384, cross runway 4 at Echo, then taxi via Alpha-Alpha to runway 13.",
+   "event": {
+    "event_id": "ev00005",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "CROSS",
+    "raw_text": "United 2384, cross runway 4 at Echo, then taxi via Alpha-Alpha to runway 13.",
+    "normalized_text": "CROSS RUNWAY 4 AT E , THEN TAXI VIA AA TO RUNWAY 13 .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#250",
+    "source_start_s": 250,
+    "source_end_s": null,
+    "event_time": 250,
+    "received_time": 250,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": "E",
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 254,
+   "freq": "ground",
+   "text": "Cross runway 4 at Echo, Alpha-Alpha to 13, United 2384.",
+   "event": {
+    "event_id": "ev00006",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "CROSS",
+    "raw_text": "Cross runway 4 at Echo, Alpha-Alpha to 13, United 2384.",
+    "normalized_text": "CROSS RUNWAY 4 AT E , AA TO 13 , .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#254",
+    "source_start_s": 254,
+    "source_end_s": null,
+    "event_time": 254,
+    "received_time": 254,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": "E",
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 310,
+   "freq": "ground",
+   "text": "(Ground advises local: crossing complete at Echo.)",
+   "event": {
+    "event_id": "ev00007",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "report",
+    "kind": "CROSSING_COMPLETE",
+    "raw_text": "(Ground advises local: crossing complete at Echo.)",
+    "normalized_text": "GROUND ADVISES LOCAL : CROSSING COMPLETE AT E .",
+    "asr_repairs_applied": [],
+    "source_id": "TAXI_EXERCISE_LGA_N_A_E#310",
+    "source_start_s": 310,
+    "source_end_s": null,
+    "event_time": 310,
+    "received_time": 310,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  }
+ ],
+ "airport": {
+  "icao": "KLGA",
+  "dataset_version": "2026-10-03.draft2",
+  "status": "draft, expert review pending; topology review only"
+ },
+ "events": [
+  {
+   "event_id": "ev00001",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_READY",
+   "raw_text": "Ground, United 2384, ready to taxi, information India.",
+   "normalized_text": "GROUND , , READY TO TAXI , INFORMATION I .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#0",
+   "source_start_s": 0,
+   "source_end_s": null,
+   "event_time": 0,
+   "received_time": 0,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00002",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "United 2384, runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+   "normalized_text": "RUNWAY 13 , TAXI VIA N , A , E , HOLD SHORT RUNWAY 4 .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#3",
+   "source_start_s": 3,
+   "source_end_s": null,
+   "event_time": 3,
+   "received_time": 3,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": [
+    "N",
+    "A",
+    "E"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "N",
+     "candidates": [
+      "KLGA:TWY:N"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    },
+    {
+     "word": "E",
+     "candidates": [
+      "KLGA:TWY:E"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "runway": "04"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "N",
+     "taxiway_id": "KLGA:TWY:N",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "A",
+     "taxiway_id": "KLGA:TWY:A",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "E",
+     "taxiway_id": "KLGA:TWY:E",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00003",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAXI",
+   "raw_text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+   "normalized_text": "RUNWAY 13 , N , A , E , HOLD SHORT RUNWAY 4 , .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#14",
+   "source_start_s": 14,
+   "source_end_s": null,
+   "event_time": 14,
+   "received_time": 14,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": [
+    "N",
+    "A",
+    "E"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "N",
+     "candidates": [
+      "KLGA:TWY:N"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    },
+    {
+     "word": "E",
+     "candidates": [
+      "KLGA:TWY:E"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "runway": "04"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00004",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_HOLDING_SHORT",
+   "raw_text": "United 2384, holding short of runway 4 at Echo.",
+   "normalized_text": "HOLDING SHORT OF RUNWAY 4 AT E .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#240",
+   "source_start_s": 240,
+   "source_end_s": null,
+   "event_time": 240,
+   "received_time": 240,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "runway": "04",
+     "at": "E"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00005",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "CROSS",
+   "raw_text": "United 2384, cross runway 4 at Echo, then taxi via Alpha-Alpha to runway 13.",
+   "normalized_text": "CROSS RUNWAY 4 AT E , THEN TAXI VIA AA TO RUNWAY 13 .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#250",
+   "source_start_s": 250,
+   "source_end_s": null,
+   "event_time": 250,
+   "received_time": 250,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": "E",
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00006",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "CROSS",
+   "raw_text": "Cross runway 4 at Echo, Alpha-Alpha to 13, United 2384.",
+   "normalized_text": "CROSS RUNWAY 4 AT E , AA TO 13 , .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#254",
+   "source_start_s": 254,
+   "source_end_s": null,
+   "event_time": 254,
+   "received_time": 254,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": "E",
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00007",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "report",
+   "kind": "CROSSING_COMPLETE",
+   "raw_text": "(Ground advises local: crossing complete at Echo.)",
+   "normalized_text": "GROUND ADVISES LOCAL : CROSSING COMPLETE AT E .",
+   "asr_repairs_applied": [],
+   "source_id": "TAXI_EXERCISE_LGA_N_A_E#310",
+   "source_start_s": 310,
+   "source_end_s": null,
+   "event_time": 310,
+   "received_time": 310,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  }
+ ],
+ "reservations": [
+  {
+   "reservation_id": "r0001",
+   "callsign": "UAL2384",
+   "type": "CROSSING",
+   "runway_end": "04",
+   "physical": "KLGA:RWY:04-22",
+   "physical_candidates": [
+    "KLGA:RWY:04-22"
+   ],
+   "t": 250,
+   "event_id": "ev00005",
+   "status": "released",
+   "ack": "acknowledged",
+   "released_at": 310,
+   "released_by": "crossing complete reported",
+   "advisory": null,
+   "basis": "authorized",
+   "at": "E"
+  }
+ ],
+ "warnings": [],
+ "notes": [
+  {
+   "t": 3,
+   "event_id": "ev00002",
+   "note": "route words N, A, E: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": 310,
+   "event_id": "ev00007",
+   "note": "crossing complete with no callsign applied to the only open crossing (UAL2384)"
+  }
+ ],
+ "actors": {
+  "UAL2384": {
+   "authorized": [
+    {
+     "value": "taxi, rwy 13, via N-A-E, hold short of runway 04",
+     "t": 3,
+     "event_id": "ev00002"
+    },
+    {
+     "value": "cross, rwy 04, at E",
+     "t": 250,
+     "event_id": "ev00005"
+    }
+   ],
+   "acknowledged": [
+    {
+     "value": "read back: taxi, rwy 13, via N-A-E, hold short of runway 04",
+     "t": 14,
+     "event_id": "ev00003"
+    },
+    {
+     "value": "read back: cross, rwy 04, at E",
+     "t": 254,
+     "event_id": "ev00006"
+    }
+   ],
+   "reported": [
+    {
+     "value": "ready",
+     "t": 0,
+     "event_id": "ev00001"
+    },
+    {
+     "value": "holding short, hold short of runway 04 at E",
+     "t": 240,
+     "event_id": "ev00004"
+    },
+    {
+     "value": "crossing complete",
+     "t": 310,
+     "event_id": "ev00007"
+    }
+   ],
+   "inferred": [],
+   "observed": []
+  }
+ },
+ "claim_limit": "Recorded authorizations and open obligations only; no prevention claims."
+}

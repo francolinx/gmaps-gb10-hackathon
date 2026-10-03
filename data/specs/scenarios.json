@@ -1,0 +1,175 @@
+{
+  "_readme": {
+    "purpose": "Scenario scripts for the clearance-state runway monitor (Saturday build). Each scenario is an ordered event list the parser/engine can replay. Times are seconds from the scenario's own t0.",
+    "ontology": {
+      "event": "{t, freq, speaker, callsign, kind, runway?, taxiways?, hold_short?, crossing_at?, text_clean, text_raw?, note?}",
+      "kinds": ["TAKEOFF_CLEARANCE", "LANDING_CLEARANCE", "LUAW", "TAXI", "HOLD_SHORT", "CROSS", "CROSSING_COMPLETE", "READBACK", "REPORT", "CANCEL", "GO_AROUND", "ADVISORY", "PHONE", "OTHER"],
+      "state_kinds": ["authorized", "acknowledged", "reported", "inferred", "observed"],
+      "rule_families": ["runway_crossing_vs_active", "takeoff_vs_crossing", "luaw_vs_arrival", "hold_short_boundary", "route_incompatible", "readback_missing_or_discrepant"]
+    },
+    "claim_discipline": "A warning says the engine HAD TWO AUTHORIZATIONS on one runway at time t. It never says the system would have prevented anything.",
+    "sources": {
+      "LGA": "Public reporting and the NTSB preliminary for DCA26MA161 (Mar 22, 2026); transmissions re-voiced from the auto-captions of a VASAviation reconstruction (YouTube vxYd_EbKEiw) that Joe Eichelberger pointed to. The captions are a secondary source with speech-recognition errors; text_clean is the standard-phraseology reading, text_raw is the caption as received. Times are mm:ss within that video, not UTC. Do NOT ship the video's audio; re-voice.",
+      "BOS": "NTSB preliminary report DCA26LA242, Table 1 (primary). Times EDT, June 20, 2026.",
+      "TAXI_EXERCISE": "United 2384's own taxi clearance from the same LGA night, which is a textbook JO 7110.65 3-7-2 format instruction; used as Joe's node-walk exercise.",
+      "CLIPPED": "Fictional, written to Schneider's 'the common case is the pilot side clipped' correction."
+    }
+  },
+  "scenarios": [
+    {
+      "id": "LGA_2026-03-22",
+      "title": "LaGuardia, Mar 22, 2026 — crossing clearance issued on runway 4 with a landing clearance active",
+      "airport": "KLGA",
+      "runways_in_use": {"arrivals": "04", "departures": "13"},
+      "t0_definition": "t=0 is the Jazz 646 landing clearance (video 9:50). Negative times are earlier in the same video.",
+      "frequency_note": "The controller was working two frequencies (he says so at video 2:49). The trucks answered 'LaGuardia Tower' when asked whether they were on ground or tower (10:15), so the crossing request and clearance appear to have been on the tower frequency. This is from a secondary source; the NTSB docket will settle it.",
+      "expected_flags": [
+        {"t": 40, "rule": "runway_crossing_vs_active", "runway": "04", "a": "Jazz 646 LANDING_CLEARANCE t=0", "b": "Truck 1 and company CROSS 04 at D t=40", "severity": "conflict", "explain": "Runway 4 has an active landing authorization (aircraft number two on final) and a crossing authorization at Delta issued 40 s later. Both require the runway 4 protected area."},
+        {"t": -577, "rule": "takeoff_vs_crossing", "runway": "13", "severity": "none", "explain": "NEGATIVE CASE: takeoff clearance on 13 with traffic inside 3 miles for intersecting runway 4 is normal LGA intersecting-runway operation. The compatibility matrix must NOT flag this. Use it as the false-positive test."}
+      ],
+      "margins": {"flag_to_controller_first_stop_s": 8, "flag_to_collision_report_s": 36, "landing_clearance_to_crossing_s": 40},
+      "events": [
+        {"t": -577, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAKEOFF_CLEARANCE", "runway": "13", "text_clean": "United 2384, traffic inside three mile final runway 4, runway 13, cleared for takeoff.", "text_raw": "United 2384. Traffic inside 3 mile on runway 4 runway 13. Clear for takeoff."},
+        {"t": -572, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "runway": "13", "text_clean": "Cleared for takeoff 13, United 2384."},
+        {"t": -556, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "runway": "13", "text_clean": "United 2384 is rejecting on 13.", "text_raw": "United 2384 is rejected on 13.", "note": "Rejected takeoff #1 (anti-ice light)."},
+        {"t": -550, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["L", "B"], "text_clean": "Roger, make the right turn at Lima and a left turn on Bravo. Do you require any assistance?"},
+        {"t": -543, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "taxiways": ["L", "B"], "text_clean": "Negative. Right turn on Lima and left on Bravo, United 2384."},
+        {"t": -543, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Contact ground 121.7.", "text_raw": "How your contact ground 79"},
+        {"t": -534, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "taxiways": ["B"], "text_clean": "Ground, 2384 is on Bravo."},
+        {"t": -508, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["M", "A"], "hold_short": {"taxiway": "K"}, "text_clean": "2384, Mike, Alpha, hold short of Kilo, and when able say the reason for the abort.", "text_raw": "why don't you go Lima Alpha and then hold your text to wake Kila ... actually Mike Alpha short of Kila", "note": "Amended mid-transmission: Lima→Mike. Amendment case."},
+        {"t": -496, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "We need to hold position for a little bit, United 2384."},
+        {"t": -492, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "HOLD_SHORT", "hold_short": {"taxiway": "M"}, "text_clean": "No problem. Can you hold short of Mike, or do you need to stay right there?"},
+        {"t": -487, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "HOLD_SHORT", "hold_short": {"taxiway": "M"}, "text_clean": "United 2384, hold short of Mike, and when you get a chance let me know the reason for the abort.", "text_raw": "United 2384. I should mic and then when you get a chance, let me know the reason for the airport."},
+        {"t": -479, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "2384, we had an anti-ice light come on."},
+        {"t": -474, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["B"], "hold_short": {"taxiway": "N"}, "text_clean": "2384, make it Bravo, short of November.", "text_raw": "2384. I should make it bravo short of November."},
+        {"t": -454, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["B"], "hold_short": {"taxiway": "Z"}, "text_clean": "2384, make it Bravo, short of Zulu please."},
+        {"t": -447, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "taxiways": ["B"], "hold_short": {"taxiway": "Z"}, "text_clean": "Bravo short of Zulu, 2384, and ground we need to hold position for now."},
+        {"t": -421, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "You got stepped on, I had two frequencies. Go ahead, United 2384.", "note": "Controller states he is working two frequencies (combined positions). Blocked-transmission case."},
+        {"t": -343, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "Ground, United 2384, ready to taxi."},
+        {"t": -340, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "runway": "13", "taxiways": ["N", "A", "E"], "hold_short": {"runway": "04", "at": "E"}, "text_clean": "Information India, United 2384, roger. Runway 13, taxi via November, Alpha, Echo, hold short runway 4.", "text_raw": "information India United 2384. Roger. Uh runway 13 November alpha and echo host runway uh 4.", "note": "JO 7110.65 3-7-2 format: runway, taxi via, route, hold short. The engine must expect a hold-short readback that names runway 4."},
+        {"t": -329, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "runway": "13", "taxiways": ["N", "A", "E"], "hold_short": {"runway": "04", "at": "E"}, "text_clean": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384."},
+        {"t": -319, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAKEOFF_CLEARANCE", "runway": "13", "text_clean": "2384, wind 070 at 5, runway 13, cleared for takeoff.", "text_raw": "2384 7 0 513. Clear for takeoff.", "note": "Crossing of runway 4 and frequency change not captured in the captions."},
+        {"t": -319, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "runway": "13", "text_clean": "Cleared for takeoff 13, 2384."},
+        {"t": -309, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "runway": "13", "text_clean": "Tower, United 2384 is rejecting on runway 13.", "text_raw": "Tower United 2384 is retracted on runway 13.", "note": "Rejected takeoff #2."},
+        {"t": -304, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, roger. So you're aborting the takeoff again?", "text_raw": "See, you're boarding the takeoff again."},
+        {"t": -297, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["M", "B"], "text_clean": "2384, make the right at Mike and then right on Bravo for me."},
+        {"t": -289, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "taxiways": ["M", "B"], "text_clean": "Right on Mike and right on Bravo, United 2384."},
+        {"t": -286, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "HOLD_SHORT", "taxiways": ["B"], "hold_short": {"taxiway": "L"}, "text_clean": "2384, once you join Bravo, hold short of Lima, and when you get a minute to take a breath, let me know the reason for the abort this time."},
+        {"t": -279, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "hold_short": {"taxiway": "L"}, "text_clean": "Bravo, short of Lima, we'll let you know, 2384."},
+        {"t": -266, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "2384, we have an odor on the plane as well at this time. We are going to be going back to the gate, request fire as well.", "note": "ARFF requested. From here the trucks are a vehicle on the airfield."},
+        {"t": -259, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Okay. Do you know what gate? Is this odor like a smoke odor, like a fire?"},
+        {"t": -249, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "No, it was a weird odor. We can't get a hold of anyone at ops for a gate assignment."},
+        {"t": -233, "freq": "phone", "speaker": "ATC", "kind": "PHONE", "text_clean": "Tower calls the ramp and the Port Authority about a gate (several calls, video 5:57–6:55)."},
+        {"t": -165, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, I just got off the phone with your ramp, they don't have a gate for you. Is this still an emergency? Do you still need us to send fire?"},
+        {"t": -148, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Yeah, there's still an alert in the back."},
+        {"t": -138, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, do you plan on evacuating at all?"},
+        {"t": -136, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Negative."},
+        {"t": -122, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "taxiways": ["K", "A"], "hold_short": {"taxiway": "E"}, "text_clean": "2384, make the left turn on Kilo and then right on Alpha, short of Echo."},
+        {"t": -120, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "taxiways": ["K", "A"], "hold_short": {"taxiway": "E"}, "text_clean": "Kilo, Alpha, short of Echo, 2384."},
+        {"t": -113, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "2384 is declaring an emergency. The flight attendants in the back are feeling ill because of the odor. We will need to go into any available gate at this time.", "text_raw": "Granada 2384 is declaring an emergency."},
+        {"t": -104, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Okay, roger that."},
+        {"t": -70, "freq": "phone", "speaker": "ATC", "kind": "PHONE", "text_clean": "Tower to ramp: no gate; a stair truck is offered. 'He's on taxiway Alpha just east of taxiway Kilo.'", "note": "Position report by the controller — observed state source for UAL2384."},
+        {"t": -58, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, the ramp doesn't have a gate for you yet, I'm trying to get in touch with the Port Authority."},
+        {"t": -50, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "ADVISORY", "text_clean": "And the fire trucks are over there. They're going to bring a stair truck just in case you want to evacuate. Let me know if you do."},
+        {"t": -44, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Copy. We'd prefer to wait on a gate, but we only have so much time, there's still a bit of an odor in the back."},
+        {"t": -32, "freq": "tower", "speaker": "JZA646", "callsign": "JZA646", "kind": "REPORT", "text_clean": "Jazz 646 (check-in on tower).", "text_raw": "Jazz 646. Yep."},
+        {"t": -30, "freq": "tower", "speaker": "ATC", "callsign": "DAL520", "kind": "HOLD_SHORT", "runway": "13", "hold_short": {"taxiway": "L", "on": "runway 13"}, "text_clean": "Delta 520, going to lane 8, just hold short of Lima on runway 13 and verify with the ramp that you'll be able to get in.", "note": "An aircraft holding on runway 13 — the engine must represent runway 13 as occupied/authorized for DAL520."},
+        {"t": -21, "freq": "tower", "speaker": "DAL520", "callsign": "DAL520", "kind": "READBACK", "runway": "13", "hold_short": {"taxiway": "L", "on": "runway 13"}, "text_clean": "Hold short of Lima on runway 13, we'll talk to ramp and get back to you, Delta 520."},
+        {"t": -15, "freq": "tower", "speaker": "ATC", "kind": "ADVISORY", "text_clean": "Just verifying, there's some shuffling of gates going on due to an inbound that had an issue."},
+        {"t": -9, "freq": "tower", "speaker": "ATC", "callsign": "JZA646", "kind": "ADVISORY", "runway": "04", "text_clean": "Jazz 646, runway 4, number two.", "text_raw": "Roger 646 for J for GS four for J 646 number two"},
+        {"t": 0, "freq": "tower", "speaker": "ATC", "callsign": "JZA646", "kind": "LANDING_CLEARANCE", "runway": "04", "text_clean": "Runway 4, cleared to land, number two, Jazz 646.", "text_raw": "clear to land four number for J 646", "note": "AUTHORIZED: JZA646 holds runway 4 (landing). Readback not captured in the captions — engine marks acknowledged=unknown."},
+        {"t": 0, "freq": "tower", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, do you have a gate available at this time? Otherwise we will probably be requesting stairs."},
+        {"t": 9, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Give me one second, 2384."},
+        {"t": 18, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "Stand by, United."},
+        {"t": 21, "freq": "tower", "speaker": "ATC", "kind": "OTHER", "text_clean": "Who's the vehicle needing to cross the runway?"},
+        {"t": 25, "freq": "tower", "speaker": "ATC", "callsign": "TRUCK1", "kind": "OTHER", "text_clean": "Emergency vehicles, are you calling on ground or are you calling on tower?", "note": "Controller cannot tell which of his two frequencies the call came on."},
+        {"t": 25, "freq": "tower", "speaker": "TRUCK1", "callsign": "TRUCK1", "kind": "REPORT", "text_clean": "Truck 1 and company, LaGuardia Tower."},
+        {"t": 34, "freq": "tower", "speaker": "TRUCK1", "callsign": "TRUCK1", "kind": "REPORT", "runway": "04", "crossing_at": "D", "text_clean": "Truck 1 and company, LaGuardia Tower, requesting to cross 4 at Delta."},
+        {"t": 40, "freq": "tower", "speaker": "ATC", "callsign": "TRUCK1", "kind": "CROSS", "runway": "04", "crossing_at": "D", "text_clean": "Truck 1 and company, cross 4 at Delta.", "note": "FLAG POINT. Runway 4: JZA646 landing authorization (t=0) + TRUCK1 crossing authorization (t=40). Fires before the readback completes."},
+        {"t": 42, "freq": "tower", "speaker": "TRUCK1", "callsign": "TRUCK1", "kind": "READBACK", "runway": "04", "crossing_at": "D", "text_clean": "Truck 1 and company, crossing 4 at Delta.", "text_raw": "Truck one and company crossing for Adelva."},
+        {"t": 48, "freq": "tower", "speaker": "ATC", "callsign": "FFT4195", "kind": "CANCEL", "text_clean": "Frontier 4195, just stop there please. Stop, stop, stop. Truck 1, stop, stop, stop.", "note": "Controller's own recognition, 8 s after the crossing clearance."},
+        {"t": 55, "freq": "tower", "speaker": "ATC", "callsign": "UAL2384", "kind": "OTHER", "text_clean": "2384, you're cleared in lane 8 for gate 41. 2384, proceed to the ramp.", "note": "Task saturation: the controller is still working UAL2384's gate between stop calls."},
+        {"t": 65, "freq": "tower", "speaker": "ATC", "callsign": "TRUCK1", "kind": "CANCEL", "text_clean": "Sorry. Truck 1, stop. Truck 1, stop, stop. Truck 1, stop.", "note": "25 s after the crossing clearance. No acknowledgement from Truck 1 is captured."},
+        {"t": 72, "freq": "tower", "speaker": "FFT4195", "callsign": "FFT4195", "kind": "REPORT", "text_clean": "4195, we're staying here."},
+        {"t": 76, "freq": "tower", "speaker": "ATC", "callsign": "DAL263", "kind": "GO_AROUND", "runway": "04", "text_clean": "Delta 263, go around, runway heading, 2000."},
+        {"t": 76, "freq": "tower", "speaker": "ATC", "callsign": "JZA646", "kind": "OTHER", "text_clean": "646, I see you collided with a vehicle.", "note": "36 s after the crossing clearance."},
+        {"t": 83, "freq": "tower", "speaker": "ATC", "callsign": "JZA646", "kind": "OTHER", "text_clean": "Just hold position, I know you can't move. The vehicles are responding to you now."},
+        {"t": 92, "freq": "tower", "speaker": "ATC", "callsign": "DAL263", "kind": "GO_AROUND", "runway": "04", "text_clean": "263, go around, runway heading, 2000."},
+        {"t": 92, "freq": "tower", "speaker": "DAL263", "callsign": "DAL263", "kind": "READBACK", "text_clean": "Right, 2000, go around, 263."}
+      ]
+    },
+    {
+      "id": "BOS_2026-06-20",
+      "title": "Logan, June 20, 2026 — takeoff clearance on 27 issued with a landing clearance active on intersecting 33L (NTSB DCA26LA242, Table 1)",
+      "airport": "KBOS",
+      "runways_in_use": {"arrivals": "33L", "departures": "27"},
+      "position": "LCW (local control west), one frequency",
+      "t0_definition": "t=0 is 11:32:21 EDT (first row of Table 1).",
+      "expected_flags": [
+        {"t": 82, "rule": "takeoff_vs_crossing", "runways": ["27", "33L"], "a": "DAL2351 LANDING_CLEARANCE 33L t=14", "b": "AAL3161 TAKEOFF_CLEARANCE 27 t=82", "severity": "conflict", "explain": "Runways 27 and 33L intersect. A takeoff authorization on 27 was issued 68 s after a landing authorization on 33L; both were live. Fires 62 s before the go-around call."}
+      ],
+      "events": [
+        {"t": 0, "clock": "11:32:21", "freq": "tower", "speaker": "ATC", "callsign": "AAL3161", "kind": "LUAW", "runway": "27", "text_clean": "American 3161, runway 27, line up and wait. Traffic landing runway 33L.", "note": "Crew acknowledged (Table 1)."},
+        {"t": 0, "clock": "11:32:21", "freq": "tower", "speaker": "AAL3161", "callsign": "AAL3161", "kind": "READBACK", "runway": "27", "text_clean": "Line up and wait runway 27, American 3161."},
+        {"t": 14, "clock": "11:32:35", "freq": "tower", "speaker": "ATC", "callsign": "DAL2351", "kind": "LANDING_CLEARANCE", "runway": "33L", "text_clean": "Delta 2351, runway 33L, cleared to land. Traffic holding on runway 27.", "note": "AUTHORIZED: DAL2351 holds 33L. Crew acknowledged (Table 1)."},
+        {"t": 14, "clock": "11:32:35", "freq": "tower", "speaker": "DAL2351", "callsign": "DAL2351", "kind": "READBACK", "runway": "33L", "text_clean": "Cleared to land 33L, Delta 2351."},
+        {"t": 53, "clock": "11:33:14", "freq": "adsb", "speaker": "ADS-B", "callsign": "AAL3161", "kind": "REPORT", "runway": "27", "text_clean": "AAL3161 positioned at the threshold of runway 27.", "note": "observed state (surveillance), not comms."},
+        {"t": 72, "clock": "11:33:33", "freq": "adsb", "speaker": "ADS-B", "callsign": "GPD82", "kind": "REPORT", "runway": "33L", "text_clean": "Tradewind 82 (PC-12) crossed the threshold of runway 33L and landed."},
+        {"t": 82, "clock": "11:33:43", "freq": "tower", "speaker": "ATC", "callsign": "AAL3161", "kind": "TAKEOFF_CLEARANCE", "runway": "27", "text_clean": "American 3161, runway 27, cleared for takeoff.", "note": "FLAG POINT. 27 and 33L intersect; DAL2351's landing authorization on 33L is live."},
+        {"t": 85, "clock": "11:33:46", "freq": "tower", "speaker": "AAL3161", "callsign": "AAL3161", "kind": "READBACK", "runway": "27", "text_clean": "Cleared for takeoff 27, American 3161."},
+        {"t": 85, "clock": "11:33:46", "freq": "adsb", "speaker": "ADS-B", "callsign": "GPD82", "kind": "REPORT", "text_clean": "GPD82 crossed the intersection of runways 33L and 27."},
+        {"t": 101, "clock": "11:34:02", "freq": "tower", "speaker": "ATC", "callsign": "GPD82", "kind": "TAXI", "taxiways": ["T"], "text_clean": "Tradewind 82, turn left on taxiway Tango, expedite, traffic on a one-and-a-quarter-mile final."},
+        {"t": 105, "clock": "11:34:06", "freq": "adsb", "speaker": "ADS-B", "callsign": "AAL3161", "kind": "REPORT", "text_clean": "AAL3161 velocity increased from zero, then back to zero 8 s later."},
+        {"t": 119, "clock": "11:34:20", "freq": "tower", "speaker": "ATC", "callsign": "GPD82", "kind": "TAXI", "runway": "27", "taxiways": ["T"], "text_clean": "Tradewind 82, continue on runway 27, turn left on taxiway Tango."},
+        {"t": 130, "clock": "11:34:31", "freq": "tower", "speaker": "ATC", "callsign": "GPD82", "kind": "TAXI", "text_clean": "Tradewind 82, additional taxi instructions."},
+        {"t": 132, "clock": "11:34:33", "freq": "adsb", "speaker": "ADS-B", "callsign": "GPD82", "kind": "REPORT", "text_clean": "GPD82 exited runway 27 onto taxiway T."},
+        {"t": 136, "clock": "11:34:37", "freq": "adsb", "speaker": "ADS-B", "callsign": "AAL3161", "kind": "REPORT", "runway": "27", "text_clean": "AAL3161 velocity began to increase (takeoff roll)."},
+        {"t": 144, "clock": "11:34:45", "freq": "tower", "speaker": "DAL2351", "callsign": "DAL2351", "kind": "GO_AROUND", "runway": "33L", "text_clean": "Delta 2351 is going around, due to the American."},
+        {"t": 149, "clock": "11:34:50", "freq": "tower", "speaker": "ATC", "callsign": "AAL3161", "kind": "OTHER", "text_clean": "American 3161, where are you going?", "note": "Crew replied they had been cleared for takeoff. Controller had lost his own clearance — the 'ten things' failure."},
+        {"t": 164, "clock": "11:35:05", "freq": "tower", "speaker": "ATC", "callsign": "DAL2351", "kind": "GO_AROUND", "text_clean": "Delta 2351, go-around instructions."}
+      ]
+    },
+    {
+      "id": "TAXI_EXERCISE_LGA_N_A_E",
+      "title": "Taxi-route exercise (Joe's node walk): runway 13 via November, Alpha, Echo, hold short runway 4",
+      "airport": "KLGA",
+      "source_note": "Real phraseology from UAL2384's second taxi on Mar 22, 2026 (video 4:10). Route segments and hold points come from lga_graph.json.",
+      "expected_engine_behaviour": [
+        "Parse: runway=13, route=[N, A, E], hold_short={runway: 04, at: E}.",
+        "Trace N→A→E on the graph; E crosses runway 4/22, so the segment E-west-of-4/22 requires a hold boundary: hold short of 4 at E. Controller DID issue it (no 'missing hold' warning).",
+        "Expect a readback that names 'hold short runway 4'. Received at +11 s (no 'readback missing' warning).",
+        "Next expected event: 'holding short of runway 4' report (not captured) → then a crossing clearance 'cross runway 4 at Echo' → then crossing complete → then runway 13 line-up/takeoff.",
+        "Variant A (missing hold): replay with the controller saying 'Runway 13, November, Alpha, Echo' only → warning: route crosses runway 4 at E, no hold-short issued.",
+        "Variant B (discrepant readback): pilot reads back 'hold short runway 13' → warning: readback names a different runway.",
+        "Variant C (unclosed crossing): crossing issued, no 'crossing complete' within 90 s → reminder: close out the crossing; runway 4 remains reserved."
+      ],
+      "events": [
+        {"t": 0, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "text_clean": "Ground, United 2384, ready to taxi, information India."},
+        {"t": 3, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "TAXI", "runway": "13", "taxiways": ["N", "A", "E"], "hold_short": {"runway": "04", "at": "E"}, "text_clean": "United 2384, runway 13, taxi via November, Alpha, Echo, hold short runway 4."},
+        {"t": 14, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "runway": "13", "taxiways": ["N", "A", "E"], "hold_short": {"runway": "04", "at": "E"}, "text_clean": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384."},
+        {"t": 240, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "REPORT", "runway": "04", "hold_short": {"runway": "04", "at": "E"}, "text_clean": "United 2384, holding short of runway 4 at Echo.", "note": "Fictional continuation from here."},
+        {"t": 250, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "CROSS", "runway": "04", "crossing_at": "E", "text_clean": "United 2384, cross runway 4 at Echo, then taxi via Alpha-Alpha to runway 13.", "note": "Engine: runway 4 reserved for UAL2384 crossing; local must have approved (JO 7110.65 §3-1-3)."},
+        {"t": 254, "freq": "ground", "speaker": "UAL2384", "callsign": "UAL2384", "kind": "READBACK", "runway": "04", "crossing_at": "E", "text_clean": "Cross runway 4 at Echo, Alpha-Alpha to 13, United 2384."},
+        {"t": 310, "freq": "ground", "speaker": "ATC", "callsign": "UAL2384", "kind": "CROSSING_COMPLETE", "runway": "04", "text_clean": "(Ground advises local: crossing complete at Echo.)", "note": "Engine: runway 4 reservation released. If absent after 90 s → 'close out the crossing' reminder."}
+      ]
+    },
+    {
+      "id": "CLIPPED_READBACK_FICTIONAL",
+      "title": "The common case (Schneider): pilot's readback is clipped; the hold-short is in the clipped part",
+      "airport": "KLGA",
+      "source_note": "Fictional. Callsigns invented.",
+      "expected_engine_behaviour": [
+        "Instruction parsed with hold_short={runway: 04, at: D}.",
+        "Readback audio is clipped before 'hold short'; parser emits READBACK with confidence 0.41 and hold_short=null.",
+        "Engine: acknowledged state for the hold boundary = UNKNOWN (never 'acknowledged'). Warning: 'hold short runway 4 at Delta not heard in readback (clipped)'.",
+        "Controller re-issues; full readback heard; acknowledged=true. No runway conflict is ever claimed."
+      ],
+      "events": [
+        {"t": 0, "freq": "ground", "speaker": "ATC", "callsign": "CBT41", "kind": "TAXI", "runway": "13", "taxiways": ["A", "D"], "hold_short": {"runway": "04", "at": "D"}, "text_clean": "Cobalt 41, runway 13, taxi via Alpha, Delta, hold short runway 4."},
+        {"t": 6, "freq": "ground", "speaker": "CBT41", "callsign": "CBT41", "kind": "READBACK", "runway": "13", "taxiways": ["A", "D"], "hold_short": null, "confidence": 0.41, "text_clean": "Runway 13, Alpha, Delta, ho— [clipped]", "note": "Clipped transmission (pilot side)."},
+        {"t": 9, "freq": "ground", "speaker": "ATC", "callsign": "CBT41", "kind": "HOLD_SHORT", "runway": "04", "hold_short": {"runway": "04", "at": "D"}, "text_clean": "Cobalt 41, you were clipped, say again, and read back hold short runway 4."},
+        {"t": 13, "freq": "ground", "speaker": "CBT41", "callsign": "CBT41", "kind": "READBACK", "runway": "13", "taxiways": ["A", "D"], "hold_short": {"runway": "04", "at": "D"}, "confidence": 0.93, "text_clean": "Alpha, Delta, hold short runway 4, Cobalt 41."}
+      ]
+    }
+  ]
+}

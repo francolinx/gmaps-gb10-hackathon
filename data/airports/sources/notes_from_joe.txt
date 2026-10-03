@@ -1,0 +1,183 @@
+ASDE for airports 
+
+
+
+asde-x simulator
+
+fis-b.. Display in an aircraft (uat - 978
+
+
+foreflight ground taxi 
+
+
+heards monitor.....
+
+
+
+CPDLC 
+
+
+CONTROLLER side visualization
+
+
+
+simplfy airport display, recognize main areas on aiport 
+
+
+system would know ruaway 3 
+
+
+71110.65BB phraseology 
+
+
+7110.65 link: https://www.faa.gov/air_traffic/publications/atpubs/atc_html/chap3_section_7.html
+
+
+look way the taxi instructions are formatted
+
+so how ai can parsae that 
+
+
+Laguardia map: https://aeronav.faa.gov/d-tpp/2610/00289ad.pdf
+
+
+vas aviation does reconstructions : emergency at laguardi then tragedy 
+
+
+Taxi way
+
+
+take diagram covert it into a data set for the taxi way names if they intersect, and identify the taxi route. the center might be the challange 
+
+
+runway incrusion categories 
+
+
+
+7110.65 link: https://www.faa.gov/air_traffic/publications/atpubs/atc_html/chap3_section_7.html
+
+Laguardia map: https://aeronav.faa.gov/d-tpp/2610/00289ad.pdf
+
+
+
+https://www.youtube.com/watch?v=vxYd_EbKEiw
+video transcript: Chapter 1: Initial takeoff attempt
+0:1313 secondsUnited 2384. Traffic inside 3 mile on runway 4 runway 13. Clear for takeoff.
+0:1818 secondsClear for takeoff 13. United 2384.
+Chapter 2: Taxi and issue reporting
+0:3434 secondsUnited 2384 is rejected on 13. All right. 2384.
+0:4040 secondsRoger. Uh, you can make the right turn at Lima and a left turn on Bravo. Do you require any assistance? Uh,
+0:4747 secondsno. Negative. United. Left turn on Lima and Bravo. United 2384. How your contact ground 79
+0:5656 seconds2384 ground at 2384 is on Bravo
+1:081 minute, 8 seconds2384 just uh which land you getting.
+Chapter 3: Resolving the anti-ice issue
+1:181 minute, 18 secondsUh we're probably going to go back to the runway. We just rejected the takeoff. United 2384.
+1:221 minute, 22 seconds2384. Okay. Um why don't you go Lima Alpha and then hold your text to wake Kila and when able say the actually Mike
+1:301 minute, 30 secondsAlpha short of Kila and when they will say the reason for the abort.
+1:341 minute, 34 secondsYeah. Uh we need to hold position for a little bit. United 2384.
+1:381 minute, 38 secondsI no problem. Can you hold short a mic or you need to just stay right there? Yeah, we can show host short of mic.
+1:431 minute, 43 secondsUnited 2384. I should mic and then when you get a chance, let me know the reason for the airport. We'll let you know United 2384.
+1:511 minute, 51 secondsand 2384. We had an anti- ice light. Come on.
+1:561 minute, 56 seconds2384. I should make it bravo short of November. Sure. November.
+2:012 minutes, 1 secondWhat's the lineup for tonight? Uh for pickard 44 46 uh 44 66 your number 15.
+2:082 minutes, 8 secondsThanks. United 2384. Any word on you?
+2:162 minutes, 16 secondsUh we're making some phone calls here. United 2384. Hey 28 284 make it bravo sh zulu please.
+2:232 minutes, 23 secondsBravo short zulu 9 2384 and uh ground we need to uh hold uh
+2:282 minutes, 28 secondsposition for now. United 2384 hold your position ground 2384.
+Chapter 4: Dispatch coordination
+2:412 minutes, 41 secondsYes sir.
+2:422 minutes, 42 secondsUh we are just finalizing here. Do you know the estimate for us to for take off for United 2384?
+2:492 minutes, 49 secondsYou got stepped out. I had two frequencies. What's that? Just go for United 2384. What was that?
+2:532 minutes, 53 secondsDo uh we are just about ready. Uh do you know how long for us to uh taxi and take off roughly?
+2:592 minutes, 59 secondsLet me know when you when you're fully ready. I'll uh I I'll try to get you out of here as soon as you can. Uh I mean if
+3:063 minutes, 6 secondsyou uh you know probably it'll be minutes. It be it won't be long cuz uh I'll get you to the head of the line.
+3:123 minutes, 12 secondsOkay. Uh, we'll let you know United 2384. Ground 2384.
+3:223 minutes, 22 secondsYes, sir.
+3:223 minutes, 22 secondsYeah. Dispatch says uh if we can be off in the next 30 minutes, they're good sending us back to the runway.
+3:263 minutes, 26 secondsOtherwise, they want to go back to the gate for LTD.
+3:283 minutes, 28 secondsUh, I mean, as soon as you're ready, you let me know that, you know, I could accommodate uh once you're ready, try to get you in line.
+3:353 minutes, 35 secondsYeah, we're we're ready now. Do you think it it'll be with doable within that 30 minute time frame?
+3:403 minutes, 40 secondsFlying on probably within the 10 minutes. Oh, perfect. All right. Thank you very much. And uh we'll sit everyone down. We had them up just cuz it's going to be a few minutes on the phone call
+3:483 minutes, 48 secondswith dispatch. Uh so we'll set everyone down and we'll call you back.
+3:513 minutes, 51 secondsOkay. Yep. Let me know when you're fully ready and then we'll do what we can. Cops. Thank you. How's taxi out time's looking?
+3:593 minutes, 59 secondsUh 20 minutes or so uh to get out of here.
+Chapter 5: Second takeoff attempt
+4:074 minutes, 7 secondsGround united 2384 ready to taxi.
+4:104 minutes, 10 secondsinformation India United 2384. Roger. Uh runway 13
+4:164 minutes, 16 secondsNovember alpha and echo host runway uh 4.
+4:214 minutes, 21 secondsRunway 13 November alpha echo short runway 4. United at 2384.
+4:314 minutes, 31 seconds2384 7 0 513. Clear for takeoff. Clear for takeoff 13384.
+Chapter 6: Emerging cabin odor issue
+4:414 minutes, 41 secondsTower United 2384 is retracted on runway 13.
+4:464 minutes, 46 seconds2384. Roger. See, you're boarding the takeoff again. That's affirmative. United 2384.
+4:534 minutes, 53 seconds2384. All right. Uh, make the right at Mike and then right on Bravo for me.
+5:015 minutes, 1 secondRight on Mike and right on Bravo. United 2384.
+5:045 minutes, 4 secondsThank you. 2384. Once you join Bravo, hold short of Lima. And when you get a minute to take a breath, let me know uh the reason for the abort this time.
+5:115 minutes, 11 secondsBravo short of Lima. Let you know 2384. Take a break.
+5:245 minutes, 24 secondsHey, look at 2384. We have an odor on the plane as well here at this time. We are going to be going back to the gate request fire as well.
+5:315 minutes, 31 secondsOkay. Do you know what gate it is? What you going to negative? We'll call though 934. Is this odor like a smoke odor?
+5:395 minutes, 39 secondsLike a like a fire?
+5:415 minutes, 41 secondsNo, it was a weird odor. I don't know exactly how to describe it, but um yeah, uh we're we can't get a hold of anyone at opts for a gate assignment.
+5:495 minutes, 49 secondsCan't get any Okay. All right. Roger that. I'll give him a call.
+Chapter 7: Gate coordination challenges
+5:575 minutes, 57 secondsSeems seems like the dissipated. Uh but yeah, it's we had we double reject for an ant any ice issue and then we had a small odor there uh uh as we exited.
+6:086 minutes, 8 secondsThey'd like to go back to the ramp. They got like some uh kind of odor and uh do you have a lane for them in what gate? No, no, this is LaGuardia Tower.
+6:176 minutes, 17 secondsHello. LaGuardia Power.
+6:206 minutes, 20 secondsYeah. Yeah. He got a United 2384 he aborted and and uh he wants to go back to the ramp but he can't get in touch with the uh LGP ramp.
+6:296 minutes, 29 secondsOkay, hang on one second. I see him over there. Hang on one second. Okay, thanks. How you doing? This is LaGuardia Tower.
+6:376 minutes, 37 secondsI'd like uh we have a United 2384 that aborted his takeoff and he said he's request he's requesting to get back to
+6:456 minutes, 45 secondsthe gate uh because he's got like some order and he's requesting fire. Do you guys have a gate for him?
+6:546 minutes, 54 secondsYou don't have a gate on you there?
+6:556 minutes, 55 secondsYeah, they their airline would have to tow off and go to a hard stand to give them a gate. I'm going to get a hold of them. Okay. All right. Roger that. Thanks.
+7:057 minutes, 5 seconds234. I just got off the phone with your ramp there. They don't they don't have a gate for you. So, is this uh is this an emergency now? Is it still an emergency?
+7:157 minutes, 15 seconds234. Go ahead.
+7:177 minutes, 17 secondsYeah. I just got off the phone with your ramp there. I don't have a gate for you.
+7:207 minutes, 20 secondsUh, you still need us to send fire there?
+7:227 minutes, 22 secondsUh, yeah, cuz we there's still an alert in the back. Okay.
+7:327 minutes, 32 seconds2384. Are you uh do you guys plan on evacuating at all? Negative.
+7:367 minutes, 36 secondsOkay. Um, you know what? I'm going to put you in a better spot here. Um, all right. Uh, 234, can you move now?
+7:477 minutes, 47 secondsYeah, we can move.
+7:487 minutes, 48 secondsAll right. Make the left turn on Kilo and then right on alpha short of echo. Kilo alpha short 2384.
+Chapter 8: Emergency response staging
+7:577 minutes, 57 secondsGranada 2384 is declaring an emergency.
+7:597 minutes, 59 secondsThe flight attendants in the back are feeling ill because of the odor. Uh we will need to go into any available gates at this time.
+8:068 minutes, 6 secondsOkay, roger that.
+8:098 minutes, 9 secondsUh hey, uh there's that again. Uh do you guys have any gates for United? Cuz now we declaring an emergency. They want to get out.
+8:188 minutes, 18 secondsYeah.
+8:198 minutes, 19 secondsLet me ask him. Give me I'll call you right back. Okay. Right. Hey.
+8:258 minutes, 25 secondsHey. Say it again. Tower. Now that United says he he needs a gate, but uh so now he's declaring an emergency. Um but but the the ramp doesn't have a gate for him.
+8:368 minutes, 36 secondsYeah. They're now we can get a stair truck if you need them to get off the plane.
+8:408 minutes, 40 secondsOkay. Yeah. Yeah. Do that just in case they want to come off. But uh so now he's on taxway alpha just east of taxiway kilo.
+8:488 minutes, 48 secondsAll right. Thanks man. All right. Byebye.
+8:528 minutes, 52 seconds2384. The ramp doesn't have a gate for you yet, but I'm trying to get in touch with the port authority to see if they have something. Copy.
+9:009 minutesAnd the fire trucks are over there.
+9:029 minutes, 2 secondsThey're going to bring a start uh truck just in case you guys do want to evacuate. Let me know if you do.
+9:069 minutes, 6 secondsCopy. Yeah, we we'd prefer to wait on a gate, but I mean again, it's we only got so much time here cuz there's still a bit of an odor in the back of the airplane.
+Chapter 9: Runway closure and incident
+9:189 minutes, 18 secondsJazz 646. Yep.
+9:209 minutes, 20 secondsDelta 520 going to lane 8. Just hold short of Lima on runway 13 and just verify with the ramp uh that you'll be able to get in.
+9:299 minutes, 29 secondsOkay, hold short of Lima on runway 13 and we'll talk to ramp. Get back to you. Delta 520.
+9:359 minutes, 35 secondsThank you. I'm just verifying there's some shuffling of gates going on uh here due to an inbound that have uh issue.
+9:419 minutes, 41 secondsRoger 646 for J for GS four for J 646 number two
+9:509 minutes, 50 secondsclear to land four number for J 646 and 2384. Do you have a gate available
+9:599 minutes, 59 secondsat this time? Otherwise, we will be uh probably uh requesting air. Give me one second. 2384.
+10:0810 minutes, 8 secondsStand by. United.
+10:1110 minutes, 11 secondsWho's the vehicle needed to cross the runway?
+10:1510 minutes, 15 secondsEmergency vehicles calling on ground or are you calling on tower? Truck one and company. LaGuardia Tower.
+10:2410 minutes, 24 secondsTruck one and company. Truck one and company LaGuardia Tower. Requesting to cross four at Delta.
+10:3010 minutes, 30 secondsTruck one and company. Cross four at Delta. Truck one and company crossing for Adelva.
+10:3810 minutes, 38 secondsFrontier 4195. Just stop there, please. Stop. Stop. Stop. Truck on. Stop. Stop. Stop.
+10:4510 minutes, 45 secondsYeah. 2384 is cleared in lane 8 for 41. 2384. Proceed to ramp. Proceed in.
+10:5510 minutes, 55 secondsSorry. Truck one. Stop. Truck one. Stop. Stop. Truck one. Stop.
+11:0211 minutes, 2 seconds4195. We're staying here.
+11:0611 minutes, 6 seconds263. Go around runway heading 2000. CH 646. 646. I see you collide with vehicle.
+11:1311 minutes, 13 secondsJust hold vision. I know you can't move. The vehicle responding to you now. Is the runway closed?
+11:2211 minutes, 22 seconds263. Go around. Runway heading 2000. Right. 2000. Go around. 263.
+
+Sync to video time
+
+
+
+
+
+

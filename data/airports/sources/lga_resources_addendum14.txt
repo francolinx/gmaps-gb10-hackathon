@@ -1,0 +1,85 @@
+Source: https://docs.google.com/document/d/19kFmgREr4ycLPEqDrG5l4vE3MK5_A-eGYhChIqXZ52E/edit
+Retrieved: 2026-10-03
+﻿Boston GB10 — Addendum 14 (Oct 2, 22:15 ET): every resource in Joe's notes, verified against the primary source, and turned into build files
+Prepared by Claude for Franco Plathottathil. Input: Franco's notes from the Eichelberger meeting (13 items plus three links and the LaGuardia captions), cross-read with the meeting transcript. Each item below was checked against the FAA's own page or the vendor's own page on Oct 2, 2026; quotes are verbatim. Two new build files come out of this: phraseology_grammar.json (the parser) and compat_matrix.json (the rules), both derived from JO 7110.65BB text rather than memory.
+1. The resources, one by one
+#
+	Note
+	What it actually is (verified)
+	What it means for tomorrow
+ 
+	1
+	ASDE for airports
+	ASDE-X fuses "surface surveillance radar located on top of the air traffic control tower," multilateration sensors, Mode S terminal radar, ADS-B and flight-plan data into one display with "visual and aural alarms that will alert controllers of possible runway incursions." It was "developed to help reduce critical Category A and B runway incursions." 35 airports; LaGuardia is on the list (and the diagram says "ASDE-X in use").
+	The competitor slide, in one line: LGA had ASDE-X. The truck had no transponder, so ASDE-X had nothing to alarm on; the radio had the clearance. Position-based nets see motion; this one hears authorization.
+	2
+	ASDE-X simulator
+	Joe's lab runs a tower simulator (Adacel MaxSim and UFA both emulate surface surveillance for CTI programs; ERAU's expansion used one). He did not say which vendor.
+	The post-hackathon test bed. Tomorrow, the "observed" lane is simulated from the NTSB table and scripts; say so on the slide. Do not call the demo's track lane ASDE-X.
+	3
+	FIS-B, display in an aircraft, UAT 978
+	FAA: FIS-B "is always broadcast into the airspace on the UAT frequency. This information is not broadcast on the 1090 MHz frequency." Products: AIRMET, SIGMET, METAR, TAF, NEXRAD, NOTAMs, winds. It does not carry ATC clearances or instructions. TIS-B is traffic only, "situational awareness" only.
+	Joe's cockpit idea is right in shape (tower-fed, lightweight client) and wrong in channel if stated as FIS-B. The future slide says: "a tower-fed broadcast to a cockpit client; FIS-B's UAT channel carries no ATC instructions today, so this is a new message, not a new receiver." One slide, labelled future.
+	4
+	ForeFlight ground taxi
+	ForeFlight 13.3 (2021) Taxi Routes: "you would call Ground Control for a taxi clearance and then enter it on this screen using the shortcut buttons"; it "automatically draws the shortest route" and lets you "enter specific taxiways or hold short points." Manual entry only; no ATC audio, no data link; Performance plan, Labs feature.
+	The gap Joe named is confirmed by the product's own description: the pilot keys in what the controller said. TaxiTrace (#8 on the board) is the layer that hears it. One sentence in the pitch, no more.
+	5
+	"heards monitor…"
+	Not in the transcript. Likely Schneider's "hazards" ("a tool to identify potential hazards in critical phases of flight") or "hearback" (the controller's hear-back of the readback). Both are already in the design.
+	No action.
+	6
+	CPDLC
+	FAA Data Comm: Departure Clearance (DCL) at "more than 60 CPDLC-DCL-enabled airports" (NBAA, 2022); en-route CPDLC requires coverage "above 16,000 feet MSL" and there are "currently no plans to provide CPDLC service at approach facilities."
+	Schneider's correction, from the FAA's own page: text is pre-departure and en route; nothing textual exists for the movement area. The dead-air data-link premise is closed.
+	7
+	Controller-side visualization
+	Joe's MVP call; Schneider agreed implicitly (his pilot display is "eventually").
+	Decided. Addendum 11 §7.
+	8
+	Simplify airport display; recognize main areas
+	The diagram's named areas: Terminal A, B, C; alleys 1–19; General Aviation Parking; Transient Parking; Fire Station; Air Carrier Maintenance; NWS; TWR.
+	In lga_graph.json as named_areas. "Coming from the terminal, alley 15" resolves to a start node.
+	9
+	"System would know runway 3"
+	Joe's hypothetical at Martin State; LGA's runways are 4/22 and 13/31.
+	Replace with 4/22 and 13/31 everywhere; the Logan exercise adds 27 and 33L.
+	10
+	7110.65BB phraseology; chapter 3 section 7 link
+	The current order is JO 7110.65BB (the FAA page header). 3-7-2: "The taxi clearance/route must include the specific route to follow." Phraseology: "RUNWAY (number), TAXI VIA (route as necessary)"; "HOLD SHORT OF (location)"; "CROSS (runway) at (runway/taxiway)"; "HOLD POSITION"; "TAXI/CONTINUE TAXIING/PROCEED VIA (route)". Readback: "Request a read back of runway hold short instructions when it is not received from the pilot/vehicle operator" — "READ BACK HOLD INSTRUCTIONS." Crossings: "An aircraft must have crossed a previous runway before another runway crossing clearance may be issued" (exception: centrelines ≤ 1,300 ft apart); "Issue a crossing clearance to vehicles for each runway their route crosses."
+	This is the grammar. Every pattern in phraseology_grammar.json is one of these strings. United 2384's real clearance that night — "Runway 13, taxi via November, Alpha, Echo, hold short runway 4" — is the 3-7-2 form exactly.
+	11
+	"Look at the way taxi instructions are formatted, so how AI can parse that"
+	Runway first, then "taxi via", then the route, then the hold-short, then (separately) crossings one runway at a time. Departures: "RUNWAY (number), LINE UP AND WAIT" (3-9-4) and "RUNWAY (number), CLEARED FOR TAKEOFF" (3-9-10), "CANCEL TAKEOFF CLEARANCE". Arrivals: "RUNWAY (number) CLEARED TO LAND" with "traffic holding in position" when LUAW traffic exists (3-10-5).
+	Runway-first ordering is the parser's anchor: the word RUNWAY followed by a number starts a clearance; what follows classifies it. The public captions broke exactly where the grammar is strongest (see Addendum 13 §4), which is the ASR slide.
+	12
+	LaGuardia map link
+	d-TPP 00289AD, cycle NE-2, 01–29 Oct 2026. Read at 600 dpi.
+	lga_graph.json (Addendum 13). Verify connector order against the PNG.
+	13
+	VASAviation reconstruction
+	Their edit of LiveATC audio with captions.
+	Sequence source only; re-voice. The auto-captions are the ASR exhibit, attributed to YouTube's captions.
+	14
+	Taxiway dataset: names, intersections, routes; "the center might be the challenge"
+	Done as a graph; the centre (HS1/HS2: P, R, S, G, Q, AA, B meeting at the runway intersection) is the part flagged "best reading."
+	Tomorrow's first visual check with the diagram open.
+	15
+	Runway incursion categories
+	FAA: a runway incursion is "any occurrence at an airport involving the incorrect presence of an aircraft, vehicle or person on the protected area of a surface designated for the landing and take off of aircraft." A: "a collision was narrowly avoided." B: "significant potential for collision… time critical corrective/evasive response." C: "ample time and/or distance to avoid a collision." D: "no immediate safety consequences." Types: Operational Incident (controller: less than required separation, or clearing to take off/land on a closed runway), Pilot Deviation, Vehicle/Pedestrian Deviation.
+	In compat_matrix.json for the UI. The monitor's rules target the Operational-Incident type — the authorization conflict — which is the one type a position-based net sees last, because nothing has moved yet when it happens. Do not assign a category to LaGuardia or Logan yourself.
+	2. The one more thing the notes led to: Runway Status Lights
+The LGA diagram says "Runway Status Lights in operation," and the FAA lists LaGuardia among the twenty RWSL sites. RWSL are "embedded in the pavement of runways and taxiways, designed to automatically signal pilots and vehicle operators when it is unsafe to enter, cross, or begin takeoff." Runway Entrance Lights illuminate "when there is high speed traffic on the runway or there is an aircraft on final approach"; Takeoff Hold Lights when "there is another aircraft or vehicle on the runway or about to enter the runway." They run off ASDE-X, are "a fully automatic, advisory system," and "do not substitute for an Air Traffic Control clearance." Ground vehicle operators are expected to hold when they are red.
+So LaGuardia had both of the FAA's surface safety nets. Whether the entrance lights at Delta were lit at 10:30 that night, and whether the truck could see them, is the NTSB's question, not ours — do not speculate on stage. The honest line is narrower and stronger: both nets key on surveillance; the vehicle was not on surveillance; the clearance was on the radio; the engine keys on the clearance.
+3. What the two new files are
+phraseology_grammar.json — 16 patterns, each quoting its 7110.65 paragraph, with regexes over normalised text, the slots they fill, and "as heard" examples from the LaGuardia and Logan records; callsign patterns including the abbreviated "234" the LGA controller used twice and a look-alike guard; the number-word and phonetic tables; and the nine caption errors with their repairs. Rule of the file: never fill a slot that was not heard; null is a value, and null hold-short means acknowledged = UNKNOWN.
+compat_matrix.json — six reservation types on a runway (LANDING, TAKEOFF, LUAW, CROSSING, OCCUPYING, CLOSED), four severities (CONFLICT, CAUTION, ADVISED, REMINDER), and thirteen rules R1–R13, each with its 7110.65 citation and the scenario that exercises it. The three that carry the demo: R1 (crossing vs active landing → LaGuardia at +40 s), R4 (takeoff vs landing on intersecting runways; ADVISED when traffic information was issued → the LaGuardia 0:13 negative case; CONFLICT when it was not → Logan at 11:33:43), R7 (hold-short not read back → the clipped case). Timers R8 (close out the crossing) and R9 (LUAW 90 s) are the two Joe named. The warning object names both authorizations, both source transmissions, the rule, and what would clear it.
+Both files are derived, not authoritative: a controller will find edge cases (LAHSO, multiple runway crossings within 1,300 ft, helicopter ops). Say "derived from JO 7110.65BB chapter 3" on the slide, and nothing stronger.
+4. How the files map onto tomorrow's hours (Addendum 11 §7)
+* 09:00–10:00: load lga_graph.json, scenarios.json, compat_matrix.json, phraseology_grammar.json. Nothing is designed after 10:00.
+* 10:00–13:00: engine. Reservations from events; R1–R13 as functions; unit test = Logan fires R4 CONFLICT at t=82 naming DAL2351 (t=14) and AAL3161 (t=82); LaGuardia fires R1 at t=+40 and does not fire at t=−577.
+* 13:00–15:00: parser from the grammar; run the local recogniser on the ATCOSIM/ATCO2 sample; report the number; show the caption-error pairs beside the grammar's repairs.
+* 15:00–17:00: runway strip, lanes renamed to the five states, LaGuardia as-is/to-be, Logan 30 s, hard-stop freeze-frame.
+* README: datasets and licences (FAA d-TPP public domain; JO 7110.65 public; NTSB public; ATCOSIM/ATCO2 per their licences; LGA audio re-voiced, VASAviation not redistributed), the stack, the limits, both advisors.
+5. What not to say, collected from this pass
+"Via FIS-B." "ASDE-X would have…" "The lights were red/not red." "This would have prevented LaGuardia." "Safety management system" as the product name. "Three times in the last year." "Dulles." "Narita." "Channel."

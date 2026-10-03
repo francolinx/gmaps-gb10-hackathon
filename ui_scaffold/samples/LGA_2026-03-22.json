@@ -1,0 +1,6352 @@
+{
+ "scenario": {
+  "id": "LGA_2026-03-22",
+  "title": "LaGuardia, Mar 22, 2026 \u2014 crossing clearance issued on runway 4 with a landing clearance active",
+  "airport": "KLGA",
+  "runways_in_use": {
+   "arrivals": "04",
+   "departures": "13"
+  },
+  "t0_definition": "t=0 is the Jazz 646 landing clearance (video 9:50). Negative times are earlier in the same video.",
+  "frequency_note": "The controller was working two frequencies (he says so at video 2:49). The trucks answered 'LaGuardia Tower' when asked whether they were on ground or tower (10:15), so the crossing request and clearance appear to have been on the tower frequency. This is from a secondary source; the NTSB docket will settle it.",
+  "expected_flags": [
+   {
+    "t": 40,
+    "rule": "runway_crossing_vs_active",
+    "runway": "04",
+    "a": "Jazz 646 LANDING_CLEARANCE t=0",
+    "b": "Truck 1 and company CROSS 04 at D t=40",
+    "severity": "conflict",
+    "explain": "Runway 4 has an active landing authorization (aircraft number two on final) and a crossing authorization at Delta issued 40 s later. Both require the runway 4 protected area."
+   },
+   {
+    "t": -577,
+    "rule": "takeoff_vs_crossing",
+    "runway": "13",
+    "severity": "none",
+    "explain": "NEGATIVE CASE: takeoff clearance on 13 with traffic inside 3 miles for intersecting runway 4 is normal LGA intersecting-runway operation. The compatibility matrix must NOT flag this. Use it as the false-positive test."
+   }
+  ],
+  "margins": {
+   "flag_to_controller_first_stop_s": 8,
+   "flag_to_collision_report_s": 36,
+   "landing_clearance_to_crossing_s": 40
+  }
+ },
+ "timeline": [
+  {
+   "t": -577,
+   "freq": "tower",
+   "text": "United 2384, traffic inside three mile final runway 4, runway 13, cleared for takeoff.",
+   "event": {
+    "event_id": "ev00001",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAKEOFF_CLEARANCE",
+    "raw_text": "United 2384, traffic inside three mile final runway 4, runway 13, cleared for takeoff.",
+    "normalized_text": "TRAFFIC INSIDE 3 MILE FINAL RUNWAY 4 , RUNWAY 13 , CLEARED FOR TAKEOFF .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-577",
+    "source_start_s": -577,
+    "source_end_s": null,
+    "event_time": -577,
+    "received_time": -577,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": "TRAFFIC INSIDE 3 MILE FINAL RUNWAY 4",
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -572,
+   "freq": "tower",
+   "text": "Cleared for takeoff 13, United 2384.",
+   "event": {
+    "event_id": "ev00002",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAKEOFF_CLEARANCE",
+    "raw_text": "Cleared for takeoff 13, United 2384.",
+    "normalized_text": "CLEARED FOR TAKEOFF 13 , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-572",
+    "source_start_s": -572,
+    "source_end_s": null,
+    "event_time": -572,
+    "received_time": -572,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -556,
+   "freq": "tower",
+   "text": "United 2384 is rejecting on 13.",
+   "event": {
+    "event_id": "ev00003",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_REJECTED_TAKEOFF",
+    "raw_text": "United 2384 is rejecting on 13.",
+    "normalized_text": "IS REJECTING ON 13 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-556",
+    "source_start_s": -556,
+    "source_end_s": null,
+    "event_time": -556,
+    "received_time": -556,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -550,
+   "freq": "tower",
+   "text": "Roger, make the right turn at Lima and a left turn on Bravo. Do you require any assistance?",
+   "event": {
+    "event_id": "ev00004",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "Roger, make the right turn at Lima and a left turn on Bravo. Do you require any assistance?",
+    "normalized_text": "ROGER , MAKE RIGHT TURN AT L AND LEFT TURN ON B . DO YOU REQUIRE ANY ASSISTANCE ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-550",
+    "source_start_s": -550,
+    "source_end_s": null,
+    "event_time": -550,
+    "received_time": -550,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "L",
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "L",
+      "candidates": [
+       "KLGA:TWY:L"
+      ]
+     },
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "L",
+      "taxiway_id": "KLGA:TWY:L",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "B",
+      "taxiway_id": "KLGA:TWY:B",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -543,
+   "freq": "tower",
+   "text": "Negative. Right turn on Lima and left on Bravo, United 2384.",
+   "event": {
+    "event_id": "ev00005",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAXI",
+    "raw_text": "Negative. Right turn on Lima and left on Bravo, United 2384.",
+    "normalized_text": "NEGATIVE . RIGHT TURN ON L AND LEFT ON B , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-543",
+    "source_start_s": -543,
+    "source_end_s": null,
+    "event_time": -543,
+    "received_time": -543,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "L",
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "L",
+      "candidates": [
+       "KLGA:TWY:L"
+      ]
+     },
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -543,
+   "freq": "tower",
+   "text": "Contact ground 121.7.",
+   "event": {
+    "event_id": "ev00006",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "FREQ_CHANGE",
+    "raw_text": "Contact ground 121.7.",
+    "normalized_text": "CONTACT GROUND 121 . 7 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-543",
+    "source_start_s": -543,
+    "source_end_s": null,
+    "event_time": -543,
+    "received_time": -543,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -534,
+   "freq": "ground",
+   "text": "Ground, 2384 is on Bravo.",
+   "event": {
+    "event_id": "ev00007",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_POSITION",
+    "raw_text": "Ground, 2384 is on Bravo.",
+    "normalized_text": "GROUND , IS ON B .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-534",
+    "source_start_s": -534,
+    "source_end_s": null,
+    "event_time": -534,
+    "received_time": -534,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -508,
+   "freq": "ground",
+   "text": "2384, Mike, Alpha, hold short of Kilo, and when able say the reason for the abort.",
+   "event": {
+    "event_id": "ev00008",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "2384, Mike, Alpha, hold short of Kilo, and when able say the reason for the abort.",
+    "normalized_text": "M , A , HOLD SHORT OF K , AND WHEN ABLE SAY REASON FOR ABORT .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-508",
+    "source_start_s": -508,
+    "source_end_s": null,
+    "event_time": -508,
+    "received_time": -508,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "M",
+     "A"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "M",
+      "candidates": [
+       "KLGA:TWY:M"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "taxiway": "K"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "M",
+      "taxiway_id": "KLGA:TWY:M",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "A",
+      "taxiway_id": "KLGA:TWY:A",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -496,
+   "freq": "ground",
+   "text": "We need to hold position for a little bit, United 2384.",
+   "event": {
+    "event_id": "ev00009",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "raw_text": "We need to hold position for a little bit, United 2384.",
+    "normalized_text": "WE NEED TO HOLD POSITION FOR LITTLE BIT , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-496",
+    "source_start_s": -496,
+    "source_end_s": null,
+    "event_time": -496,
+    "received_time": -496,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.6,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -492,
+   "freq": "ground",
+   "text": "No problem. Can you hold short of Mike, or do you need to stay right there?",
+   "event": {
+    "event_id": "ev00010",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "raw_text": "No problem. Can you hold short of Mike, or do you need to stay right there?",
+    "normalized_text": "NO PROBLEM . CAN YOU HOLD SHORT OF M , OR DO YOU NEED TO STAY RIGHT THERE ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-492",
+    "source_start_s": -492,
+    "source_end_s": null,
+    "event_time": -492,
+    "received_time": -492,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "M"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": "ev00008"
+   }
+  },
+  {
+   "t": -487,
+   "freq": "ground",
+   "text": "United 2384, hold short of Mike, and when you get a chance let me know the reason for the abort.",
+   "event": {
+    "event_id": "ev00011",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "raw_text": "United 2384, hold short of Mike, and when you get a chance let me know the reason for the abort.",
+    "normalized_text": "HOLD SHORT OF M , AND WHEN YOU GET CHANCE LET ME KNOW REASON FOR ABORT .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-487",
+    "source_start_s": -487,
+    "source_end_s": null,
+    "event_time": -487,
+    "received_time": -487,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "M"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": "ev00010"
+   }
+  },
+  {
+   "t": -479,
+   "freq": "ground",
+   "text": "2384, we had an anti-ice light come on.",
+   "event": {
+    "event_id": "ev00012",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, we had an anti-ice light come on.",
+    "normalized_text": "WE HAD ANTI ICE LIGHT COME ON .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-479",
+    "source_start_s": -479,
+    "source_end_s": null,
+    "event_time": -479,
+    "received_time": -479,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -474,
+   "freq": "ground",
+   "text": "2384, make it Bravo, short of November.",
+   "event": {
+    "event_id": "ev00013",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "2384, make it Bravo, short of November.",
+    "normalized_text": "MAKE IT B , SHORT OF N .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-474",
+    "source_start_s": -474,
+    "source_end_s": null,
+    "event_time": -474,
+    "received_time": -474,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "taxiway": "N"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": "ev00011",
+    "route_check": [
+     {
+      "word": "B",
+      "taxiway_id": "KLGA:TWY:B",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -454,
+   "freq": "ground",
+   "text": "2384, make it Bravo, short of Zulu please.",
+   "event": {
+    "event_id": "ev00014",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "2384, make it Bravo, short of Zulu please.",
+    "normalized_text": "MAKE IT B , SHORT OF Z .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-454",
+    "source_start_s": -454,
+    "source_end_s": null,
+    "event_time": -454,
+    "received_time": -454,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "taxiway": "Z"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": "ev00013",
+    "route_check": [
+     {
+      "word": "B",
+      "taxiway_id": "KLGA:TWY:B",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -447,
+   "freq": "ground",
+   "text": "Bravo short of Zulu, 2384, and ground we need to hold position for now.",
+   "event": {
+    "event_id": "ev00015",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "HOLD_SHORT",
+    "raw_text": "Bravo short of Zulu, 2384, and ground we need to hold position for now.",
+    "normalized_text": "B SHORT OF Z , 2384 , AND GROUND WE NEED TO HOLD POSITION FOR NOW .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-447",
+    "source_start_s": -447,
+    "source_end_s": null,
+    "event_time": -447,
+    "received_time": -447,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "Z"
+     }
+    ],
+    "hold_position": true,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -421,
+   "freq": "ground",
+   "text": "You got stepped on, I had two frequencies. Go ahead, United 2384.",
+   "event": {
+    "event_id": "ev00016",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "You got stepped on, I had two frequencies. Go ahead, United 2384.",
+    "normalized_text": "YOU GOT STEPPED ON , I HAD 2 FREQUENCIES . GO AHEAD , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-421",
+    "source_start_s": -421,
+    "source_end_s": null,
+    "event_time": -421,
+    "received_time": -421,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -343,
+   "freq": "ground",
+   "text": "Ground, United 2384, ready to taxi.",
+   "event": {
+    "event_id": "ev00017",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_READY",
+    "raw_text": "Ground, United 2384, ready to taxi.",
+    "normalized_text": "GROUND , , READY TO TAXI .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-343",
+    "source_start_s": -343,
+    "source_end_s": null,
+    "event_time": -343,
+    "received_time": -343,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -340,
+   "freq": "ground",
+   "text": "Information India, United 2384, roger. Runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+   "event": {
+    "event_id": "ev00018",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "Information India, United 2384, roger. Runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+    "normalized_text": "INFORMATION I , , ROGER . RUNWAY 13 , TAXI VIA N , A , E , HOLD SHORT RUNWAY 4 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-340",
+    "source_start_s": -340,
+    "source_end_s": null,
+    "event_time": -340,
+    "received_time": -340,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": [
+     "N",
+     "A",
+     "E"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "N",
+      "candidates": [
+       "KLGA:TWY:N"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     },
+     {
+      "word": "E",
+      "candidates": [
+       "KLGA:TWY:E"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "runway": "04"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "N",
+      "taxiway_id": "KLGA:TWY:N",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "A",
+      "taxiway_id": "KLGA:TWY:A",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "E",
+      "taxiway_id": "KLGA:TWY:E",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -329,
+   "freq": "ground",
+   "text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+   "event": {
+    "event_id": "ev00019",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAXI",
+    "raw_text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+    "normalized_text": "RUNWAY 13 , N , A , E , HOLD SHORT RUNWAY 4 , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-329",
+    "source_start_s": -329,
+    "source_end_s": null,
+    "event_time": -329,
+    "received_time": -329,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": [
+     "N",
+     "A",
+     "E"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "N",
+      "candidates": [
+       "KLGA:TWY:N"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     },
+     {
+      "word": "E",
+      "candidates": [
+       "KLGA:TWY:E"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "runway": "04"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -319,
+   "freq": "tower",
+   "text": "2384, wind 070 at 5, runway 13, cleared for takeoff.",
+   "event": {
+    "event_id": "ev00020",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAKEOFF_CLEARANCE",
+    "raw_text": "2384, wind 070 at 5, runway 13, cleared for takeoff.",
+    "normalized_text": "WIND 070 AT 5 , RUNWAY 13 , CLEARED FOR TAKEOFF .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-319",
+    "source_start_s": -319,
+    "source_end_s": null,
+    "event_time": -319,
+    "received_time": -319,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -319,
+   "freq": "tower",
+   "text": "Cleared for takeoff 13, 2384.",
+   "event": {
+    "event_id": "ev00021",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAKEOFF_CLEARANCE",
+    "raw_text": "Cleared for takeoff 13, 2384.",
+    "normalized_text": "CLEARED FOR TAKEOFF 13 , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-319",
+    "source_start_s": -319,
+    "source_end_s": null,
+    "event_time": -319,
+    "received_time": -319,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -309,
+   "freq": "tower",
+   "text": "Tower, United 2384 is rejecting on runway 13.",
+   "event": {
+    "event_id": "ev00022",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_REJECTED_TAKEOFF",
+    "raw_text": "Tower, United 2384 is rejecting on runway 13.",
+    "normalized_text": "TOWER , IS REJECTING ON RUNWAY 13 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-309",
+    "source_start_s": -309,
+    "source_end_s": null,
+    "event_time": -309,
+    "received_time": -309,
+    "runway": "13",
+    "runway_end_candidates": [
+     "KLGA:END:13"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -304,
+   "freq": "tower",
+   "text": "2384, roger. So you're aborting the takeoff again?",
+   "event": {
+    "event_id": "ev00023",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, roger. So you're aborting the takeoff again?",
+    "normalized_text": "ROGER . SO YOU'RE ABORTING TAKEOFF AGAIN ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-304",
+    "source_start_s": -304,
+    "source_end_s": null,
+    "event_time": -304,
+    "received_time": -304,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -297,
+   "freq": "tower",
+   "text": "2384, make the right at Mike and then right on Bravo for me.",
+   "event": {
+    "event_id": "ev00024",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "2384, make the right at Mike and then right on Bravo for me.",
+    "normalized_text": "MAKE RIGHT AT M AND THEN RIGHT ON B FOR ME .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-297",
+    "source_start_s": -297,
+    "source_end_s": null,
+    "event_time": -297,
+    "received_time": -297,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "M",
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "M",
+      "candidates": [
+       "KLGA:TWY:M"
+      ]
+     },
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "M",
+      "taxiway_id": "KLGA:TWY:M",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "B",
+      "taxiway_id": "KLGA:TWY:B",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -289,
+   "freq": "tower",
+   "text": "Right on Mike and right on Bravo, United 2384.",
+   "event": {
+    "event_id": "ev00025",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "UAL2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAXI",
+    "raw_text": "Right on Mike and right on Bravo, United 2384.",
+    "normalized_text": "RIGHT ON M AND RIGHT ON B , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-289",
+    "source_start_s": -289,
+    "source_end_s": null,
+    "event_time": -289,
+    "received_time": -289,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "M",
+     "B"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "M",
+      "candidates": [
+       "KLGA:TWY:M"
+      ]
+     },
+     {
+      "word": "B",
+      "candidates": [
+       "KLGA:TWY:B"
+      ]
+     }
+    ],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -286,
+   "freq": "tower",
+   "text": "2384, once you join Bravo, hold short of Lima, and when you get a minute to take a breath, let me know the reason for the abort this time.",
+   "event": {
+    "event_id": "ev00026",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "raw_text": "2384, once you join Bravo, hold short of Lima, and when you get a minute to take a breath, let me know the reason for the abort this time.",
+    "normalized_text": "ONCE YOU JOIN B , HOLD SHORT OF L , AND WHEN YOU GET MINUTE TO TAKE BREATH , LET ME KNOW REASON FOR ABORT THIS TIME .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-286",
+    "source_start_s": -286,
+    "source_end_s": null,
+    "event_time": -286,
+    "received_time": -286,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "L"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -279,
+   "freq": "tower",
+   "text": "Bravo, short of Lima, we'll let you know, 2384.",
+   "event": {
+    "event_id": "ev00027",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "HOLD_SHORT",
+    "raw_text": "Bravo, short of Lima, we'll let you know, 2384.",
+    "normalized_text": "B , SHORT OF L , WE'LL LET YOU KNOW , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-279",
+    "source_start_s": -279,
+    "source_end_s": null,
+    "event_time": -279,
+    "received_time": -279,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "L"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -266,
+   "freq": "tower",
+   "text": "2384, we have an odor on the plane as well at this time. We are going to be going back to the gate, request fire as well.",
+   "event": {
+    "event_id": "ev00028",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "raw_text": "2384, we have an odor on the plane as well at this time. We are going to be going back to the gate, request fire as well.",
+    "normalized_text": "WE HAVE ODOR ON PLANE AS WELL AT THIS TIME . WE ARE GOING TO BE GOING BACK TO GATE , REQUEST FIRE AS WELL .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-266",
+    "source_start_s": -266,
+    "source_end_s": null,
+    "event_time": -266,
+    "received_time": -266,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.6,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -259,
+   "freq": "tower",
+   "text": "Okay. Do you know what gate? Is this odor like a smoke odor, like a fire?",
+   "event": {
+    "event_id": "ev00029",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Okay. Do you know what gate? Is this odor like a smoke odor, like a fire?",
+    "normalized_text": "DO YOU KNOW WHAT GATE ? IS THIS ODOR LIKE SMOKE ODOR , LIKE FIRE ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-259",
+    "source_start_s": -259,
+    "source_end_s": null,
+    "event_time": -259,
+    "received_time": -259,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -249,
+   "freq": "tower",
+   "text": "No, it was a weird odor. We can't get a hold of anyone at ops for a gate assignment.",
+   "event": {
+    "event_id": "ev00030",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "PILOT",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "No, it was a weird odor. We can't get a hold of anyone at ops for a gate assignment.",
+    "normalized_text": "NO , IT WAS WEIRD ODOR . WE CAN'T GET HOLD OF ANYONE AT OPS FOR GATE ASSIGNMENT .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-249",
+    "source_start_s": -249,
+    "source_end_s": null,
+    "event_time": -249,
+    "received_time": -249,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -233,
+   "freq": "phone",
+   "text": "Tower calls the ramp and the Port Authority about a gate (several calls, video 5:57\u20136:55).",
+   "kind": "PHONE"
+  },
+  {
+   "t": -165,
+   "freq": "tower",
+   "text": "2384, I just got off the phone with your ramp, they don't have a gate for you. Is this still an emergency? Do you still need us to send fire?",
+   "event": {
+    "event_id": "ev00031",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, I just got off the phone with your ramp, they don't have a gate for you. Is this still an emergency? Do you still need us to send fire?",
+    "normalized_text": "I GOT OFF PHONE WITH YOUR RAMP , THEY DON'T HAVE GATE FOR YOU . IS THIS STILL EMERGENCY ? DO YOU STILL NEED US TO SEND FIRE ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-165",
+    "source_start_s": -165,
+    "source_end_s": null,
+    "event_time": -165,
+    "received_time": -165,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -148,
+   "freq": "tower",
+   "text": "Yeah, there's still an alert in the back.",
+   "event": {
+    "event_id": "ev00032",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "PILOT",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Yeah, there's still an alert in the back.",
+    "normalized_text": "YEAH , THERE'S STILL ALERT IN BACK .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-148",
+    "source_start_s": -148,
+    "source_end_s": null,
+    "event_time": -148,
+    "received_time": -148,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -138,
+   "freq": "tower",
+   "text": "2384, do you plan on evacuating at all?",
+   "event": {
+    "event_id": "ev00033",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, do you plan on evacuating at all?",
+    "normalized_text": "DO YOU PLAN ON EVACUATING AT ALL ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-138",
+    "source_start_s": -138,
+    "source_end_s": null,
+    "event_time": -138,
+    "received_time": -138,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -136,
+   "freq": "tower",
+   "text": "Negative.",
+   "event": {
+    "event_id": "ev00034",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "PILOT",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Negative.",
+    "normalized_text": "NEGATIVE .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-136",
+    "source_start_s": -136,
+    "source_end_s": null,
+    "event_time": -136,
+    "received_time": -136,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -122,
+   "freq": "tower",
+   "text": "2384, make the left turn on Kilo and then right on Alpha, short of Echo.",
+   "event": {
+    "event_id": "ev00035",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "TAXI",
+    "raw_text": "2384, make the left turn on Kilo and then right on Alpha, short of Echo.",
+    "normalized_text": "MAKE LEFT TURN ON K AND THEN RIGHT ON A , SHORT OF E .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-122",
+    "source_start_s": -122,
+    "source_end_s": null,
+    "event_time": -122,
+    "received_time": -122,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "K",
+     "A"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "K",
+      "candidates": [
+       "KLGA:TWY:K"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "taxiway": "E"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null,
+    "route_check": [
+     {
+      "word": "K",
+      "taxiway_id": "KLGA:TWY:K",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     },
+     {
+      "word": "A",
+      "taxiway_id": "KLGA:TWY:A",
+      "status": "no_crossing_data_in_draft_graph",
+      "crossings": []
+     }
+    ]
+   }
+  },
+  {
+   "t": -120,
+   "freq": "tower",
+   "text": "Kilo, Alpha, short of Echo, 2384.",
+   "event": {
+    "event_id": "ev00036",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "TAXI",
+    "raw_text": "Kilo, Alpha, short of Echo, 2384.",
+    "normalized_text": "K , A , SHORT OF E , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-120",
+    "source_start_s": -120,
+    "source_end_s": null,
+    "event_time": -120,
+    "received_time": -120,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": [
+     "K",
+     "A"
+    ],
+    "route_surface_candidates": [
+     {
+      "word": "K",
+      "candidates": [
+       "KLGA:TWY:K"
+      ]
+     },
+     {
+      "word": "A",
+      "candidates": [
+       "KLGA:TWY:A"
+      ]
+     }
+    ],
+    "hold_constraints": [
+     {
+      "taxiway": "E"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -113,
+   "freq": "tower",
+   "text": "2384 is declaring an emergency. The flight attendants in the back are feeling ill because of the odor. We will need to go into any available gate at this time.",
+   "event": {
+    "event_id": "ev00037",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_EMERGENCY",
+    "raw_text": "2384 is declaring an emergency. The flight attendants in the back are feeling ill because of the odor. We will need to go into any available gate at this time.",
+    "normalized_text": "IS DECLARING EMERGENCY . FLIGHT ATTENDANTS IN BACK ARE FEELING ILL BECAUSE OF ODOR . WE WILL NEED TO GO INTO ANY AVAILABLE GATE AT THIS TIME .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-113",
+    "source_start_s": -113,
+    "source_end_s": null,
+    "event_time": -113,
+    "received_time": -113,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -104,
+   "freq": "tower",
+   "text": "Okay, roger that.",
+   "event": {
+    "event_id": "ev00038",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Okay, roger that.",
+    "normalized_text": "ROGER THAT .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-104",
+    "source_start_s": -104,
+    "source_end_s": null,
+    "event_time": -104,
+    "received_time": -104,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -70,
+   "freq": "phone",
+   "text": "Tower to ramp: no gate; a stair truck is offered. 'He's on taxiway Alpha just east of taxiway Kilo.'",
+   "kind": "PHONE"
+  },
+  {
+   "t": -58,
+   "freq": "tower",
+   "text": "2384, the ramp doesn't have a gate for you yet, I'm trying to get in touch with the Port Authority.",
+   "event": {
+    "event_id": "ev00039",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, the ramp doesn't have a gate for you yet, I'm trying to get in touch with the Port Authority.",
+    "normalized_text": "RAMP DOESN'T HAVE GATE FOR YOU YET , I'M TRYING TO GET IN TOUCH WITH PORT AUTHORITY .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-58",
+    "source_start_s": -58,
+    "source_end_s": null,
+    "event_time": -58,
+    "received_time": -58,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -50,
+   "freq": "tower",
+   "text": "And the fire trucks are over there. They're going to bring a stair truck just in case you want to evacuate. Let me know if you do.",
+   "event": {
+    "event_id": "ev00040",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "And the fire trucks are over there. They're going to bring a stair truck just in case you want to evacuate. Let me know if you do.",
+    "normalized_text": "AND FIRE TRUCKS ARE OVER THERE . THEY'RE GOING TO BRING STAIR TRUCK IN CASE YOU WANT TO EVACUATE . LET ME KNOW IF YOU DO .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-50",
+    "source_start_s": -50,
+    "source_end_s": null,
+    "event_time": -50,
+    "received_time": -50,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -44,
+   "freq": "tower",
+   "text": "Copy. We'd prefer to wait on a gate, but we only have so much time, there's still a bit of an odor in the back.",
+   "event": {
+    "event_id": "ev00041",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "PILOT",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Copy. We'd prefer to wait on a gate, but we only have so much time, there's still a bit of an odor in the back.",
+    "normalized_text": "COPY . WE'D PREFER TO WAIT ON GATE , BUT WE ONLY HAVE SO MUCH TIME , THERE'S STILL BIT OF ODOR IN BACK .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-44",
+    "source_start_s": -44,
+    "source_end_s": null,
+    "event_time": -44,
+    "received_time": -44,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -32,
+   "freq": "tower",
+   "text": "Jazz 646 (check-in on tower).",
+   "event": {
+    "event_id": "ev00042",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "JZA646"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "CHECK_IN",
+    "raw_text": "Jazz 646 (check-in on tower).",
+    "normalized_text": "CHECK IN ON TOWER .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-32",
+    "source_start_s": -32,
+    "source_end_s": null,
+    "event_time": -32,
+    "received_time": -32,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.6,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -30,
+   "freq": "tower",
+   "text": "Delta 520, going to lane 8, just hold short of Lima on runway 13 and verify with the ramp that you'll be able to get in.",
+   "event": {
+    "event_id": "ev00043",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "DAL520"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "raw_text": "Delta 520, going to lane 8, just hold short of Lima on runway 13 and verify with the ramp that you'll be able to get in.",
+    "normalized_text": "GOING TO LANE 8 , HOLD SHORT OF L ON RUNWAY 13 AND VERIFY WITH RAMP THAT YOU'LL BE ABLE TO GET IN .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-30",
+    "source_start_s": -30,
+    "source_end_s": null,
+    "event_time": -30,
+    "received_time": -30,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "L",
+      "on_runway": "13"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -21,
+   "freq": "tower",
+   "text": "Hold short of Lima on runway 13, we'll talk to ramp and get back to you, Delta 520.",
+   "event": {
+    "event_id": "ev00044",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?520"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "HOLD_SHORT",
+    "raw_text": "Hold short of Lima on runway 13, we'll talk to ramp and get back to you, Delta 520.",
+    "normalized_text": "HOLD SHORT OF L ON RUNWAY 13 , WE'LL TALK TO RAMP AND GET BACK TO YOU , D .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-21",
+    "source_start_s": -21,
+    "source_end_s": null,
+    "event_time": -21,
+    "received_time": -21,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [
+     {
+      "taxiway": "L",
+      "on_runway": "13"
+     }
+    ],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -15,
+   "freq": "tower",
+   "text": "Just verifying, there's some shuffling of gates going on due to an inbound that had an issue.",
+   "event": {
+    "event_id": "ev00045",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Just verifying, there's some shuffling of gates going on due to an inbound that had an issue.",
+    "normalized_text": "VERIFYING , THERE'S SOME SHUFFLING OF GATES GOING ON DUE TO INBOUND THAT HAD ISSUE .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-15",
+    "source_start_s": -15,
+    "source_end_s": null,
+    "event_time": -15,
+    "received_time": -15,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": -9,
+   "freq": "tower",
+   "text": "Jazz 646, runway 4, number two.",
+   "event": {
+    "event_id": "ev00046",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "JZA646"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Jazz 646, runway 4, number two.",
+    "normalized_text": "RUNWAY 4 , NUMBER 2 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#-9",
+    "source_start_s": -9,
+    "source_end_s": null,
+    "event_time": -9,
+    "received_time": -9,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 0,
+   "freq": "tower",
+   "text": "Runway 4, cleared to land, number two, Jazz 646.",
+   "event": {
+    "event_id": "ev00047",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "JZA646"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "LANDING_CLEARANCE",
+    "raw_text": "Runway 4, cleared to land, number two, Jazz 646.",
+    "normalized_text": "RUNWAY 4 , CLEARED TO LAND , NUMBER 2 , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#0",
+    "source_start_s": 0,
+    "source_end_s": null,
+    "event_time": 0,
+    "received_time": 0,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": "2",
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 0,
+   "freq": "tower",
+   "text": "2384, do you have a gate available at this time? Otherwise we will probably be requesting stairs.",
+   "event": {
+    "event_id": "ev00048",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "request",
+    "kind": "REQUEST_OTHER",
+    "raw_text": "2384, do you have a gate available at this time? Otherwise we will probably be requesting stairs.",
+    "normalized_text": "DO YOU HAVE GATE AVAILABLE AT THIS TIME ? OTHERWISE WE WILL PROBABLY BE REQUESTING STAIRS .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#0",
+    "source_start_s": 0,
+    "source_end_s": null,
+    "event_time": 0,
+    "received_time": 0,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.6,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 9,
+   "freq": "tower",
+   "text": "Give me one second, 2384.",
+   "event": {
+    "event_id": "ev00049",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Give me one second, 2384.",
+    "normalized_text": "GIVE ME 1 SECOND , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#9",
+    "source_start_s": 9,
+    "source_end_s": null,
+    "event_time": 9,
+    "received_time": 9,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 18,
+   "freq": "tower",
+   "text": "Stand by, United.",
+   "event": {
+    "event_id": "ev00050",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Stand by, United.",
+    "normalized_text": "STAND BY , UNITED .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#18",
+    "source_start_s": 18,
+    "source_end_s": null,
+    "event_time": 18,
+    "received_time": 18,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 21,
+   "freq": "tower",
+   "text": "Who's the vehicle needing to cross the runway?",
+   "event": {
+    "event_id": "ev00051",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Who's the vehicle needing to cross the runway?",
+    "normalized_text": "WHO'S VEHICLE NEEDING TO CROSS RUNWAY ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#21",
+    "source_start_s": 21,
+    "source_end_s": null,
+    "event_time": 21,
+    "received_time": 21,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 25,
+   "freq": "tower",
+   "text": "Emergency vehicles, are you calling on ground or are you calling on tower?",
+   "event": {
+    "event_id": "ev00052",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "Emergency vehicles, are you calling on ground or are you calling on tower?",
+    "normalized_text": "EMERGENCY VEHICLES , ARE YOU CALLING ON GROUND OR ARE YOU CALLING ON TOWER ?",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#25",
+    "source_start_s": 25,
+    "source_end_s": null,
+    "event_time": 25,
+    "received_time": 25,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 25,
+   "freq": "tower",
+   "text": "Truck 1 and company, LaGuardia Tower.",
+   "event": {
+    "event_id": "ev00053",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "TRUCK1"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "CHECK_IN",
+    "raw_text": "Truck 1 and company, LaGuardia Tower.",
+    "normalized_text": "LAGUARDIA TOWER .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#25",
+    "source_start_s": 25,
+    "source_end_s": null,
+    "event_time": 25,
+    "received_time": 25,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.6,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 34,
+   "freq": "tower",
+   "text": "Truck 1 and company, LaGuardia Tower, requesting to cross 4 at Delta.",
+   "event": {
+    "event_id": "ev00054",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "TRUCK1"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "request",
+    "kind": "CROSS_REQUEST",
+    "raw_text": "Truck 1 and company, LaGuardia Tower, requesting to cross 4 at Delta.",
+    "normalized_text": "LAGUARDIA TOWER , REQUESTING TO CROSS 4 AT D .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#34",
+    "source_start_s": 34,
+    "source_end_s": null,
+    "event_time": 34,
+    "received_time": 34,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": "D",
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 40,
+   "freq": "tower",
+   "text": "Truck 1 and company, cross 4 at Delta.",
+   "event": {
+    "event_id": "ev00055",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "TRUCK1"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "CROSS",
+    "raw_text": "Truck 1 and company, cross 4 at Delta.",
+    "normalized_text": "CROSS 4 AT D .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#40",
+    "source_start_s": 40,
+    "source_end_s": null,
+    "event_time": 40,
+    "received_time": 40,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": "D",
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 42,
+   "freq": "tower",
+   "text": "Truck 1 and company, crossing 4 at Delta.",
+   "event": {
+    "event_id": "ev00056",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "TRUCK1"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "CROSS",
+    "raw_text": "Truck 1 and company, crossing 4 at Delta.",
+    "normalized_text": "CROSSING 4 AT D .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#42",
+    "source_start_s": 42,
+    "source_end_s": null,
+    "event_time": 42,
+    "received_time": 42,
+    "runway": "04",
+    "runway_end_candidates": [
+     "KLGA:END:04"
+    ],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": "D",
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.95,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 48,
+   "freq": "tower",
+   "text": "Frontier 4195, just stop there please. Stop, stop, stop. Truck 1, stop, stop, stop.",
+   "event": {
+    "event_id": "ev00057",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "FFT4195",
+     "TRUCK1"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "CANCEL",
+    "raw_text": "Frontier 4195, just stop there please. Stop, stop, stop. Truck 1, stop, stop, stop.",
+    "normalized_text": "STOP THERE . STOP , STOP , STOP . , STOP , STOP , STOP .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#48",
+    "source_start_s": 48,
+    "source_end_s": null,
+    "event_time": 48,
+    "received_time": 48,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 55,
+   "freq": "tower",
+   "text": "2384, you're cleared in lane 8 for gate 41. 2384, proceed to the ramp.",
+   "event": {
+    "event_id": "ev00058",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?2384"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "2384, you're cleared in lane 8 for gate 41. 2384, proceed to the ramp.",
+    "normalized_text": "YOU'RE CLEARED IN LANE 8 FOR GATE 41 . 2384 , PROCEED TO RAMP .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#55",
+    "source_start_s": 55,
+    "source_end_s": null,
+    "event_time": 55,
+    "received_time": 55,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 65,
+   "freq": "tower",
+   "text": "Sorry. Truck 1, stop. Truck 1, stop, stop. Truck 1, stop.",
+   "event": {
+    "event_id": "ev00059",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "TRUCK1",
+     "TRUCK1",
+     "TRUCK1"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "CANCEL",
+    "raw_text": "Sorry. Truck 1, stop. Truck 1, stop, stop. Truck 1, stop.",
+    "normalized_text": "SORRY . , STOP . , STOP , STOP . , STOP .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#65",
+    "source_start_s": 65,
+    "source_end_s": null,
+    "event_time": 65,
+    "received_time": 65,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 72,
+   "freq": "tower",
+   "text": "4195, we're staying here.",
+   "event": {
+    "event_id": "ev00060",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?4195"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "report",
+    "kind": "REPORT_HOLDING_POSITION",
+    "raw_text": "4195, we're staying here.",
+    "normalized_text": "WE'RE STAYING HERE .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#72",
+    "source_start_s": 72,
+    "source_end_s": null,
+    "event_time": 72,
+    "received_time": 72,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.8,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 76,
+   "freq": "tower",
+   "text": "Delta 263, go around, runway heading, 2000.",
+   "event": {
+    "event_id": "ev00061",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "DAL263"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "GO_AROUND",
+    "raw_text": "Delta 263, go around, runway heading, 2000.",
+    "normalized_text": "GO AROUND , RUNWAY HEADING , 2000 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#76",
+    "source_start_s": 76,
+    "source_end_s": null,
+    "event_time": 76,
+    "received_time": 76,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 76,
+   "freq": "tower",
+   "text": "646, I see you collided with a vehicle.",
+   "event": {
+    "event_id": "ev00062",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?646"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "unknown",
+    "kind": "OTHER",
+    "raw_text": "646, I see you collided with a vehicle.",
+    "normalized_text": "I SEE YOU COLLIDED WITH VEHICLE .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#76",
+    "source_start_s": 76,
+    "source_end_s": null,
+    "event_time": 76,
+    "received_time": 76,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "residue",
+    "uncertainty": {
+     "confidence_heuristic": 0.3,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 83,
+   "freq": "tower",
+   "text": "Just hold position, I know you can't move. The vehicles are responding to you now.",
+   "event": {
+    "event_id": "ev00063",
+    "airport_icao": "KLGA",
+    "actor_candidates": [],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "raw_text": "Just hold position, I know you can't move. The vehicles are responding to you now.",
+    "normalized_text": "HOLD POSITION , I KNOW YOU CAN'T MOVE . VEHICLES ARE RESPONDING TO YOU NOW .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#83",
+    "source_start_s": 83,
+    "source_end_s": null,
+    "event_time": 83,
+    "received_time": 83,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": true,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.85,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 92,
+   "freq": "tower",
+   "text": "263, go around, runway heading, 2000.",
+   "event": {
+    "event_id": "ev00064",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?263"
+    ],
+    "speaker_role": "ATC",
+    "speech_act": "instruction",
+    "kind": "GO_AROUND",
+    "raw_text": "263, go around, runway heading, 2000.",
+    "normalized_text": "GO AROUND , RUNWAY HEADING , 2000 .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#92",
+    "source_start_s": 92,
+    "source_end_s": null,
+    "event_time": 92,
+    "received_time": 92,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  },
+  {
+   "t": 92,
+   "freq": "tower",
+   "text": "Right, 2000, go around, 263.",
+   "event": {
+    "event_id": "ev00065",
+    "airport_icao": "KLGA",
+    "actor_candidates": [
+     "?263"
+    ],
+    "speaker_role": "PILOT",
+    "speech_act": "readback",
+    "kind": "GO_AROUND",
+    "raw_text": "Right, 2000, go around, 263.",
+    "normalized_text": "RIGHT , 2000 , GO AROUND , .",
+    "asr_repairs_applied": [],
+    "source_id": "LGA_2026-03-22#92",
+    "source_start_s": 92,
+    "source_end_s": null,
+    "event_time": 92,
+    "received_time": 92,
+    "runway": null,
+    "runway_end_candidates": [],
+    "route": null,
+    "route_surface_candidates": [],
+    "hold_constraints": [],
+    "hold_position": false,
+    "crossing_at": null,
+    "traffic_advisory": null,
+    "sequence": null,
+    "clipped": false,
+    "parse_path": "grammar",
+    "uncertainty": {
+     "confidence_heuristic": 0.9,
+     "note": "heuristic parser score, not a calibrated probability",
+     "unresolved": []
+    },
+    "supersedes_event_id": null
+   }
+  }
+ ],
+ "airport": {
+  "icao": "KLGA",
+  "dataset_version": "2026-10-03.draft2",
+  "status": "draft, expert review pending; topology review only"
+ },
+ "events": [
+  {
+   "event_id": "ev00001",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAKEOFF_CLEARANCE",
+   "raw_text": "United 2384, traffic inside three mile final runway 4, runway 13, cleared for takeoff.",
+   "normalized_text": "TRAFFIC INSIDE 3 MILE FINAL RUNWAY 4 , RUNWAY 13 , CLEARED FOR TAKEOFF .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-577",
+   "source_start_s": -577,
+   "source_end_s": null,
+   "event_time": -577,
+   "received_time": -577,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": "TRAFFIC INSIDE 3 MILE FINAL RUNWAY 4",
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00002",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAKEOFF_CLEARANCE",
+   "raw_text": "Cleared for takeoff 13, United 2384.",
+   "normalized_text": "CLEARED FOR TAKEOFF 13 , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-572",
+   "source_start_s": -572,
+   "source_end_s": null,
+   "event_time": -572,
+   "received_time": -572,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00003",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_REJECTED_TAKEOFF",
+   "raw_text": "United 2384 is rejecting on 13.",
+   "normalized_text": "IS REJECTING ON 13 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-556",
+   "source_start_s": -556,
+   "source_end_s": null,
+   "event_time": -556,
+   "received_time": -556,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00004",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "Roger, make the right turn at Lima and a left turn on Bravo. Do you require any assistance?",
+   "normalized_text": "ROGER , MAKE RIGHT TURN AT L AND LEFT TURN ON B . DO YOU REQUIRE ANY ASSISTANCE ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-550",
+   "source_start_s": -550,
+   "source_end_s": null,
+   "event_time": -550,
+   "received_time": -550,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "L",
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "L",
+     "candidates": [
+      "KLGA:TWY:L"
+     ]
+    },
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "L",
+     "taxiway_id": "KLGA:TWY:L",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "B",
+     "taxiway_id": "KLGA:TWY:B",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00005",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAXI",
+   "raw_text": "Negative. Right turn on Lima and left on Bravo, United 2384.",
+   "normalized_text": "NEGATIVE . RIGHT TURN ON L AND LEFT ON B , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-543",
+   "source_start_s": -543,
+   "source_end_s": null,
+   "event_time": -543,
+   "received_time": -543,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "L",
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "L",
+     "candidates": [
+      "KLGA:TWY:L"
+     ]
+    },
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00006",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "FREQ_CHANGE",
+   "raw_text": "Contact ground 121.7.",
+   "normalized_text": "CONTACT GROUND 121 . 7 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-543",
+   "source_start_s": -543,
+   "source_end_s": null,
+   "event_time": -543,
+   "received_time": -543,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00007",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_POSITION",
+   "raw_text": "Ground, 2384 is on Bravo.",
+   "normalized_text": "GROUND , IS ON B .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-534",
+   "source_start_s": -534,
+   "source_end_s": null,
+   "event_time": -534,
+   "received_time": -534,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00008",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "2384, Mike, Alpha, hold short of Kilo, and when able say the reason for the abort.",
+   "normalized_text": "M , A , HOLD SHORT OF K , AND WHEN ABLE SAY REASON FOR ABORT .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-508",
+   "source_start_s": -508,
+   "source_end_s": null,
+   "event_time": -508,
+   "received_time": -508,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "M",
+    "A"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "M",
+     "candidates": [
+      "KLGA:TWY:M"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "taxiway": "K"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "M",
+     "taxiway_id": "KLGA:TWY:M",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "A",
+     "taxiway_id": "KLGA:TWY:A",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00009",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "request",
+   "kind": "REQUEST_OTHER",
+   "raw_text": "We need to hold position for a little bit, United 2384.",
+   "normalized_text": "WE NEED TO HOLD POSITION FOR LITTLE BIT , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-496",
+   "source_start_s": -496,
+   "source_end_s": null,
+   "event_time": -496,
+   "received_time": -496,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.6,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00010",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "HOLD_SHORT",
+   "raw_text": "No problem. Can you hold short of Mike, or do you need to stay right there?",
+   "normalized_text": "NO PROBLEM . CAN YOU HOLD SHORT OF M , OR DO YOU NEED TO STAY RIGHT THERE ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-492",
+   "source_start_s": -492,
+   "source_end_s": null,
+   "event_time": -492,
+   "received_time": -492,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "M"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": "ev00008"
+  },
+  {
+   "event_id": "ev00011",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "HOLD_SHORT",
+   "raw_text": "United 2384, hold short of Mike, and when you get a chance let me know the reason for the abort.",
+   "normalized_text": "HOLD SHORT OF M , AND WHEN YOU GET CHANCE LET ME KNOW REASON FOR ABORT .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-487",
+   "source_start_s": -487,
+   "source_end_s": null,
+   "event_time": -487,
+   "received_time": -487,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "M"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": "ev00010"
+  },
+  {
+   "event_id": "ev00012",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, we had an anti-ice light come on.",
+   "normalized_text": "WE HAD ANTI ICE LIGHT COME ON .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-479",
+   "source_start_s": -479,
+   "source_end_s": null,
+   "event_time": -479,
+   "received_time": -479,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00013",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "2384, make it Bravo, short of November.",
+   "normalized_text": "MAKE IT B , SHORT OF N .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-474",
+   "source_start_s": -474,
+   "source_end_s": null,
+   "event_time": -474,
+   "received_time": -474,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "taxiway": "N"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": "ev00011",
+   "route_check": [
+    {
+     "word": "B",
+     "taxiway_id": "KLGA:TWY:B",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00014",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "2384, make it Bravo, short of Zulu please.",
+   "normalized_text": "MAKE IT B , SHORT OF Z .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-454",
+   "source_start_s": -454,
+   "source_end_s": null,
+   "event_time": -454,
+   "received_time": -454,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "taxiway": "Z"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": "ev00013",
+   "route_check": [
+    {
+     "word": "B",
+     "taxiway_id": "KLGA:TWY:B",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00015",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "HOLD_SHORT",
+   "raw_text": "Bravo short of Zulu, 2384, and ground we need to hold position for now.",
+   "normalized_text": "B SHORT OF Z , 2384 , AND GROUND WE NEED TO HOLD POSITION FOR NOW .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-447",
+   "source_start_s": -447,
+   "source_end_s": null,
+   "event_time": -447,
+   "received_time": -447,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "Z"
+    }
+   ],
+   "hold_position": true,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00016",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "You got stepped on, I had two frequencies. Go ahead, United 2384.",
+   "normalized_text": "YOU GOT STEPPED ON , I HAD 2 FREQUENCIES . GO AHEAD , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-421",
+   "source_start_s": -421,
+   "source_end_s": null,
+   "event_time": -421,
+   "received_time": -421,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00017",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_READY",
+   "raw_text": "Ground, United 2384, ready to taxi.",
+   "normalized_text": "GROUND , , READY TO TAXI .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-343",
+   "source_start_s": -343,
+   "source_end_s": null,
+   "event_time": -343,
+   "received_time": -343,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00018",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "Information India, United 2384, roger. Runway 13, taxi via November, Alpha, Echo, hold short runway 4.",
+   "normalized_text": "INFORMATION I , , ROGER . RUNWAY 13 , TAXI VIA N , A , E , HOLD SHORT RUNWAY 4 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-340",
+   "source_start_s": -340,
+   "source_end_s": null,
+   "event_time": -340,
+   "received_time": -340,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": [
+    "N",
+    "A",
+    "E"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "N",
+     "candidates": [
+      "KLGA:TWY:N"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    },
+    {
+     "word": "E",
+     "candidates": [
+      "KLGA:TWY:E"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "runway": "04"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "N",
+     "taxiway_id": "KLGA:TWY:N",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "A",
+     "taxiway_id": "KLGA:TWY:A",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "E",
+     "taxiway_id": "KLGA:TWY:E",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00019",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAXI",
+   "raw_text": "Runway 13, November, Alpha, Echo, hold short runway 4, United 2384.",
+   "normalized_text": "RUNWAY 13 , N , A , E , HOLD SHORT RUNWAY 4 , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-329",
+   "source_start_s": -329,
+   "source_end_s": null,
+   "event_time": -329,
+   "received_time": -329,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": [
+    "N",
+    "A",
+    "E"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "N",
+     "candidates": [
+      "KLGA:TWY:N"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    },
+    {
+     "word": "E",
+     "candidates": [
+      "KLGA:TWY:E"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "runway": "04"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00020",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAKEOFF_CLEARANCE",
+   "raw_text": "2384, wind 070 at 5, runway 13, cleared for takeoff.",
+   "normalized_text": "WIND 070 AT 5 , RUNWAY 13 , CLEARED FOR TAKEOFF .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-319",
+   "source_start_s": -319,
+   "source_end_s": null,
+   "event_time": -319,
+   "received_time": -319,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00021",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAKEOFF_CLEARANCE",
+   "raw_text": "Cleared for takeoff 13, 2384.",
+   "normalized_text": "CLEARED FOR TAKEOFF 13 , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-319",
+   "source_start_s": -319,
+   "source_end_s": null,
+   "event_time": -319,
+   "received_time": -319,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00022",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_REJECTED_TAKEOFF",
+   "raw_text": "Tower, United 2384 is rejecting on runway 13.",
+   "normalized_text": "TOWER , IS REJECTING ON RUNWAY 13 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-309",
+   "source_start_s": -309,
+   "source_end_s": null,
+   "event_time": -309,
+   "received_time": -309,
+   "runway": "13",
+   "runway_end_candidates": [
+    "KLGA:END:13"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00023",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, roger. So you're aborting the takeoff again?",
+   "normalized_text": "ROGER . SO YOU'RE ABORTING TAKEOFF AGAIN ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-304",
+   "source_start_s": -304,
+   "source_end_s": null,
+   "event_time": -304,
+   "received_time": -304,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00024",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "2384, make the right at Mike and then right on Bravo for me.",
+   "normalized_text": "MAKE RIGHT AT M AND THEN RIGHT ON B FOR ME .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-297",
+   "source_start_s": -297,
+   "source_end_s": null,
+   "event_time": -297,
+   "received_time": -297,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "M",
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "M",
+     "candidates": [
+      "KLGA:TWY:M"
+     ]
+    },
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "M",
+     "taxiway_id": "KLGA:TWY:M",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "B",
+     "taxiway_id": "KLGA:TWY:B",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00025",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "UAL2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAXI",
+   "raw_text": "Right on Mike and right on Bravo, United 2384.",
+   "normalized_text": "RIGHT ON M AND RIGHT ON B , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-289",
+   "source_start_s": -289,
+   "source_end_s": null,
+   "event_time": -289,
+   "received_time": -289,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "M",
+    "B"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "M",
+     "candidates": [
+      "KLGA:TWY:M"
+     ]
+    },
+    {
+     "word": "B",
+     "candidates": [
+      "KLGA:TWY:B"
+     ]
+    }
+   ],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00026",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "HOLD_SHORT",
+   "raw_text": "2384, once you join Bravo, hold short of Lima, and when you get a minute to take a breath, let me know the reason for the abort this time.",
+   "normalized_text": "ONCE YOU JOIN B , HOLD SHORT OF L , AND WHEN YOU GET MINUTE TO TAKE BREATH , LET ME KNOW REASON FOR ABORT THIS TIME .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-286",
+   "source_start_s": -286,
+   "source_end_s": null,
+   "event_time": -286,
+   "received_time": -286,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "L"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00027",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "HOLD_SHORT",
+   "raw_text": "Bravo, short of Lima, we'll let you know, 2384.",
+   "normalized_text": "B , SHORT OF L , WE'LL LET YOU KNOW , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-279",
+   "source_start_s": -279,
+   "source_end_s": null,
+   "event_time": -279,
+   "received_time": -279,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "L"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00028",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "request",
+   "kind": "REQUEST_OTHER",
+   "raw_text": "2384, we have an odor on the plane as well at this time. We are going to be going back to the gate, request fire as well.",
+   "normalized_text": "WE HAVE ODOR ON PLANE AS WELL AT THIS TIME . WE ARE GOING TO BE GOING BACK TO GATE , REQUEST FIRE AS WELL .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-266",
+   "source_start_s": -266,
+   "source_end_s": null,
+   "event_time": -266,
+   "received_time": -266,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.6,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00029",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Okay. Do you know what gate? Is this odor like a smoke odor, like a fire?",
+   "normalized_text": "DO YOU KNOW WHAT GATE ? IS THIS ODOR LIKE SMOKE ODOR , LIKE FIRE ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-259",
+   "source_start_s": -259,
+   "source_end_s": null,
+   "event_time": -259,
+   "received_time": -259,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00030",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "PILOT",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "No, it was a weird odor. We can't get a hold of anyone at ops for a gate assignment.",
+   "normalized_text": "NO , IT WAS WEIRD ODOR . WE CAN'T GET HOLD OF ANYONE AT OPS FOR GATE ASSIGNMENT .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-249",
+   "source_start_s": -249,
+   "source_end_s": null,
+   "event_time": -249,
+   "received_time": -249,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00031",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, I just got off the phone with your ramp, they don't have a gate for you. Is this still an emergency? Do you still need us to send fire?",
+   "normalized_text": "I GOT OFF PHONE WITH YOUR RAMP , THEY DON'T HAVE GATE FOR YOU . IS THIS STILL EMERGENCY ? DO YOU STILL NEED US TO SEND FIRE ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-165",
+   "source_start_s": -165,
+   "source_end_s": null,
+   "event_time": -165,
+   "received_time": -165,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00032",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "PILOT",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Yeah, there's still an alert in the back.",
+   "normalized_text": "YEAH , THERE'S STILL ALERT IN BACK .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-148",
+   "source_start_s": -148,
+   "source_end_s": null,
+   "event_time": -148,
+   "received_time": -148,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00033",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, do you plan on evacuating at all?",
+   "normalized_text": "DO YOU PLAN ON EVACUATING AT ALL ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-138",
+   "source_start_s": -138,
+   "source_end_s": null,
+   "event_time": -138,
+   "received_time": -138,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00034",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "PILOT",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Negative.",
+   "normalized_text": "NEGATIVE .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-136",
+   "source_start_s": -136,
+   "source_end_s": null,
+   "event_time": -136,
+   "received_time": -136,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00035",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "TAXI",
+   "raw_text": "2384, make the left turn on Kilo and then right on Alpha, short of Echo.",
+   "normalized_text": "MAKE LEFT TURN ON K AND THEN RIGHT ON A , SHORT OF E .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-122",
+   "source_start_s": -122,
+   "source_end_s": null,
+   "event_time": -122,
+   "received_time": -122,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "K",
+    "A"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "K",
+     "candidates": [
+      "KLGA:TWY:K"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "taxiway": "E"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null,
+   "route_check": [
+    {
+     "word": "K",
+     "taxiway_id": "KLGA:TWY:K",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    },
+    {
+     "word": "A",
+     "taxiway_id": "KLGA:TWY:A",
+     "status": "no_crossing_data_in_draft_graph",
+     "crossings": []
+    }
+   ]
+  },
+  {
+   "event_id": "ev00036",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "TAXI",
+   "raw_text": "Kilo, Alpha, short of Echo, 2384.",
+   "normalized_text": "K , A , SHORT OF E , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-120",
+   "source_start_s": -120,
+   "source_end_s": null,
+   "event_time": -120,
+   "received_time": -120,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": [
+    "K",
+    "A"
+   ],
+   "route_surface_candidates": [
+    {
+     "word": "K",
+     "candidates": [
+      "KLGA:TWY:K"
+     ]
+    },
+    {
+     "word": "A",
+     "candidates": [
+      "KLGA:TWY:A"
+     ]
+    }
+   ],
+   "hold_constraints": [
+    {
+     "taxiway": "E"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00037",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_EMERGENCY",
+   "raw_text": "2384 is declaring an emergency. The flight attendants in the back are feeling ill because of the odor. We will need to go into any available gate at this time.",
+   "normalized_text": "IS DECLARING EMERGENCY . FLIGHT ATTENDANTS IN BACK ARE FEELING ILL BECAUSE OF ODOR . WE WILL NEED TO GO INTO ANY AVAILABLE GATE AT THIS TIME .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-113",
+   "source_start_s": -113,
+   "source_end_s": null,
+   "event_time": -113,
+   "received_time": -113,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00038",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Okay, roger that.",
+   "normalized_text": "ROGER THAT .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-104",
+   "source_start_s": -104,
+   "source_end_s": null,
+   "event_time": -104,
+   "received_time": -104,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00039",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, the ramp doesn't have a gate for you yet, I'm trying to get in touch with the Port Authority.",
+   "normalized_text": "RAMP DOESN'T HAVE GATE FOR YOU YET , I'M TRYING TO GET IN TOUCH WITH PORT AUTHORITY .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-58",
+   "source_start_s": -58,
+   "source_end_s": null,
+   "event_time": -58,
+   "received_time": -58,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00040",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "And the fire trucks are over there. They're going to bring a stair truck just in case you want to evacuate. Let me know if you do.",
+   "normalized_text": "AND FIRE TRUCKS ARE OVER THERE . THEY'RE GOING TO BRING STAIR TRUCK IN CASE YOU WANT TO EVACUATE . LET ME KNOW IF YOU DO .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-50",
+   "source_start_s": -50,
+   "source_end_s": null,
+   "event_time": -50,
+   "received_time": -50,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00041",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "PILOT",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Copy. We'd prefer to wait on a gate, but we only have so much time, there's still a bit of an odor in the back.",
+   "normalized_text": "COPY . WE'D PREFER TO WAIT ON GATE , BUT WE ONLY HAVE SO MUCH TIME , THERE'S STILL BIT OF ODOR IN BACK .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-44",
+   "source_start_s": -44,
+   "source_end_s": null,
+   "event_time": -44,
+   "received_time": -44,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00042",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "JZA646"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "CHECK_IN",
+   "raw_text": "Jazz 646 (check-in on tower).",
+   "normalized_text": "CHECK IN ON TOWER .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-32",
+   "source_start_s": -32,
+   "source_end_s": null,
+   "event_time": -32,
+   "received_time": -32,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.6,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00043",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "DAL520"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "HOLD_SHORT",
+   "raw_text": "Delta 520, going to lane 8, just hold short of Lima on runway 13 and verify with the ramp that you'll be able to get in.",
+   "normalized_text": "GOING TO LANE 8 , HOLD SHORT OF L ON RUNWAY 13 AND VERIFY WITH RAMP THAT YOU'LL BE ABLE TO GET IN .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-30",
+   "source_start_s": -30,
+   "source_end_s": null,
+   "event_time": -30,
+   "received_time": -30,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "L",
+     "on_runway": "13"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00044",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?520"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "HOLD_SHORT",
+   "raw_text": "Hold short of Lima on runway 13, we'll talk to ramp and get back to you, Delta 520.",
+   "normalized_text": "HOLD SHORT OF L ON RUNWAY 13 , WE'LL TALK TO RAMP AND GET BACK TO YOU , D .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-21",
+   "source_start_s": -21,
+   "source_end_s": null,
+   "event_time": -21,
+   "received_time": -21,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [
+    {
+     "taxiway": "L",
+     "on_runway": "13"
+    }
+   ],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00045",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Just verifying, there's some shuffling of gates going on due to an inbound that had an issue.",
+   "normalized_text": "VERIFYING , THERE'S SOME SHUFFLING OF GATES GOING ON DUE TO INBOUND THAT HAD ISSUE .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-15",
+   "source_start_s": -15,
+   "source_end_s": null,
+   "event_time": -15,
+   "received_time": -15,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00046",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "JZA646"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Jazz 646, runway 4, number two.",
+   "normalized_text": "RUNWAY 4 , NUMBER 2 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#-9",
+   "source_start_s": -9,
+   "source_end_s": null,
+   "event_time": -9,
+   "received_time": -9,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00047",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "JZA646"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "LANDING_CLEARANCE",
+   "raw_text": "Runway 4, cleared to land, number two, Jazz 646.",
+   "normalized_text": "RUNWAY 4 , CLEARED TO LAND , NUMBER 2 , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#0",
+   "source_start_s": 0,
+   "source_end_s": null,
+   "event_time": 0,
+   "received_time": 0,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": "2",
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00048",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "request",
+   "kind": "REQUEST_OTHER",
+   "raw_text": "2384, do you have a gate available at this time? Otherwise we will probably be requesting stairs.",
+   "normalized_text": "DO YOU HAVE GATE AVAILABLE AT THIS TIME ? OTHERWISE WE WILL PROBABLY BE REQUESTING STAIRS .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#0",
+   "source_start_s": 0,
+   "source_end_s": null,
+   "event_time": 0,
+   "received_time": 0,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.6,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00049",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Give me one second, 2384.",
+   "normalized_text": "GIVE ME 1 SECOND , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#9",
+   "source_start_s": 9,
+   "source_end_s": null,
+   "event_time": 9,
+   "received_time": 9,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00050",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Stand by, United.",
+   "normalized_text": "STAND BY , UNITED .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#18",
+   "source_start_s": 18,
+   "source_end_s": null,
+   "event_time": 18,
+   "received_time": 18,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00051",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Who's the vehicle needing to cross the runway?",
+   "normalized_text": "WHO'S VEHICLE NEEDING TO CROSS RUNWAY ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#21",
+   "source_start_s": 21,
+   "source_end_s": null,
+   "event_time": 21,
+   "received_time": 21,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00052",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "Emergency vehicles, are you calling on ground or are you calling on tower?",
+   "normalized_text": "EMERGENCY VEHICLES , ARE YOU CALLING ON GROUND OR ARE YOU CALLING ON TOWER ?",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#25",
+   "source_start_s": 25,
+   "source_end_s": null,
+   "event_time": 25,
+   "received_time": 25,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00053",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "TRUCK1"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "CHECK_IN",
+   "raw_text": "Truck 1 and company, LaGuardia Tower.",
+   "normalized_text": "LAGUARDIA TOWER .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#25",
+   "source_start_s": 25,
+   "source_end_s": null,
+   "event_time": 25,
+   "received_time": 25,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.6,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00054",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "TRUCK1"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "request",
+   "kind": "CROSS_REQUEST",
+   "raw_text": "Truck 1 and company, LaGuardia Tower, requesting to cross 4 at Delta.",
+   "normalized_text": "LAGUARDIA TOWER , REQUESTING TO CROSS 4 AT D .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#34",
+   "source_start_s": 34,
+   "source_end_s": null,
+   "event_time": 34,
+   "received_time": 34,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": "D",
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00055",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "TRUCK1"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "CROSS",
+   "raw_text": "Truck 1 and company, cross 4 at Delta.",
+   "normalized_text": "CROSS 4 AT D .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#40",
+   "source_start_s": 40,
+   "source_end_s": null,
+   "event_time": 40,
+   "received_time": 40,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": "D",
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00056",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "TRUCK1"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "CROSS",
+   "raw_text": "Truck 1 and company, crossing 4 at Delta.",
+   "normalized_text": "CROSSING 4 AT D .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#42",
+   "source_start_s": 42,
+   "source_end_s": null,
+   "event_time": 42,
+   "received_time": 42,
+   "runway": "04",
+   "runway_end_candidates": [
+    "KLGA:END:04"
+   ],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": "D",
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.95,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00057",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "FFT4195",
+    "TRUCK1"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "CANCEL",
+   "raw_text": "Frontier 4195, just stop there please. Stop, stop, stop. Truck 1, stop, stop, stop.",
+   "normalized_text": "STOP THERE . STOP , STOP , STOP . , STOP , STOP , STOP .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#48",
+   "source_start_s": 48,
+   "source_end_s": null,
+   "event_time": 48,
+   "received_time": 48,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00058",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?2384"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "2384, you're cleared in lane 8 for gate 41. 2384, proceed to the ramp.",
+   "normalized_text": "YOU'RE CLEARED IN LANE 8 FOR GATE 41 . 2384 , PROCEED TO RAMP .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#55",
+   "source_start_s": 55,
+   "source_end_s": null,
+   "event_time": 55,
+   "received_time": 55,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00059",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "TRUCK1",
+    "TRUCK1",
+    "TRUCK1"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "CANCEL",
+   "raw_text": "Sorry. Truck 1, stop. Truck 1, stop, stop. Truck 1, stop.",
+   "normalized_text": "SORRY . , STOP . , STOP , STOP . , STOP .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#65",
+   "source_start_s": 65,
+   "source_end_s": null,
+   "event_time": 65,
+   "received_time": 65,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00060",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?4195"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "report",
+   "kind": "REPORT_HOLDING_POSITION",
+   "raw_text": "4195, we're staying here.",
+   "normalized_text": "WE'RE STAYING HERE .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#72",
+   "source_start_s": 72,
+   "source_end_s": null,
+   "event_time": 72,
+   "received_time": 72,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.8,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00061",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "DAL263"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "GO_AROUND",
+   "raw_text": "Delta 263, go around, runway heading, 2000.",
+   "normalized_text": "GO AROUND , RUNWAY HEADING , 2000 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#76",
+   "source_start_s": 76,
+   "source_end_s": null,
+   "event_time": 76,
+   "received_time": 76,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00062",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?646"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "unknown",
+   "kind": "OTHER",
+   "raw_text": "646, I see you collided with a vehicle.",
+   "normalized_text": "I SEE YOU COLLIDED WITH VEHICLE .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#76",
+   "source_start_s": 76,
+   "source_end_s": null,
+   "event_time": 76,
+   "received_time": 76,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "residue",
+   "uncertainty": {
+    "confidence_heuristic": 0.3,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00063",
+   "airport_icao": "KLGA",
+   "actor_candidates": [],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "HOLD_SHORT",
+   "raw_text": "Just hold position, I know you can't move. The vehicles are responding to you now.",
+   "normalized_text": "HOLD POSITION , I KNOW YOU CAN'T MOVE . VEHICLES ARE RESPONDING TO YOU NOW .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#83",
+   "source_start_s": 83,
+   "source_end_s": null,
+   "event_time": 83,
+   "received_time": 83,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": true,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00064",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?263"
+   ],
+   "speaker_role": "ATC",
+   "speech_act": "instruction",
+   "kind": "GO_AROUND",
+   "raw_text": "263, go around, runway heading, 2000.",
+   "normalized_text": "GO AROUND , RUNWAY HEADING , 2000 .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#92",
+   "source_start_s": 92,
+   "source_end_s": null,
+   "event_time": 92,
+   "received_time": 92,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  },
+  {
+   "event_id": "ev00065",
+   "airport_icao": "KLGA",
+   "actor_candidates": [
+    "?263"
+   ],
+   "speaker_role": "PILOT",
+   "speech_act": "readback",
+   "kind": "GO_AROUND",
+   "raw_text": "Right, 2000, go around, 263.",
+   "normalized_text": "RIGHT , 2000 , GO AROUND , .",
+   "asr_repairs_applied": [],
+   "source_id": "LGA_2026-03-22#92",
+   "source_start_s": 92,
+   "source_end_s": null,
+   "event_time": 92,
+   "received_time": 92,
+   "runway": null,
+   "runway_end_candidates": [],
+   "route": null,
+   "route_surface_candidates": [],
+   "hold_constraints": [],
+   "hold_position": false,
+   "crossing_at": null,
+   "traffic_advisory": null,
+   "sequence": null,
+   "clipped": false,
+   "parse_path": "grammar",
+   "uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   },
+   "supersedes_event_id": null
+  }
+ ],
+ "reservations": [
+  {
+   "reservation_id": "r0001",
+   "callsign": "UAL2384",
+   "type": "TAKEOFF",
+   "runway_end": "13",
+   "physical": "KLGA:RWY:13-31",
+   "physical_candidates": [
+    "KLGA:RWY:13-31"
+   ],
+   "t": -577,
+   "event_id": "ev00001",
+   "status": "released",
+   "ack": "acknowledged",
+   "released_at": -556,
+   "released_by": "rejected takeoff reported",
+   "advisory": "TRAFFIC INSIDE 3 MILE FINAL RUNWAY 4",
+   "basis": "authorized",
+   "at": null
+  },
+  {
+   "reservation_id": "r0002",
+   "callsign": "UAL2384",
+   "type": "OCCUPYING",
+   "runway_end": "13",
+   "physical": "KLGA:RWY:13-31",
+   "physical_candidates": [
+    "KLGA:RWY:13-31"
+   ],
+   "t": -556,
+   "event_id": "ev00003",
+   "status": "released",
+   "ack": "pending",
+   "released_at": -550,
+   "released_by": "exit/taxi instruction issued (inferred clear; not observed)",
+   "advisory": null,
+   "basis": "reported: rejected takeoff, still on runway"
+  },
+  {
+   "reservation_id": "r0003",
+   "callsign": "UAL2384",
+   "type": "TAKEOFF",
+   "runway_end": "13",
+   "physical": "KLGA:RWY:13-31",
+   "physical_candidates": [
+    "KLGA:RWY:13-31"
+   ],
+   "t": -319,
+   "event_id": "ev00020",
+   "status": "released",
+   "ack": "acknowledged",
+   "released_at": -309,
+   "released_by": "rejected takeoff reported",
+   "advisory": null,
+   "basis": "authorized",
+   "at": null
+  },
+  {
+   "reservation_id": "r0004",
+   "callsign": "UAL2384",
+   "type": "OCCUPYING",
+   "runway_end": "13",
+   "physical": "KLGA:RWY:13-31",
+   "physical_candidates": [
+    "KLGA:RWY:13-31"
+   ],
+   "t": -309,
+   "event_id": "ev00022",
+   "status": "released",
+   "ack": "pending",
+   "released_at": -297,
+   "released_by": "exit/taxi instruction issued (inferred clear; not observed)",
+   "advisory": null,
+   "basis": "reported: rejected takeoff, still on runway"
+  },
+  {
+   "reservation_id": "r0005",
+   "callsign": "DAL520",
+   "type": "OCCUPYING",
+   "runway_end": "13",
+   "physical": "KLGA:RWY:13-31",
+   "physical_candidates": [
+    "KLGA:RWY:13-31"
+   ],
+   "t": -30,
+   "event_id": "ev00043",
+   "status": "active",
+   "ack": "acknowledged",
+   "released_at": null,
+   "released_by": null,
+   "advisory": null,
+   "basis": "authorized: hold on runway"
+  },
+  {
+   "reservation_id": "r0006",
+   "callsign": "JZA646",
+   "type": "LANDING",
+   "runway_end": "04",
+   "physical": "KLGA:RWY:04-22",
+   "physical_candidates": [
+    "KLGA:RWY:04-22"
+   ],
+   "t": 0,
+   "event_id": "ev00047",
+   "status": "active",
+   "ack": "pending",
+   "released_at": null,
+   "released_by": null,
+   "advisory": null,
+   "basis": "authorized",
+   "at": null
+  },
+  {
+   "reservation_id": "r0007",
+   "callsign": "TRUCK1",
+   "type": "CROSSING",
+   "runway_end": "04",
+   "physical": "KLGA:RWY:04-22",
+   "physical_candidates": [
+    "KLGA:RWY:04-22"
+   ],
+   "t": 40,
+   "event_id": "ev00055",
+   "status": "cancel_unacknowledged",
+   "ack": "acknowledged",
+   "released_at": null,
+   "released_by": null,
+   "advisory": null,
+   "basis": "authorized",
+   "at": "D",
+   "cancel_status": "unacknowledged",
+   "cancel_t": 65
+  }
+ ],
+ "warnings": [
+  {
+   "warning_id": "w0001",
+   "rule_id": "R1",
+   "name": "crossing vs active landing",
+   "severity": "CONFLICT",
+   "runway": "KLGA:RWY:04-22",
+   "t_fired": 40,
+   "status": "open",
+   "cleared_at": null,
+   "cleared_by": null,
+   "authorization_a": {
+    "callsign": "JZA646",
+    "type": "LANDING",
+    "runway_end": "04",
+    "physical_runway": "KLGA:RWY:04-22",
+    "t_issued": 0,
+    "event_id": "ev00047",
+    "acknowledged": "pending"
+   },
+   "authorization_b": {
+    "callsign": "TRUCK1",
+    "type": "CROSSING",
+    "runway_end": "04",
+    "physical_runway": "KLGA:RWY:04-22",
+    "t_issued": 40,
+    "event_id": "ev00055",
+    "acknowledged": "pending"
+   },
+   "state_snapshot": {
+    "JZA646": {
+     "authorized": "landing clearance, rwy 04",
+     "acknowledged": null,
+     "reported": "check in",
+     "inferred": null,
+     "observed": null
+    },
+    "TRUCK1": {
+     "authorized": "cross, rwy 04, at D",
+     "acknowledged": null,
+     "reported": "requests cross_request runway 04 at D",
+     "inferred": null,
+     "observed": null
+    }
+   },
+   "explain": "Runway 04 has a recorded landing authorization for JZA646 (t=0) and a crossing authorization for TRUCK1 at D (t=40). Both need the 04-22 protected area.",
+   "what_would_clear_it": "TRUCK1 reports clear of runway, or JZA646 go-around / landing complete",
+   "cite": "JO 7110.65BB 3-1-3; 3-7-2",
+   "claim_limit": "Two recorded authorizations / an open obligation at time t. Not a collision prediction."
+  },
+  {
+   "warning_id": "w0002",
+   "rule_id": "R13",
+   "name": "stop/cancel unacknowledged",
+   "severity": "CAUTION",
+   "runway": "KLGA:RWY:04-22",
+   "t_fired": 58,
+   "status": "open",
+   "cleared_at": null,
+   "cleared_by": null,
+   "authorization_a": {
+    "callsign": "TRUCK1",
+    "type": "CROSSING",
+    "runway_end": "04",
+    "physical_runway": "KLGA:RWY:04-22",
+    "t_issued": 40,
+    "event_id": "ev00055",
+    "acknowledged": "acknowledged"
+   },
+   "authorization_b": null,
+   "state_snapshot": {
+    "TRUCK1": {
+     "authorized": "cancel",
+     "acknowledged": "read back: cross, rwy 04, at D",
+     "reported": "requests cross_request runway 04 at D",
+     "inferred": null,
+     "observed": null
+    }
+   },
+   "explain": "Stop/cancel issued to TRUCK1 at t=48; no acknowledgement heard in 10 s. The reservation is kept: the engine does not assume the stop took effect.",
+   "what_would_clear_it": "TRUCK1 acknowledges, or an observed/reported stop",
+   "cite": "JO 7110.65BB stop/cancel acknowledgement (engine rule)",
+   "claim_limit": "Two recorded authorizations / an open obligation at time t. Not a collision prediction.",
+   "repeat_stop_calls_t": [
+    65
+   ]
+  },
+  {
+   "warning_id": "w0003",
+   "rule_id": "R8",
+   "name": "crossing not closed out",
+   "severity": "REMINDER",
+   "runway": "KLGA:RWY:04-22",
+   "t_fired": 130,
+   "status": "open",
+   "cleared_at": null,
+   "cleared_by": null,
+   "authorization_a": {
+    "callsign": "TRUCK1",
+    "type": "CROSSING",
+    "runway_end": "04",
+    "physical_runway": "KLGA:RWY:04-22",
+    "t_issued": 40,
+    "event_id": "ev00055",
+    "acknowledged": "acknowledged"
+   },
+   "authorization_b": null,
+   "state_snapshot": {
+    "TRUCK1": {
+     "authorized": "cancel",
+     "acknowledged": "read back: cross, rwy 04, at D",
+     "reported": "requests cross_request runway 04 at D",
+     "inferred": null,
+     "observed": null
+    }
+   },
+   "explain": "Crossing authorization for TRUCK1 on 04 is 90 s old with no crossing-complete / clear-of-runway report. The runway stays reserved.",
+   "what_would_clear_it": "crossing complete reported",
+   "cite": "JO 7110.65BB 3-1-3",
+   "claim_limit": "Two recorded authorizations / an open obligation at time t. Not a collision prediction."
+  }
+ ],
+ "notes": [
+  {
+   "t": -550,
+   "event_id": "ev00004",
+   "note": "instruction with no callsign attributed to the last station heard, UAL2384 (heuristic)"
+  },
+  {
+   "t": -550,
+   "event_id": "ev00004",
+   "note": "route words L, B: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -543,
+   "event_id": "ev00006",
+   "note": "instruction with no callsign attributed to the last station heard, UAL2384 (heuristic)"
+  },
+  {
+   "t": -534,
+   "event_id": "ev00007",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -508,
+   "event_id": "ev00008",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -508,
+   "event_id": "ev00008",
+   "note": "route words M, A: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -492,
+   "event_id": "ev00010",
+   "note": "instruction with no callsign attributed to the last station heard, UAL2384 (heuristic)"
+  },
+  {
+   "t": -479,
+   "event_id": "ev00012",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -474,
+   "event_id": "ev00013",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -474,
+   "event_id": "ev00013",
+   "note": "route words B: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -454,
+   "event_id": "ev00014",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -454,
+   "event_id": "ev00014",
+   "note": "route words B: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -447,
+   "event_id": "ev00015",
+   "note": "no callsign heard; readback attributed to last addressed UAL2384 (heuristic)"
+  },
+  {
+   "t": -340,
+   "event_id": "ev00018",
+   "note": "route words N, A, E: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -319,
+   "event_id": "ev00020",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -319,
+   "event_id": "ev00021",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -304,
+   "event_id": "ev00023",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -297,
+   "event_id": "ev00024",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -297,
+   "event_id": "ev00024",
+   "note": "route words M, B: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -286,
+   "event_id": "ev00026",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -279,
+   "event_id": "ev00027",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -266,
+   "event_id": "ev00028",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -233,
+   "event_id": null,
+   "note": "phone/landline: Tower calls the ramp and the Port Authority about a gate (several calls, video 5:57\u20136:55)."
+  },
+  {
+   "t": -165,
+   "event_id": "ev00031",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -138,
+   "event_id": "ev00033",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -122,
+   "event_id": "ev00035",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -122,
+   "event_id": "ev00035",
+   "note": "route words K, A: no reviewed runway-crossing data in the draft graph; hold coverage not checkable (unresolved, not 'clear')"
+  },
+  {
+   "t": -120,
+   "event_id": "ev00036",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -113,
+   "event_id": "ev00037",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -70,
+   "event_id": null,
+   "note": "phone/landline: Tower to ramp: no gate; a stair truck is offered. 'He's on taxiway Alpha just east of taxiway Kilo.'"
+  },
+  {
+   "t": -58,
+   "event_id": "ev00039",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": -21,
+   "event_id": "ev00044",
+   "note": "abbreviated callsign 520 resolved to DAL520 (most recent match; heuristic)"
+  },
+  {
+   "t": 0,
+   "event_id": "ev00048",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": 9,
+   "event_id": "ev00049",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": 48,
+   "event_id": "ev00057",
+   "note": "stop/cancel to FFT4195: no recorded reservation for FFT4195"
+  },
+  {
+   "t": 55,
+   "event_id": "ev00058",
+   "note": "abbreviated callsign 2384 resolved to UAL2384 (most recent match; heuristic)"
+  },
+  {
+   "t": 72,
+   "event_id": "ev00060",
+   "note": "abbreviated callsign 4195 resolved to FFT4195 (most recent match; heuristic)"
+  },
+  {
+   "t": 72,
+   "event_id": "ev00060",
+   "note": "FFT4195 reports holding position (acknowledges stop)"
+  },
+  {
+   "t": 76,
+   "event_id": "ev00061",
+   "note": "go-around for DAL263: no recorded landing authorization (not captured)"
+  },
+  {
+   "t": 76,
+   "event_id": "ev00062",
+   "note": "abbreviated callsign 646 resolved to JZA646 (most recent match; heuristic)"
+  },
+  {
+   "t": 83,
+   "event_id": "ev00063",
+   "note": "instruction with no callsign attributed to the last station heard, FFT4195 (heuristic)"
+  },
+  {
+   "t": 92,
+   "event_id": "ev00064",
+   "note": "abbreviated callsign 263 resolved to DAL263 (most recent match; heuristic)"
+  },
+  {
+   "t": 92,
+   "event_id": "ev00064",
+   "note": "go-around for DAL263: no recorded landing authorization (not captured)"
+  },
+  {
+   "t": 92,
+   "event_id": "ev00065",
+   "note": "abbreviated callsign 263 resolved to DAL263 (most recent match; heuristic)"
+  }
+ ],
+ "actors": {
+  "UAL2384": {
+   "authorized": [
+    {
+     "value": "takeoff clearance, rwy 13",
+     "t": -577,
+     "event_id": "ev00001"
+    },
+    {
+     "value": "taxi, via L-B",
+     "t": -550,
+     "event_id": "ev00004"
+    },
+    {
+     "value": "freq change",
+     "t": -543,
+     "event_id": "ev00006"
+    },
+    {
+     "value": "contact CONTACT GROUND 121 . 7 .",
+     "t": -543,
+     "event_id": "ev00006"
+    },
+    {
+     "value": "taxi, via M-A, hold short of K",
+     "t": -508,
+     "event_id": "ev00008"
+    },
+    {
+     "value": "hold short, hold short of M",
+     "t": -492,
+     "event_id": "ev00010"
+    },
+    {
+     "value": "hold short, hold short of M",
+     "t": -487,
+     "event_id": "ev00011"
+    },
+    {
+     "value": "taxi, via B, hold short of N",
+     "t": -474,
+     "event_id": "ev00013"
+    },
+    {
+     "value": "taxi, via B, hold short of Z",
+     "t": -454,
+     "event_id": "ev00014"
+    },
+    {
+     "value": "taxi, rwy 13, via N-A-E, hold short of runway 04",
+     "t": -340,
+     "event_id": "ev00018"
+    },
+    {
+     "value": "takeoff clearance, rwy 13",
+     "t": -319,
+     "event_id": "ev00020"
+    },
+    {
+     "value": "taxi, via M-B",
+     "t": -297,
+     "event_id": "ev00024"
+    },
+    {
+     "value": "hold short, hold short of L",
+     "t": -286,
+     "event_id": "ev00026"
+    },
+    {
+     "value": "taxi, via K-A, hold short of E",
+     "t": -122,
+     "event_id": "ev00035"
+    }
+   ],
+   "acknowledged": [
+    {
+     "value": "read back: takeoff clearance, rwy 13",
+     "t": -572,
+     "event_id": "ev00002"
+    },
+    {
+     "value": "read back: taxi, via L-B",
+     "t": -543,
+     "event_id": "ev00005"
+    },
+    {
+     "value": "read back: hold short, hold short of Z",
+     "t": -447,
+     "event_id": "ev00015"
+    },
+    {
+     "value": "read back: taxi, rwy 13, via N-A-E, hold short of runway 04",
+     "t": -329,
+     "event_id": "ev00019"
+    },
+    {
+     "value": "read back: takeoff clearance, rwy 13",
+     "t": -319,
+     "event_id": "ev00021"
+    },
+    {
+     "value": "read back: taxi, via M-B",
+     "t": -289,
+     "event_id": "ev00025"
+    },
+    {
+     "value": "read back: hold short, hold short of L",
+     "t": -279,
+     "event_id": "ev00027"
+    },
+    {
+     "value": "read back: taxi, via K-A, hold short of E",
+     "t": -120,
+     "event_id": "ev00036"
+    }
+   ],
+   "reported": [
+    {
+     "value": "rejected takeoff, rwy 13",
+     "t": -556,
+     "event_id": "ev00003"
+    },
+    {
+     "value": "position",
+     "t": -534,
+     "event_id": "ev00007"
+    },
+    {
+     "value": "requests request_other",
+     "t": -496,
+     "event_id": "ev00009"
+    },
+    {
+     "value": "ready",
+     "t": -343,
+     "event_id": "ev00017"
+    },
+    {
+     "value": "rejected takeoff, rwy 13",
+     "t": -309,
+     "event_id": "ev00022"
+    },
+    {
+     "value": "requests request_other",
+     "t": -266,
+     "event_id": "ev00028"
+    },
+    {
+     "value": "emergency",
+     "t": -113,
+     "event_id": "ev00037"
+    },
+    {
+     "value": "requests request_other",
+     "t": 0,
+     "event_id": "ev00048"
+    }
+   ],
+   "inferred": [
+    {
+     "value": "exit instruction issued; runway 13 assumed vacating (not observed)",
+     "t": -550,
+     "event_id": "ev00004"
+    },
+    {
+     "value": "exit instruction issued; runway 13 assumed vacating (not observed)",
+     "t": -297,
+     "event_id": "ev00024"
+    }
+   ],
+   "observed": []
+  },
+  "JZA646": {
+   "authorized": [
+    {
+     "value": "landing clearance, rwy 04",
+     "t": 0,
+     "event_id": "ev00047"
+    }
+   ],
+   "acknowledged": [],
+   "reported": [
+    {
+     "value": "check in",
+     "t": -32,
+     "event_id": "ev00042"
+    }
+   ],
+   "inferred": [],
+   "observed": []
+  },
+  "DAL520": {
+   "authorized": [
+    {
+     "value": "hold short, hold short of L on runway 13",
+     "t": -30,
+     "event_id": "ev00043"
+    }
+   ],
+   "acknowledged": [
+    {
+     "value": "read back: hold short, hold short of L on runway 13",
+     "t": -21,
+     "event_id": "ev00044"
+    }
+   ],
+   "reported": [],
+   "inferred": [],
+   "observed": []
+  },
+  "TRUCK1": {
+   "authorized": [
+    {
+     "value": "cross, rwy 04, at D",
+     "t": 40,
+     "event_id": "ev00055"
+    },
+    {
+     "value": "cancel",
+     "t": 48,
+     "event_id": "ev00057"
+    },
+    {
+     "value": "cancel",
+     "t": 65,
+     "event_id": "ev00059"
+    }
+   ],
+   "acknowledged": [
+    {
+     "value": "read back: cross, rwy 04, at D",
+     "t": 42,
+     "event_id": "ev00056"
+    }
+   ],
+   "reported": [
+    {
+     "value": "check in",
+     "t": 25,
+     "event_id": "ev00053"
+    },
+    {
+     "value": "requests cross_request runway 04 at D",
+     "t": 34,
+     "event_id": "ev00054"
+    }
+   ],
+   "inferred": [],
+   "observed": []
+  },
+  "FFT4195": {
+   "authorized": [
+    {
+     "value": "cancel",
+     "t": 48,
+     "event_id": "ev00057"
+    },
+    {
+     "value": "hold short",
+     "t": 83,
+     "event_id": "ev00063"
+    }
+   ],
+   "acknowledged": [],
+   "reported": [
+    {
+     "value": "holding position",
+     "t": 72,
+     "event_id": "ev00060"
+    }
+   ],
+   "inferred": [],
+   "observed": []
+  },
+  "DAL263": {
+   "authorized": [
+    {
+     "value": "go around",
+     "t": 76,
+     "event_id": "ev00061"
+    },
+    {
+     "value": "go around",
+     "t": 92,
+     "event_id": "ev00064"
+    }
+   ],
+   "acknowledged": [],
+   "reported": [
+    {
+     "value": "readback-like transmission with no matching recorded instruction: RIGHT , 2000 , GO AROUND , .",
+     "t": 92,
+     "event_id": "ev00065"
+    }
+   ],
+   "inferred": [],
+   "observed": []
+  }
+ },
+ "claim_limit": "Recorded authorizations and open obligations only; no prevention claims."
+}
