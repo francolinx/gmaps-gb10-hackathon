@@ -1,0 +1,8 @@
+episode                          raise?  ref_t | route_only         | motion_only        | combined           | ledger
+SIM_H56774_0                     False    None | TN   t=None lead= None | FP   t=  22 lead= None | TN   t=None lead= None | [] ok
+SIM_H56774_1                     False    None | TN   t=None lead= None | FP   t=  22 lead= None | TN   t=None lead= None | [] ok
+SIM_H56774_2                     False    None | TN   t=None lead= None | FP   t=  23 lead= None | TN   t=None lead= None | [] ok
+SIM_H56774_3                     False    None | FP   t=  75 lead= None | TN   t=None lead= None | TN   t=None lead= None | ['R1'] ok
+SIM_H56774_4                     False    None | TN   t=None lead= None | FP   t=  22 lead= None | TN   t=None lead= None | [] ok
+SIM_H56774_5                     True   62.965 | TP   t=  22 lead= 41.0 | TP   t=  33 lead= 30.0 | TP   t=  33 lead= 30.0 | ['R1'] ok
+tally {"route_only": {"TN": 4, "FP": 1, "TP": 1}, "motion_only": {"FP": 4, "TN": 1, "TP": 1}, "combined": {"TN": 5, "TP": 1}}

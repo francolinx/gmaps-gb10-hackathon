@@ -39,7 +39,17 @@ Everything below was observed on the GB10 today. Each line names its run ID; tra
 - **Alerts are tied to ledger warnings.** A look-ahead-only cue (E5) shows in the UI but is not sent to the phone.
 - The predictor parameters are declared engineering choices, not aviation standards. The LGA/BOS graphs are draft topology for identifier lookup only (no geometry, no routing).
 - E1–E6 were designed before the event; they are **regression cases, not a blind test**.
-- Blind fresh-seed test: **not run** (see below).
+- The blind test scored the **library pipeline, not the agent** (see below).
 
-## Blind test
-Not run as of 14:47 CDT. If it runs before the freeze, the seed, label hashes and the scored system will be added here.
+## Blind test (fresh seed, picked live)
+- Seed **56774**, picked 14:46:14 CDT. 6 hidden episodes (`tools/make_episodes.py --hidden 6 --seed 56774`). Label sha256s were recorded and **committed before scoring** (commit 3cf603b; `venue_traces/blind_label_hashes.txt`).
+- **System scored: the prepared GMAPS library pipeline** (parse → ledger → look-ahead, per-second frames) through `eval/run_eval.py`, **not the OpenClaw agent**. The agent requests a look-ahead only per transmission or tick, and the scorer needs per-second frames; adapting it was not possible before the freeze. The agent's tools call this same deterministic code.
+- Result (n=6, only **1** positive episode, so a small sample):
+
+| method | TP | TN | FP | FN |
+|---|---|---|---|---|
+| route_only (authorization rules only) | 1 | 4 | 1 | 0 |
+| motion_only (observations, no intent) | 1 | 1 | 4 | 0 |
+| **combined (GMAPS)** | **1** | **5** | **0** | **0** |
+
+- In the positive episode, combined raised at t=33 with a 30.0 s lead before the reference time (62.965 s). Fictional episodes, declared model; not operational performance.
