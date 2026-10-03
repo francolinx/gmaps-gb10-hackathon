@@ -31,12 +31,18 @@ RESIDUE_SCHEMA = {
         'confidence_note': {'type': 'string'}}}
 
 
+_ASR_CACHE = {}   # venue fix (Oct 3): build the Whisper pipeline once per (model_dir, device), not per clip
+
+
 def transcribe(wav_path, model_dir, device='cuda'):
-    """Return {'text', 'chunks'} for one clip. Requires torch + transformers (present in the NGC vLLM container)."""
+    """Return {'text', 'chunks'} for one clip. Requires torch + transformers (present in the NGC vLLM container).
+    wav_path may also be {'raw': float32 array, 'sampling_rate': 16000} when ffmpeg is unavailable for file decoding."""
     import torch
     from transformers import pipeline
-    asr = pipeline('automatic-speech-recognition', model=model_dir, device=device,
-                   torch_dtype=torch.float16 if device != 'cpu' else torch.float32)
+    asr = _ASR_CACHE.get((model_dir, device))
+    if asr is None:
+        asr = _ASR_CACHE[(model_dir, device)] = pipeline('automatic-speech-recognition', model=model_dir, device=device,
+                                                         torch_dtype=torch.float16 if device != 'cpu' else torch.float32)
     out = asr(wav_path, return_timestamps=True, generate_kwargs={'language': 'en', 'task': 'transcribe'})
     return {'text': out['text'].strip(), 'chunks': out.get('chunks', []), 'model_dir': model_dir}
 

@@ -142,6 +142,27 @@ nemoclaw my-assistant policy remove huggingface --yes    # Removed preset: huggi
 - Tool route recheck, run `postpol-20261003-135930`: one E1 turn (t=0) → parse_transmission, ledger_ingest, lookahead all ok; `winnerProvider=inference`, `fallbackUsed=false`. No rollback needed.
 - Rollback if ever needed: `policy restore nvidia`, `policy add huggingface`.
 
+## 6. ASR on owned clips: DONE (14:01 CDT), run `asr_140059`
+- Command: throwaway container from the existing nemoclaw vLLM image (`sha256:46591c6e…`), `--network none --runtime=nvidia --gpus all`, `HF_HUB_OFFLINE=1`, read-only mounts; `python3 /gmaps/venue/asr_clips.py`. No pulls, no downloads, no pip. `nemoclaw-vllm` was untouched (still Up).
+- Model: Whisper large-v3-turbo from `~/gmaps_models/whisper-large-v3-turbo`, fp16 on NVIDIA GB10, torch 2.12.0a0+5aff3928d8.nv26.05, transformers 5.6.0.
+- The image has **no ffmpeg**, so clips are decoded with soundfile and resampled to 16 kHz with librosa, then passed to `adapters.transcribe()` as `{'raw','sampling_rate'}`.
+- Library fix: `transcribe()` now caches the pipeline per (model_dir, device) instead of rebuilding it per clip. Tests 53/53 afterwards.
+- **Latency (n=8, warm, GPU, decode excluded): median 0.21 s, min 0.181, max 0.229.** Cold model load + first clip: 12.086 s.
+- Raw ASR is kept exactly as heard; the script line is shown for reference only. Results: `venue_traces/asr_results_asr_140059.json`.
+
+| clip | ASR (raw) | script | parse (grammar, no speaker hint) | ASR s |
+|---|---|---|---|---|
+| SIM_E1_CROSS_DURING_ROLLOUT_0.wav | Simair 212, Runway 36, cleared to land. | SimAir two one two, runway three six, cleared to land. | instruction/LANDING_CLEARANCE actors=['SIM212'] rwy=36 at=None | 0.215 |
+| SIM_E1_CROSS_DURING_ROLLOUT_3.wav | cleared to land runway 367R212 | Cleared to land runway three six, SimAir two one two. | instruction_or_readback/LANDING_CLEARANCE actors=[] rwy=36 at=None | 0.194 |
+| SIM_E1_CROSS_DURING_ROLLOUT_24.wav | Tour, Resco 7, request to cross runway 36 at Kilo. | Tower, Rescue seven, request to cross runway three six at Kilo. | request/CROSS_REQUEST actors=[] rwy=36 at=K | 0.229 |
+| SIM_E1_CROSS_DURING_ROLLOUT_28.wav | Rescue 7, Cross Runway 36 at Kilo. | Rescue seven, cross runway three six at Kilo. | instruction/CROSS actors=['RESCUE7'] rwy=36 at=K | 0.195 |
+| SIM_E1_CROSS_DURING_ROLLOUT_31.wav | Crossing Runway 36 at Kilo, RISCO 7. | Crossing runway three six at Kilo, Rescue seven. | readback/CROSS actors=[] rwy=36 at=K | 0.205 |
+| SIM_E3_STOP_NOT_OBSERVED_38.wav | Rescue 7, stop, stop, stop. | Rescue seven, stop, stop, stop. | instruction/CANCEL actors=['RESCUE7'] rwy=None at=None | 0.181 |
+| SIM_E5_HOLD_NOT_SLOWING_18.wav | Rescue 7. Hold short runway 36 at Kilo. Traffic landing. | Rescue seven, hold short runway three six at Kilo, traffic landing. | instruction/HOLD_SHORT actors=['RESCUE7'] rwy=None at=None | 0.216 |
+| SIM_E5_HOLD_NOT_SLOWING_21.wav | Hold short runway 36 at Kilo, RISCO 7. | Hold short runway three six at Kilo, Rescue seven. | instruction_or_readback/HOLD_SHORT actors=[] rwy=None at=None | 0.216 |
+
+- Degradation, as observed: misheard callsigns ("367R212", "Resco 7", "RISCO 7") leave readbacks and the t=24 request with **no actor**. "Tower" was heard as "Tour". No ASR repair rules were added for these clips.
+
 ## NEXT
 1. Franco: confirm Telegram message_id 4 on the phone. Decide on the policy removals (below).
 2. Test that `tool_search`/`tool_call` cannot reach denied tools (or turn tool search off for the gmaps agent).
