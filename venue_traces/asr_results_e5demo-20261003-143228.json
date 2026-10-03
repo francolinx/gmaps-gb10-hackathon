@@ -1,0 +1,81 @@
+{
+ "summary": {
+  "model_dir": "~/gmaps_models/whisper-large-v3-turbo",
+  "device": "NVIDIA GB10",
+  "torch": "2.12.0a0+5aff3928d8.nv26.05",
+  "n": 2,
+  "cold_load_plus_first_s": 11.965,
+  "warm_asr_s_median": 0.211,
+  "warm_asr_s_min": 0.205,
+  "warm_asr_s_max": 0.217,
+  "note": "Warm per-clip wall time of adapters.transcribe() on GPU, excluding file decode. Clips are re-voiced fictional lines."
+ },
+ "clips": [
+  {
+   "clip": "SIM_E5_HOLD_NOT_SLOWING_18.wav",
+   "episode": "SIM_E5_HOLD_NOT_SLOWING",
+   "t": 18.0,
+   "audio_s": 4.51,
+   "sr_in": 16000,
+   "asr_text_raw": "Rescue 7. Hold short runway 36 at Kilo. Traffic landing.",
+   "script_text": "Rescue seven, hold short runway three six at Kilo, traffic landing.",
+   "asr_s": 0.217,
+   "rtf": 0.048,
+   "parse": {
+    "event_id": "ev00001",
+    "speech_act": "instruction",
+    "kind": "HOLD_SHORT",
+    "actor_candidates": [
+     "RESCUE7"
+    ],
+    "runway": null,
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "runway": "36",
+      "at": "K"
+     }
+    ],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  },
+  {
+   "clip": "SIM_E5_HOLD_NOT_SLOWING_21.wav",
+   "episode": "SIM_E5_HOLD_NOT_SLOWING",
+   "t": 21.0,
+   "audio_s": 4.09,
+   "sr_in": 16000,
+   "asr_text_raw": "Hold short runway 36 at Kilo, RISCO 7.",
+   "script_text": "Hold short runway three six at Kilo, Rescue seven.",
+   "asr_s": 0.205,
+   "rtf": 0.05,
+   "parse": {
+    "event_id": "ev00002",
+    "speech_act": "instruction_or_readback",
+    "kind": "HOLD_SHORT",
+    "actor_candidates": [],
+    "runway": null,
+    "crossing_at": null,
+    "hold_constraints": [
+     {
+      "runway": "36",
+      "at": "K"
+     }
+    ],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.85,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  }
+ ]
+}

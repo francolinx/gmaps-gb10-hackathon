@@ -13,7 +13,7 @@ REPO=$(cd "$(dirname "$0")/.." && pwd)
 V=$HOME/gmaps_venue
 IMG=sha256:46591c6e4a018d8d197fa246b1e3d682c907654aab4e9402302abb3e6a7dd916   # existing nemoclaw vLLM image
 TAG=$(echo "$EP" | sed -E 's/^SIM_(E[0-9]+)_.*/\1/' | tr 'A-Z' 'a-z')
-RUN=${TAG}demo-$(date +%Y%m%d-%H%M%S)
+RUN=${TAG}demo-$(date +%Y%m%d-%H%M%S)-$(head -c2 /dev/urandom | od -An -tx1 | tr -d " \n")   # random suffix: IDs never repeat or look alike
 echo "== run $RUN  episode $EP  alerts $ALERTS"
 
 # 1. ASR (fallback: transcript text, labelled)
@@ -24,7 +24,12 @@ if ls "$V/audio/${EP}_"*.wav >/dev/null 2>&1 && timeout 600 docker run --rm --ne
      -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 -e HOME=/tmp --user "$(id -u):$(id -g)" \
      -v "$REPO:/gmaps:ro" -v "$V/audio:/audio:ro" -v "$HOME/gmaps_models/whisper-large-v3-turbo:/models/whisper:ro" -v "$ASR_DIR:/out" \
      --entrypoint python3 "$IMG" /gmaps/venue/asr_clips.py "${EP}_" 2>&1 | grep -E '\.wav|median' ; then
-  if [ -s "$ASR_DIR/asr_results.json" ]; then MODE="Whisper ASR of owned re-voiced clips"; ASR_ARG=(--asr-results "$ASR_DIR/asr_results.json"); fi
+  if [ -s "$ASR_DIR/asr_results.json" ]; then
+    NCLIP=$(ls "$V/audio/${EP}_"*.wav | wc -l); NLINE=$(python3 -c "import json;print(len(json.load(open('$REPO/episodes/$EP.transcript.json'))['events']))")
+    if [ "$NCLIP" -ge "$NLINE" ]; then MODE="Whisper ASR of owned re-voiced clips"
+    else MODE="mixed: Whisper ASR for $NCLIP owned clip(s), transcript text for the other $((NLINE-NCLIP)) line(s)"; fi
+    ASR_ARG=(--asr-results "$ASR_DIR/asr_results.json" --fill-missing-with-script)
+  fi
 fi
 echo "== input mode: $MODE"
 

@@ -99,12 +99,14 @@ def main():
         except json.JSONDecodeError:
             summ = summ[-1] if summ else None
         for e in transcript:
-            if e['t'] == x['t'] and summ:
-                e['agent_summary_unverified'] = summ
+            if e['t'] == x['t']:
+                e['input_source'] = x.get('input_source')
+                if summ:
+                    e['agent_summary_unverified'] = summ
         turn_rows.append({'t': x['t'], 'wall_s': x['wall_s'], 'rc': x['rc'], 'provider': prov[-1] if prov else None,
                           'agent_summary_unverified': summ,
                           'model': model[-1] if model else None, 'source_id': x['source_id'],
-                          'input_text': x.get('input_text'), 'asr_s': x.get('asr_s')})
+                          'input_text': x.get('input_text'), 'input_source': x.get('input_source'), 'asr_s': x.get('asr_s')})
     ep = {k: v for k, v in tr.items() if k != 'events'}
     ep['title'] = f"{tr['title']} - agent run {args.run_id} - input: {args.input_mode}"
     out = {'episode': ep, 'transcript': transcript, 'frames': frames, 'map': SIM_MAP, 'model': MODEL,

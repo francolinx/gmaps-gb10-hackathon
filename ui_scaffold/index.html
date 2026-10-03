@@ -126,7 +126,7 @@ function render(){
 }
 
 function renderTx(){
-  const items = D.isSim ? D.transcript.map(x => ({t:x.t, freq:x.freq, text:x.text, act:x.speech_act, kind:x.kind, cs:(x.callsigns||[]).join(' '), summ:x.agent_summary_unverified}))
+  const items = D.isSim ? D.transcript.map(x => ({t:x.t, freq:x.freq, text:x.text, act:x.speech_act, kind:x.kind, cs:(x.callsigns||[]).join(' ') + (x.input_source ? ' · input: ' + x.input_source : ''), summ:x.agent_summary_unverified}))
     : D.timeline.map(x => ({t:x.t, freq:x.freq, text:x.text, act:x.event ? (x.event.speech_act_resolved || x.event.speech_act) : x.kind, kind:x.event ? x.event.kind : x.kind, cs:x.event ? x.event.actor_candidates.join(' ') : ''}));
   let lastPast = -1; items.forEach((x,i) => { if (x.t <= T) lastPast = i; });
   $('tx').innerHTML = items.map((x,i) => `<div class="tx ${x.t<=T?'past':''} ${i===lastPast?'now':''}" id="tx${i}">

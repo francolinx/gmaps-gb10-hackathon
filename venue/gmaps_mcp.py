@@ -160,7 +160,9 @@ class GmapsTools:
         tier, cands = self.tier(w, la)
         lines = [f"GMAPS {self.HEADERS[tier]}",
                  'FICTIONAL SIMULATION - map SIM-1, airport XSIM, simulated observations. Not real traffic.',
-                 f"Rule {w['rule_id']} ({w['severity']}): {w['name']} - warning {w['warning_id']} at t={w['t_fired']} s",
+                 (f"Rule {w['rule_id']} ({w['severity']}): {w['name']} - warning {w['warning_id']} at t={w['t_fired']} s"
+                  if tier == 'POSSIBLE_CONFLICT' else
+                  f"Rule {w['rule_id']}: authorization conflict (two clearances on record): {w['name']} - warning {w['warning_id']} at t={w['t_fired']} s"),
                  f"Actors: {a.get('callsign')} {a.get('type')} rwy {a.get('runway_end')} t={a.get('t_issued')} [{a.get('acknowledged')}]"
                  f" / {b.get('callsign')} {b.get('type')} rwy {b.get('runway_end')} t={b.get('t_issued')} [{b.get('acknowledged')}]"]
         if la is None:
@@ -186,6 +188,9 @@ class GmapsTools:
             raise ToolError(f'unknown warning_id {warning_id!r}')
         if w['status'] != 'open':
             raise ToolError(f'warning {warning_id} is {w["status"]}; only open warnings are posted')
+        posted_file = LOG_DIR / f'alerts_posted_{self.run_id}.json'
+        if posted_file.exists():
+            self.posted.update(json.loads(posted_file.read_text()))
         if warning_id in self.posted:
             return {'warning_id': warning_id, 'status': 'already_posted', 'message_id': self.posted[warning_id]}
         la_note = 'agent-requested'
@@ -217,6 +222,7 @@ class GmapsTools:
             raise ToolError(f"delivery failed: telegram ok=false {res.get('error_code')}")
         mid = res['result']['message_id']
         self.posted[warning_id] = mid
+        posted_file.write_text(json.dumps(self.posted))
         return {'warning_id': warning_id, 'status': 'sent', 'destination': 'approved Telegram chat (host-side)',
                 'message_id': mid, 'text': text, **result_extra}
 

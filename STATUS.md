@@ -219,7 +219,24 @@ Telegram messages sent today: 4 (E1), 5 (E1, **stale look-ahead line, superseded
   - **E1 `e1demo-20261003-142530`** (Whisper input, 104 s): R1 w0001 t=28 → **msg 10 "GMAPS POSSIBLE CONFLICT"**, look-ahead as_of 28: SIM212/RESCUE7 overlap Z1 47.3-72.8 s, lead 19.3 s.
   - **E2 `e2demo-20261003-142714`** (transcript text, 79 s): R1 w0001 t=74 → **msg 11 "GMAPS AUTHORIZATION CHECK, no predicted overlap from this check"**, look-ahead as_of 74: no overlap candidate.
 - Note: the template still prints the ledger's own severity, "Rule R1 (CONFLICT)", under the AUTHORIZATION CHECK header. That is the rule's procedural severity, not a prediction.
-- Phone receipt of messages 4-11: Franco's note is still a placeholder; **unconfirmed** (Bot API ok:true for each).
+- **Phone receipt (Franco, 14:3x CDT), in the "GMAPS Alerts" chat:** ET 15:15 (e1demo-141347 = msg 6), 15:17 (e2demo-141619 = msg 7), 15:18 and 15:21 (= msgs 8 and 9), 15:26 POSSIBLE CONFLICT (e1demo-142530 = msg 10, Whisper input), 15:28 AUTHORIZATION CHECK (e2demo-142714 = msg 11, text input). **Messages 4 and 5 are not in Franco's list** (Bot API returned ok:true for both).
+- Franco read both 15:18 and 15:21 as "e4demo-20261003-141737". The server logs show msg 8's text = `run e4demo-20261003-141737` and msg 9's text = `run e4demo-20261003-142003`: two separate runs whose IDs differ only in the last 6 digits. Fixed anyway so this can't be ambiguous:
+  - Run IDs now carry a random 4-hex suffix (`e1demo-YYYYMMDD-HHMMSS-xxxx`).
+  - `post_alert` dedupe persists per run in `~/gmaps_venue/log/alerts_posted_<run>.json`, so one warning = one alert per run, even across a server restart.
+- AUTHORIZATION CHECK template now reads "Rule R1: authorization conflict (two clearances on record): ..." (POSSIBLE CONFLICT unchanged). Verified by dry-run, no message sent.
+
+## 10. E3, E5 (Rachel's clips, mixed input) and E6 (text) with tick turns: DONE (14:29-14:37 CDT)
+`demo.sh` mixed mode: Whisper for lines with an owned clip, transcript text for the others. Each line is labelled `input_source` whisper/script/tick on screen, and the header says "mixed: ...".
+- **E3 `e3demo-20261003-142924`** (ticks 42, 48; clip t=38 via Whisper: "Rescue 7, stop, stop, stop."):
+  - R1 w0001 at t=28 → **msg 12 POSSIBLE CONFLICT** (overlap 47.3-72.8 s).
+  - Stop parsed as CANCEL for RESCUE7 and ingested at t=38. Look-ahead **keeps the raised overlap** at 38 [47.2, 55.9], tick 42 [49.6, 102.0] and tick 48 [51.7, 108.0], because the observed motion has not stopped. w0001 stays open.
+- **E5 `e5demo-20261003-143228`** (ticks 30, 40; clips t=18, 21 via Whisper; readback heard as "RISCO 7" → no actor, ingested as readback):
+  - Look-ahead: conditional overlap at 21 and 30; at **tick 40, `hold_exceedance` RAISED + overlap RAISED** [44.8, 100.0].
+  - **No ledger warning fires, so no Telegram alert.** Alerts are tied to ledger warnings (`post_alert(warning_id)`); this look-ahead-only cue is visible in the UI only.
+  - The agent parsed the t=18 line twice (second event never ingested).
+- **E6 `e6demo-20261003-143449`** (text; same ticks 30, 40 as E5): look-ahead **conditional only** at 21, 30, 40 (never raised). No warning, no alert. This is the intended contrast with E5.
+  - Agent flakiness: on the first turn the model made 5 calls with empty arguments (4× parse_transmission, 1× ledger_ingest, via OpenClaw's tool_call meta-tool). The server rejected each ("bad arguments") and the model then recovered.
+  - The prepared harness (`run_sim_episode`, dev check) shows a 1-second `hold_exceedance` blip at t=78 in E6. It was not exercised here (no tick there).
 
 ## NEXT (feature freeze 16:30 ET = 15:30 CDT)
 1. Franco: confirm phone receipt of messages 4-9; decide whether E2 should send a ledger-only alert. Push when ready (all commits local on main).

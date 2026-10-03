@@ -1,0 +1,44 @@
+{
+ "summary": {
+  "model_dir": "~/gmaps_models/whisper-large-v3-turbo",
+  "device": "NVIDIA GB10",
+  "torch": "2.12.0a0+5aff3928d8.nv26.05",
+  "n": 1,
+  "cold_load_plus_first_s": 11.913,
+  "warm_asr_s_median": 0.171,
+  "warm_asr_s_min": 0.171,
+  "warm_asr_s_max": 0.171,
+  "note": "Warm per-clip wall time of adapters.transcribe() on GPU, excluding file decode. Clips are re-voiced fictional lines."
+ },
+ "clips": [
+  {
+   "clip": "SIM_E3_STOP_NOT_OBSERVED_38.wav",
+   "episode": "SIM_E3_STOP_NOT_OBSERVED",
+   "t": 38.0,
+   "audio_s": 3.01,
+   "sr_in": 16000,
+   "asr_text_raw": "Rescue 7, stop, stop, stop.",
+   "script_text": "Rescue seven, stop, stop, stop.",
+   "asr_s": 0.171,
+   "rtf": 0.057,
+   "parse": {
+    "event_id": "ev00001",
+    "speech_act": "instruction",
+    "kind": "CANCEL",
+    "actor_candidates": [
+     "RESCUE7"
+    ],
+    "runway": null,
+    "crossing_at": null,
+    "hold_constraints": [],
+    "parse_path": "grammar",
+    "asr_repairs_applied": []
+   },
+   "parse_uncertainty": {
+    "confidence_heuristic": 0.9,
+    "note": "heuristic parser score, not a calibrated probability",
+    "unresolved": []
+   }
+  }
+ ]
+}
