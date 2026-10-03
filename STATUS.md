@@ -119,12 +119,28 @@ Input is the episode transcript `text_clean`, **not Whisper output**. Fictional 
 - Imperfections, kept as they happened:
   - At t=31 the model called parse_transmission twice. ev00006 was parsed but never ingested, so it does no harm, but it is not ideal.
   - At t=24 the model's prose summary paraphrases the look-ahead loosely. The tool results in the server log are the evidence, not the prose.
-- Message 4 delivered: the Bot API returned ok:true. **Franco to confirm on the phone.**
+- Message 4: the Bot API returned ok:true. Phone receipt: Franco's 13:5x note still reads "[received / NOT received]", so it is **unconfirmed** until he edits this line.
 - Earlier plumbing turn `plumb-134443` (t=0 only) ran against the previous server instance, run `e1fs-20261003-134317`. That server was restarted so the E1 run starts with a clean ledger.
 
 ## 4b. openclaw.json backups (13:47)
 - `~/gmaps_venue/backups/openclaw.json.pre-gmaps-134332` (before any change) and `openclaw.json.working-gmaps-*` (working state; contains the MCP token, chmod 600, outside the repo).
 - A rebuild may overwrite `openclaw.json`. To restore, re-run `openclaw mcp set` + `openclaw config patch` from `venue/openclaw/`, or upload the backup.
+
+## 5. Cloud egress removal: DONE (13:58-14:00 CDT), approved by Franco
+Applied live, with no rebuild (nemoclaw docs `manage-sandboxes/runtime-controls.mdx`: policy changes take effect at runtime on the next request; `exclude` persists across rebuild and snapshot restore).
+```
+nemoclaw my-assistant policy exclude nvidia --yes        # ✓ Excluded baseline entry 'nvidia'
+nemoclaw my-assistant policy remove huggingface --yes    # Removed preset: huggingface (huggingface.co, cdn-lfs, router.huggingface.co)
+```
+- Before: `venue_traces/policy_before_removal.yaml`. Keys: brew, clawhub, **huggingface**, local_inference, managed_inference, npm_registry, npm_yarn, **nvidia**, openclaw-pricing, openclaw_api, openclaw_docs, openclaw_gateway_dialback, pypi, telegram_bot.
+- After: `venue_traces/policy_after_removal.yaml`. The same keys minus `huggingface` and `nvidia`, and zero lines naming integrate.api.nvidia.com or huggingface.
+- Also observed: `telegram_bot` (api.telegram.org, node only) appeared between 13:09 and 13:58, most likely from Franco's Telegram channel attempt. Left as is.
+- Recheck (`venue_traces/t1_inference_local_postremoval_*.txt`): sandbox `GET https://inference.local/v1/models` → 200. POST chat → "GMAPS SANDBOX OK" (`chatcmpl-bebf48cdd41bc900`).
+- Negative probes:
+  - python3 → `router.huggingface.co` → `Tunnel connection failed: 403 Forbidden` (blocked).
+  - node → `integrate.api.nvidia.com` → "Request was cancelled". Consistent with a block, but less explicit; the old rule only ever allowed `/usr/local/bin/openclaw` there.
+- Tool route recheck, run `postpol-20261003-135930`: one E1 turn (t=0) → parse_transmission, ledger_ingest, lookahead all ok; `winnerProvider=inference`, `fallbackUsed=false`. No rollback needed.
+- Rollback if ever needed: `policy restore nvidia`, `policy add huggingface`.
 
 ## NEXT
 1. Franco: confirm Telegram message_id 4 on the phone. Decide on the policy removals (below).

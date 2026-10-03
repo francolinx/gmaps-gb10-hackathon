@@ -1,0 +1,13 @@
+## 2026-10-03T13:58:46-05:00 policy exclude nvidia --yes
+      allow: POST /v1/chat/completions
+      allow: POST /v1/completions
+      allow: POST /v1/embeddings
+      allow: GET /v1/models
+      allow: GET /v1/models/**
+    binary: /usr/local/bin/openclaw
+  Support impact: Direct NVIDIA API inference may stop working.
+  ✓ Excluded baseline entry 'nvidia' for 'my-assistant'.
+## 2026-10-03T13:58:53-05:00 policy remove huggingface --yes
+  Endpoints that would be removed: huggingface.co, cdn-lfs.huggingface.co, router.huggingface.co
+  Narrowing sandbox egress — removing: huggingface.co, cdn-lfs.huggingface.co, router.huggingface.co
+  Removed preset: huggingface

@@ -1,0 +1,10 @@
+## 2026-10-03T13:59:20-05:00 sandbox: GET https://inference.local/v1/models
+HTTP 200
+## 2026-10-03T13:59:20-05:00 sandbox: POST chat/completions
+"id":"chatcmpl-bebf48cdd41bc900"
+"content":"GMAPS SANDBOX OK"
+HTTP 200
+## 2026-10-03T13:59:21-05:00 NEGATIVE: python3 -> router.huggingface.co (was allowed for python3)
+BLOCKED/ERR URLError <urlopen error Tunnel connection failed: 403 Forbidden>
+## 2026-10-03T13:59:22-05:00 NEGATIVE: node -> integrate.api.nvidia.com/v1/models
+BLOCKED/ERR Request was cancelled.
