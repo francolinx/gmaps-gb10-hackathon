@@ -60,6 +60,10 @@ Everything below was observed on the GB10 today. Each line names its run ID; tra
   - One **repetition loop** (batch 3 clip 14, "785-785-785-…", 3.08 s).
   - Batch 3 appears to be a different airport ("Hayward Tower", runway 28R). The parser flagged "runway 28R not in KLGA inventory" rather than guessing.
 
+## Demo support pages (added 16:04-16:10 CDT)
+- **Live GB10 telemetry** (`python3 venue/perf_server.py &` → http://localhost:8766; stdlib, real readings only). During E1 run `e1demo-20261003-160553-8576` (same pipeline, alerts dry-run, nothing sent): GPU utilization rose from 0-8 % idle to 92-96 %, GPU power from ~11 W to 38-81 W, and vLLM generation ran at ~67-73 tokens/s with 1 request in flight. The Whisper container appeared for ~10 s; unified memory stayed ~65 of 122 GiB. GB10 GPU-memory fields report N/A and are not shown.
+- **KLGA reference page** (`ui_scaffold/klga.html`, built by `venue/build_klga_page.py`): the FAA LaGuardia diagram rendered from the FAA PDF with pdftoppm, plus runway/taxiway identifiers and the draft runway-crossing fragments from `klga.graph.json` (draft2; all 60 records expert-review pending; geometry null). Not used for prediction. Index of all pages: `ui_scaffold/nav.html`.
+
 ## Blind test (fresh seed, picked live)
 - Seed **56774**, picked 14:46:14 CDT. 6 hidden episodes (`tools/make_episodes.py --hidden 6 --seed 56774`). Label sha256s were recorded and **committed before scoring** (commit 3cf603b; `venue_traces/blind_label_hashes.txt`).
 - **System scored: the prepared GMAPS library pipeline** (parse → ledger → look-ahead, per-second frames) through `eval/run_eval.py`, **not the OpenClaw agent**. The agent requests a look-ahead only per transmission or tick, and the scorer needs per-second frames; adapting it was not possible before the freeze. The agent's tools call this same deterministic code.

@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KLGA reference</title>
+<style>
+body{margin:0;background:#0d1117;color:#e6edf5;font:14px system-ui,sans-serif;padding:16px}
+.banner{background:#2a2110;border:1px solid #d29922;color:#f0c674;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-weight:600}
+.wrap{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:14px}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}}
+.panel{background:#151b23;border:1px solid #263040;border-radius:8px;padding:10px 12px;overflow-x:auto}
+img{max-width:100%;background:#fff;border-radius:4px}
+table{border-collapse:collapse;font:12px ui-monospace,monospace;margin:4px 0 12px}td,th{padding:3px 8px;border-bottom:1px solid #263040;text-align:left}th{color:#8b98a9}
+h2{font-size:14px;margin:6px 0}.dim{color:#8b98a9;font-size:12px}a{color:#4aa3ff}
+</style></head><body>
+<div class="banner">Real airport reference: FAA diagram + identifiers (draft2, expert review pending). Geometry not used for prediction; look-ahead runs only on fictional SIM-1.</div>
+<div class="wrap">
+<div class="panel"><h2>FAA airport diagram: FAA LaGuardia diagram, cycle 2610, 00289AD</h2>
+<img src="klga_faa_diagram.png" alt="FAA LaGuardia airport diagram (rendered from the FAA PDF)">
+<div class="dim">Rendered from <code>sources/lga_faa_2610_00289AD.pdf</code> (sha256 99951faddb8779db…), source https://aeronav.faa.gov/d-tpp/2610/00289AD.PDF. Not for navigation.</div></div>
+<div class="panel">
+<div class="dim">Dataset 2026-10-03.draft2 · intended use: prototype_source_review · review status of all records: pending · geometry: null everywhere</div>
+<div class="dim">Usable for: identifier_lookup, topology_review · NOT usable for: automatic_routing, physical_position_inference, metric_prediction, operational_navigation</div>
+<h2>Runways</h2><div>04/22, 13/31</div>
+<h2>Taxiways (identifiers read from the diagram; not exhaustive)</h2><div>A, AA, AC, B, BB, C, CC, CY, D, DD, E, F, G, GG, J, K, L, M, N, P, Q, R, S, T, U, V, W, Y, YY, Z</div>
+<h2>Named areas</h2><div>Fire Station, General Aviation Parking, Transient Parking, Terminal A, Terminal B, Terminal C, Air Carrier Maintenance and Base Facilities, Alley 15</div>
+<h2>Runway-crossing topology (draft fragments)</h2>
+<table><tr><th>junction</th><th>surfaces</th><th>kind</th></tr><tr><td>D_RWY04-22</td><td>D × 04-22</td><td>runway_taxiway_junction</td></tr><tr><td>RWY04-22_RWY13-31</td><td>04-22 × 13-31</td><td>runway_intersection</td></tr></table>
+<table><tr><th>segment on</th><th>from</th><th>to</th><th>topology</th><th>direction</th></tr><tr><td>D</td><td>D_AA</td><td>D_RWY04-22</td><td>visible_pavement_connection</td><td>unknown</td></tr><tr><td>D</td><td>D_RWY04-22</td><td>D_B</td><td>visible_pavement_connection</td><td>unknown</td></tr><tr><td>D</td><td>D_BB</td><td>D_AA</td><td>visible_pavement_connection</td><td>unknown</td></tr></table>
+<h2>Hold constraints (conceptual)</h2>
+<table><tr><th>id</th><th>protects</th><th>approach</th><th>physical marking</th></tr><tr><td>D_APPROACH_FROM_AA</td><td>04-22</td><td>D</td><td>not_located</td></tr><tr><td>D_APPROACH_FROM_B</td><td>04-22</td><td>D</td><td>not_located</td></tr><tr><td>B_ILS_RWY04</td><td>04-22</td><td>B</td><td>chart_depicted_location_unmeasured</td></tr><tr><td>AC_ILS</td><td>04-22</td><td>AC</td><td>chart_depicted_location_unmeasured</td></tr><tr><td>R_ILS</td><td>04-22</td><td>R</td><td>chart_depicted_location_unmeasured</td></tr></table>
+<h2>Conflict-area references</h2>
+<table><tr><th>id</th><th>surfaces</th><th>boundary</th><th>usable for occupancy</th></tr><tr><td>DELTA_CROSSING</td><td>04-22, D</td><td>unknown</td><td>no</td></tr><tr><td>HS1</td><td>04-22, 13-31, AA, P, R, S</td><td>unknown</td><td>no</td></tr><tr><td>HS2</td><td>04-22, G, Q, B</td><td>unknown</td><td>no</td></tr></table>
+<div class="dim">12 open questions for a qualified reviewer: data/airports/KLGA_CHANGES_draft2.md.</div>
+</div></div>
+<div class="panel" style="margin-top:14px">Historical text replay (ledger only, no prediction): <a href="index.html?f=samples/LGA_2026-03-22.json">LGA_2026-03-22 in the main display</a> · <a href="nav.html">all GMAPS pages</a></div>
+</body></html>
