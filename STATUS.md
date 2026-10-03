@@ -261,7 +261,7 @@ clip_to_alert values: [12.83, 13.96, 16.0] median 13.96
   - `tool_search` "exec shell command" / "read file" / "web_fetch fetch url" → `[]`
 - Scope: tested by name for exec, read, web_fetch, plus a full-catalog listing. Not every built-in was called individually.
 
-## 13. Blind test, seed 56774: library pipeline scored (14:46-14:48 CDT)
+## 13. Blind test, seed 56774: library pipeline scored (14:46 CDT)
 - Seed **56774**, picked 14:46:14 CDT. 6 hidden episodes (`tools/make_episodes.py --hidden 6 --seed 56774`). Label sha256s were recorded and **committed before scoring** (commit 3cf603b; `venue_traces/blind_label_hashes.txt`).
 - **System scored: the prepared GMAPS library pipeline** (parse → ledger → look-ahead, per-second frames) through `eval/run_eval.py`, **not the OpenClaw agent**. The agent requests a look-ahead only per transmission or tick, and the scorer needs per-second frames; adapting it was not possible before the freeze. The agent's tools call this same deterministic code.
 - Result (n=6, only **1** positive episode, so a small sample):
