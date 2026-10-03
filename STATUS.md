@@ -87,8 +87,47 @@ Code: `venue/build_runtime.py`, `venue/replay_emit.py`, `venue/gmaps_mcp.py` (st
 - TLS (nemoclaw docs `configure-raw-tls-passthrough.mdx`, `troubleshoot-mcp-servers.mdx`): OpenShell terminates sandbox TLS and opens its own TLS connection upstream. The upstream cert must chain to a trusted root. A private CA needs `NEMOCLAW_CORPORATE_CA_BUNDLE` plus a sandbox rebuild. There is no plain-http upstream for managed MCP.
 - Options are presented to Franco; nothing applied.
 
+## 2c. Option B route + tools-only agent: DONE (13:43)
+**Label:** unmanaged MCP route over the existing local-inference egress rule. OpenShell 0.0.116 can't pin host.openshell.internal for managed MCP; tool bounds and token enforced server-side; all traffic stays on-box except the Telegram alert from the host.
+- Server: `venue/gmaps_mcp.py --bind 172.18.0.1 --port 11435 --send-alerts`, run from `~/gmaps_venue/runtime/`. Port 11435 is covered by the existing `local_inference` rule (GET/POST /**). **No policy change.**
+- Token: a dedicated low-value MCP token (`~/gmaps_venue/secrets/mcp_token`, 600), separate from the Telegram token. It sits in the sandbox's `openclaw.json` header, readable inside the sandbox; that is accepted for this route.
+- Sandbox check: `curl http://host.openshell.internal:11435/health` → 200 through the proxy 10.200.0.1:3128.
+- Registration: `openclaw mcp set gmaps '{"url":"http://host.openshell.internal:11435/mcp","transport":"streamable-http","headers":{"Authorization":"Bearer <token>"},...}'` (redacted copy: `venue/openclaw/mcp_server.redacted.json`).
+  - `openclaw mcp probe gmaps` → 5 tools `gmaps__{ledger_ingest,lookahead,open_warnings,parse_transmission,post_alert}`.
+  - The probe logs a 405: the client tried to open the optional SSE GET stream, and the server declines it, which MCP allows.
+- Agent: `nemoclaw my-assistant agents add gmaps --non-interactive --workspace /sandbox/.openclaw/workspace-gmaps --model inference/nvidia/Qwen3.6-35B-A3B-NVFP4`, then `openclaw config patch` (`venue/openclaw/gmaps_agent.patch.json`):
+  - `tools.allow` = the 5 `gmaps__*` tools.
+  - `tools.deny` = group:runtime, fs, web, ui, automation, sessions, memory, messaging, nodes.
+  - `openclaw config validate` → valid. Instructions: `venue/openclaw/AGENTS.md`.
+- Open item: the turn trace also shows OpenClaw's built-in `tool_search`/`tool_call` meta-tools (`tools.toolSearch.mode=tools`). In this run they only reached `gmaps__*` tools. Whether they can reach a denied tool is NOT yet tested.
+- `post_alert` is host-side. It reads `~/.gmaps_secrets` at call time, posts only open warnings, at most once per warning, and never logs the token. A secret scan of the repo and `~/gmaps_venue/log` found neither token.
+
+## 3b. FULL-STACK E1: DONE. Run `e1fs-20261003-134511` (13:45-13:46 CDT)
+Path: host replay → `openclaw agent --agent gmaps` (sandbox) → Qwen3.6 via `inference.local` (executionTrace `winnerProvider=inference`, `fallbackUsed=false` on all 5 turns) → gmaps MCP tools over the unmanaged route → ledger and look-ahead → `post_alert` → Telegram (host).
+Driver: `python3 venue/run_fullstack.py SIM_E1_CROSS_DURING_ROLLOUT --run-id e1fs-20261003-134511`. Traces: `venue_traces/mcp_calls_e1fs-20261003-134511.jsonl` (server side) and `venue_traces/agent_turns_e1fs-20261003-134511.jsonl` (OpenClaw JSON per turn).
+Input is the episode transcript `text_clean`, **not Whisper output**. Fictional SIM-1.
+
+| t | feed pkts | tool calls the model chose (server log) | result | turn wall |
+|---|---|---|---|---|
+| 0 | 0 | parse → ingest → lookahead | ev00001 LANDING_CLEARANCE; look-ahead unavailable (airborne, no obs) | 15.02 s |
+| 3 | 3 | parse → ingest → lookahead | ev00002 readback; no warning | 15.48 s |
+| 24 | 28 | parse → ingest → lookahead | ev00003 CROSS_REQUEST (request does not authorize); no warning | 14.97 s |
+| 28 | 36 | parse → ingest → lookahead → **post_alert(w0001)** | **w0001 R1 CONFLICT "crossing vs active landing"**; look-ahead **raised** SIM212/RESCUE7 overlap Z1 [47.3, 72.8] s, lead 19.3 s; **Telegram sent, message_id=4** (post_alert 404.8 ms) | 20.87 s |
+| 31 | 42 | parse → ingest → parse (duplicate) → lookahead | ev00005 readback ingested; w0001 still open; overlap [50.2, 75.7] s lead 19.2 s | 31.40 s |
+
+- Timings (n=5 turns, one run, warm model): agent turn wall p50 15.48 s, max 31.40 s. Server-side tool execution 0.03–1.21 ms per call except post_alert 404.8 ms. This is not the clip-to-screen latency the plan asks for; no ASR or display was in the loop.
+- Imperfections, kept as they happened:
+  - At t=31 the model called parse_transmission twice. ev00006 was parsed but never ingested, so it does no harm, but it is not ideal.
+  - At t=24 the model's prose summary paraphrases the look-ahead loosely. The tool results in the server log are the evidence, not the prose.
+- Message 4 delivered: the Bot API returned ok:true. **Franco to confirm on the phone.**
+- Earlier plumbing turn `plumb-134443` (t=0 only) ran against the previous server instance, run `e1fs-20261003-134317`. That server was restarted so the E1 run starts with a clean ledger.
+
+## 4b. openclaw.json backups (13:47)
+- `~/gmaps_venue/backups/openclaw.json.pre-gmaps-134332` (before any change) and `openclaw.json.working-gmaps-*` (working state; contains the MCP token, chmod 600, outside the repo).
+- A rebuild may overwrite `openclaw.json`. To restore, re-run `openclaw mcp set` + `openclaw config patch` from `venue/openclaw/`, or upload the backup.
+
 ## NEXT
-1. Franco: approve or adjust the task 2 option and the task 5 removals.
-2. Build `gmaps_mcp.py` plus the runtime allow-list copy, register it, then run one OpenClaw agent turn calling `parse_transmission`.
-3. Telegram add (Franco's token), then one real delivery.
-4. Owned clip → Whisper (needs Rachel's audio in `~/gmaps_venue/audio/`).
+1. Franco: confirm Telegram message_id 4 on the phone. Decide on the policy removals (below).
+2. Test that `tool_search`/`tool_call` cannot reach denied tools (or turn tool search off for the gmaps agent).
+3. Repeat E1 x3 and run E2-E6 through the full stack; owned clip → Whisper when Rachel's audio lands.
+4. Parked: Option A (managed MCP + private CA), Telegram channel rebuild (preflight failed: gateway.version.compatible, gateway.port.uncontested; standalone openshell gateway PID 61626 on :8080 left untouched).
