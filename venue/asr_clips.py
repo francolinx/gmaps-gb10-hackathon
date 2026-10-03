@@ -30,7 +30,8 @@ def load(p):
 
 
 def main():
-    clips = sorted(Path('/audio').glob('*.wav'), key=lambda p: (p.stem.rsplit('_', 1)[0], float(p.stem.rsplit('_', 1)[1])))
+    prefix = sys.argv[1] if len(sys.argv) > 1 else ''
+    clips = sorted(Path('/audio').glob(f'{prefix}*.wav'), key=lambda p: (p.stem.rsplit('_', 1)[0], float(p.stem.rsplit('_', 1)[1])))
     ref = {}
     for f in Path('/gmaps/episodes').glob('*.transcript.json'):
         d = json.loads(f.read_text())

@@ -106,6 +106,8 @@ function setData(d){
   $('kind').textContent = fict ? 'fictional exercise' : 'historical replay · re-voice · secondary sources';
   $('kind').className = 'badge ' + (fict ? 'fict' : 'hist');
   $('title').textContent = isSim ? d.episode.title : d.scenario.title;
+  if (d.agent_run){ const r = d.agent_run, al = (r.alerts||[]).filter(x => x.status === 'sent').map(x => x.warning_id + '→msg ' + x.message_id).join(', ');
+    $('kind').textContent += ' · AGENT RUN ' + r.run_id + ' · INPUT: ' + r.input_mode + (al ? ' · alert sent: ' + al : ''); }
   $('midTitle').textContent = isSim ? 'Look-ahead · fictional SIM-1 map (not a real airport)' : 'Runway reservations (recorded authorizations, not positions)';
   $('slider').min = tMin; $('slider').max = tMax; T = tMin; $('slider').value = T; render();
 }

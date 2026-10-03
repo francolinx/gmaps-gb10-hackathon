@@ -167,9 +167,15 @@ class GmapsTools:
             raise ToolError(f'warning {warning_id} is {w["status"]}; only open warnings are posted')
         if warning_id in self.posted:
             return {'warning_id': warning_id, 'status': 'already_posted', 'message_id': self.posted[warning_id]}
+        la_note = 'agent-requested'
+        if self.last_lookahead is None or self.last_lookahead['as_of'] < w['t_fired']:
+            # never ship a look-ahead older than the warning: run it now at the warning time (same feed rule)
+            self.lookahead(w['t_fired'])
+            la_note = 'computed by post_alert at warning time (agent had not requested it yet)'
         text = self.alert_text(w)
+        result_extra = {'lookahead_used': self.last_lookahead, 'lookahead_source': la_note}
         if not self.send:
-            return {'warning_id': warning_id, 'status': 'dry_run_not_sent', 'text': text}
+            return {'warning_id': warning_id, 'status': 'dry_run_not_sent', 'text': text, **result_extra}
         sec = {}
         for ln in SECRETS.read_text().splitlines():
             if '=' in ln and not ln.lstrip().startswith('#'):
@@ -190,7 +196,7 @@ class GmapsTools:
         mid = res['result']['message_id']
         self.posted[warning_id] = mid
         return {'warning_id': warning_id, 'status': 'sent', 'destination': 'approved Telegram chat (host-side)',
-                'message_id': mid, 'text': text}
+                'message_id': mid, 'text': text, **result_extra}
 
     def call(self, name, args):
         fn = {s['function']['name']: getattr(self, s['function']['name']) for s in TOOL_SCHEMAS}.get(name)

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# GMAPS demo, one command (venue code, Oct 3). Usage: venue/demo.sh [EPISODE] [--alerts|--no-alerts]
+#   1. restart the GMAPS MCP tool server with a clean ledger and a fresh run ID
+#   2. Whisper large-v3-turbo on the episode's owned clips (throwaway offline container); if that fails, use transcript text
+#   3. one OpenClaw `gmaps` agent turn per transmission (Qwen3.6 via inference.local -> gmaps MCP tools [-> post_alert])
+#   4. write the UI timeline JSON and print the URL
+set -euo pipefail
+EP=${1:-SIM_E1_CROSS_DURING_ROLLOUT}
+ALERTS=${2:---alerts}
+REPO=$(cd "$(dirname "$0")/.." && pwd)
+V=$HOME/gmaps_venue
+IMG=sha256:46591c6e4a018d8d197fa246b1e3d682c907654aab4e9402302abb3e6a7dd916   # existing nemoclaw vLLM image
+TAG=$(echo "$EP" | sed -E 's/^SIM_(E[0-9]+)_.*/\1/' | tr 'A-Z' 'a-z')
+RUN=${TAG}demo-$(date +%Y%m%d-%H%M%S)
+echo "== run $RUN  episode $EP  alerts $ALERTS"
+
+# 1. clean tool server
+python3 "$REPO/venue/build_runtime.py"
+rm -f "$V/runtime/feed/$EP.json"
+PID=$(ss -ltnp 2>/dev/null | grep '172.18.0.1:11435' | grep -oE 'pid=[0-9]+' | head -1 | cut -d= -f2 || true)
+if [ -n "${PID:-}" ]; then kill "$PID"; sleep 1; fi
+SEND=""; [ "$ALERTS" = "--alerts" ] && SEND="--send-alerts"
+( cd "$V/runtime" && GMAPS_MCP_TOKEN=$(cat "$V/secrets/mcp_token") GMAPS_RUN_ID=$RUN \
+  exec setsid python3 venue/gmaps_mcp.py --episode "$EP" --bind 172.18.0.1 --port 11435 $SEND ) < /dev/null > "$V/log/mcp_server_$RUN.log" 2>&1 &
+for i in $(seq 1 20); do curl -s -m 1 http://172.18.0.1:11435/health | grep -q "$RUN" && break; sleep 0.5; done
+curl -s -m 2 http://172.18.0.1:11435/health | grep -q "$RUN" || { echo "tool server did not start"; exit 1; }
+
+# 2. ASR (fallback: transcript text, labelled)
+ASR_DIR=$V/log/asr_$RUN; mkdir -p "$ASR_DIR"
+MODE="transcript text (no owned clips or Whisper failed)"; ASR_ARG=()
+if ls "$V/audio/${EP}_"*.wav >/dev/null 2>&1 && timeout 600 docker run --rm --network none --runtime=nvidia --gpus all --ipc=host \
+     -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 -e HOME=/tmp --user "$(id -u):$(id -g)" \
+     -v "$REPO:/gmaps:ro" -v "$V/audio:/audio:ro" -v "$HOME/gmaps_models/whisper-large-v3-turbo:/models/whisper:ro" -v "$ASR_DIR:/out" \
+     --entrypoint python3 "$IMG" /gmaps/venue/asr_clips.py "${EP}_" 2>&1 | grep -E '\.wav|median' ; then
+  if [ -s "$ASR_DIR/asr_results.json" ]; then MODE="Whisper ASR of owned re-voiced clips"; ASR_ARG=(--asr-results "$ASR_DIR/asr_results.json"); fi
+fi
+echo "== input mode: $MODE"
+
+# 3. agent turns
+python3 "$REPO/venue/run_fullstack.py" "$EP" --run-id "$RUN" "${ASR_ARG[@]}"
+
+# 4. UI
+python3 "$REPO/venue/build_timeline.py" "$RUN" --episode "$EP" --input-mode "$MODE" --out "$REPO/ui_scaffold/samples/agent_$RUN.json"
+cp "$REPO/ui_scaffold/samples/agent_$RUN.json" "$REPO/ui_scaffold/samples/agent_latest.json"
+ss -ltn | grep -q ':8765 ' || ( cd "$REPO/ui_scaffold" && exec setsid python3 -m http.server 8765 --bind 127.0.0.1 ) < /dev/null > "$V/log/ui_http.log" 2>&1 &
+echo "$RUN" > "$V/log/current_run_id"
+echo "== run $RUN done. Open: http://localhost:8765/?f=samples/agent_$RUN.json"

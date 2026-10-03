@@ -163,6 +163,32 @@ nemoclaw my-assistant policy remove huggingface --yes    # Removed preset: huggi
 
 - Degradation, as observed: misheard callsigns ("367R212", "Resco 7", "RISCO 7") leave readbacks and the t=24 request with **no actor**. "Tower" was heard as "Tour". No ASR repair rules were added for these clips.
 
+## 7. One-command demo + UI timeline: DONE (14:15 CDT). Video run `e1demo-20261003-141347`
+- Command: `venue/demo_e1.sh`, which wraps `venue/demo.sh SIM_E1_CROSS_DURING_ROLLOUT --alerts`. It:
+  1. rebuilds the runtime and restarts the MCP server with a clean ledger and a fresh run ID;
+  2. runs Whisper on the episode's owned clips (offline throwaway container), falling back to transcript text with an on-screen label if there are no clips or ASR fails;
+  3. runs one OpenClaw `gmaps` turn per clip;
+  4. runs `venue/build_timeline.py` to write `ui_scaffold/samples/agent_<run>.json` (+ `agent_latest.json`) and prints the URL.
+- URL: `http://localhost:8765/?f=samples/agent_e1demo-20261003-141347.json` (HTTP 200). The header badge shows **AGENT RUN id · INPUT: Whisper ASR of owned re-voiced clips · alert sent: w0001→msg 6**.
+- Timeline content comes only from the agent's tool results: transcript lanes = the ASR text the agent parsed; warning cards = ledger_ingest results; look-ahead cards = the latest agent-requested `lookahead` with as_of <= t. Positions = simulated packets received by t (display only). No screenshot: Franco's Firefox is running and was not touched.
+- Run `e1demo-20261003-141347`: total 110 s wall, exit 0.
+  - Tool order on every turn: parse → ingest → lookahead. At t=28 the order was lookahead → **post_alert(w0001) → Telegram message_id 6** (ok:true).
+  - Alert look-ahead line: "SIM212/RESCUE7 occupancy overlap at Z1 47.3-72.8 s (lead 19.3 s)", as_of 28.
+  - Measured: ASR median 0.2 s per clip; agent turn wall median 19.37 s, max 22.26 s (n=5).
+
+| t | Whisper text the agent received | ASR s | agent turn s |
+|---|---|---|---|
+| 0 | Simair 212, Runway 36, cleared to land. | 0.205 | 19.37 |
+| 3 | cleared to land runway 367R212 | 0.169 | 14.42 |
+| 24 | Tour, Resco 7, request to cross runway 36 at Kilo. | 0.212 | 16.51 |
+| 28 | Rescue 7, Cross Runway 36 at Kilo. | 0.197 | 20.08 |
+| 31 | Crossing Runway 36 at Kilo, RISCO 7. | 0.2 | 22.26 |
+
+- **Defect found and fixed (run `e1demo-20261003-140253`, 14:03):** at t=28 the agent called post_alert *before* lookahead. **Telegram message 5 therefore carried a stale look-ahead line** ("as_of 24.0 s: no occupancy-overlap candidate"), from before the crossing clearance existed. Its ledger warning (R1 CONFLICT) was correct.
+  - Fix in `gmaps_mcp.post_alert`: if the latest look-ahead is older than the warning, run `lookahead(as_of=t_fired)` first. The alert records `lookahead_source`.
+  - Message 6 verified correct. Message 5 stays on Franco's phone; treat it as superseded.
+- Fixed `demo.sh` backgrounding: the subshell had held the stdout pipe open, so a piped caller hung after the run finished.
+
 ## NEXT
 1. Franco: confirm Telegram message_id 4 on the phone. Decide on the policy removals (below).
 2. Test that `tool_search`/`tool_call` cannot reach denied tools (or turn tool search off for the gmaps agent).
