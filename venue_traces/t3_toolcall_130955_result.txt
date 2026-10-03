@@ -1,0 +1,38 @@
+request chatcmpl-be856e7f7eec6d75 | tool chosen: parse_transmission | args valid against TOOL_SCHEMAS: {'airport': 'XSIM', 'source_id': 'SIM_E1_CROSS_DURING_ROLLOUT_28.wav', 't': 28, 'text': 'Rescue seven, cross runway three six at Kilo.'}
+typed event: {
+ "event_id": "ev00001",
+ "airport_icao": "XSIM",
+ "actor_candidates": [
+  "RESCUE7"
+ ],
+ "speaker_role": "ATC",
+ "speech_act": "instruction",
+ "kind": "CROSS",
+ "raw_text": "Rescue seven, cross runway three six at Kilo.",
+ "normalized_text": "CROSS RUNWAY 36 AT K .",
+ "asr_repairs_applied": [],
+ "source_id": "SIM_E1_CROSS_DURING_ROLLOUT_28.wav",
+ "source_start_s": 28,
+ "source_end_s": null,
+ "event_time": 28,
+ "received_time": 28,
+ "runway": "36",
+ "runway_end_candidates": [
+  "XSIM:END:36"
+ ],
+ "route": null,
+ "route_surface_candidates": [],
+ "hold_constraints": [],
+ "hold_position": false,
+ "crossing_at": "K",
+ "traffic_advisory": null,
+ "sequence": null,
+ "clipped": false,
+ "parse_path": "grammar",
+ "uncertainty": {
+  "confidence_heuristic": 0.95,
+  "note": "heuristic parser score, not a calibrated probability",
+  "unresolved": []
+ },
+ "supersedes_event_id": null
+}
